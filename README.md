@@ -1,4 +1,4 @@
-# XYZ Agency — Digital Marketing Website
+# XYZ Agency — Software Development & Digital Marketing Website
 
 A multi-page, responsive marketing website for **XYZ Agency**, built with **React 18 + Vite + React Router** in a blue theme with a light/dark mode toggle and scroll animations.
 
@@ -6,8 +6,8 @@ A multi-page, responsive marketing website for **XYZ Agency**, built with **Reac
 
 | Route | Page |
 | --- | --- |
-| `/` | Home |
-| `/services`, `/services/:slug` | Services overview + 6 rich single-service pages (unique hero visual, process timeline, FAQ, tools, related results & posts) |
+| `/` | Home — Lottie hero, partner badges, service tabs, CMS/app-stack orbit, cloud & server section |
+| `/services`, `/services/:slug` | Services grouped by Development / Marketing / Cloud + 13 rich single-service pages (unique hero visual, process timeline, FAQ, tools, related results & posts) |
 | `/work`, `/work/:slug` | Case studies + case study detail |
 | `/about` | About us, values, offices |
 | `/blog`, `/blog/:slug` | Blog with category filter & search + article pages |
@@ -29,6 +29,17 @@ npm run dev
 - Light/dark colors are CSS variables in `:root` and `[data-theme="dark"]` in `styles.css`.
 - Shared layout (header, footer, cards, icons) is in `components.jsx`; pages are in `pages.jsx`.
 - Colors are CSS variables at the top of `styles.css`.
+
+## Lottie (JSON) animations
+
+- Hero/banner animations are Lottie files in the repo root: `lottie-<web|mobile|marketing>-<light|dark>.json`.
+- `LottiePlayer` in `components.jsx` lazy-loads `lottie-web` (light build) and swaps the light/dark file when the theme toggle changes.
+- To use a LottieFiles animation instead, drop the JSON in the root with the same naming (e.g. `lottie-web-light.json` and `lottie-web-dark.json`).
+
+## Header
+
+- **Services** opens a full-width mega menu on hover (click on touch/mobile), grouped into Software Development, Digital Marketing and Cloud & DevOps, with a technologies strip.
+- The sun/moon switch in the header toggles light/dark mode (saved per visitor).
 
 ## Deploy
 

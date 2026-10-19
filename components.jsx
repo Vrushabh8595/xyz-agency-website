@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { COMPANY, SERVICES } from './data.js'
+import { APP_TECH, CMS_TECH, COMPANY, HOSTING, PARTNERS, SERVICE_GROUPS, SERVICES } from './data.js'
 
 /* ---------- Icons ---------- */
 export function Icon({ name, size = 22 }) {
@@ -31,6 +31,16 @@ export function Icon({ name, size = 22 }) {
     case 'plus': return <svg {...p}><path d="M12 5v14M5 12h14" /></svg>
     case 'star': return <svg {...p}><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" /></svg>
     case 'lock': return <svg {...p}><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+    case 'globe': return <svg {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+    case 'code': return <svg {...p}><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" /></svg>
+    case 'mobile': return <svg {...p}><rect x="6.5" y="2" width="11" height="20" rx="2.5" /><path d="M11 18h2" /></svg>
+    case 'cpu': return <svg {...p}><rect x="6" y="6" width="12" height="12" rx="2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></svg>
+    case 'cart': return <svg {...p}><circle cx="9" cy="20" r="1.5" /><circle cx="18" cy="20" r="1.5" /><path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21 7H6" /></svg>
+    case 'cloud': return <svg {...p}><path d="M7 19h10.5a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.4 9.1 5 5 0 0 0 7 19Z" /></svg>
+    case 'shield': return <svg {...p}><path d="M12 3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6Z" /><path d="m9 12 2 2 4-4" /></svg>
+    case 'server': return <svg {...p}><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" /></svg>
+    case 'layers': return <svg {...p}><path d="m12 3 9 5-9 5-9-5Z" /><path d="m3 13 9 5 9-5" /></svg>
+    case 'bolt': return <svg {...p}><path d="M13 2 4 14h7l-1 8 9-12h-7Z" /></svg>
     default: return null
   }
 }
@@ -53,7 +63,7 @@ export function useInView() {
 
 export function useTitle(title) {
   useEffect(() => {
-    document.title = title ? `${title} | ${COMPANY.name}` : `${COMPANY.name} | Digital Marketing that Compounds`
+    document.title = title ? `${title} | ${COMPANY.name}` : `${COMPANY.name} | Software Development & Digital Marketing`
   }, [title])
 }
 
@@ -113,6 +123,68 @@ export function useScrollY() {
 }
 
 const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+/* ---------- Theme hook (reacts to the header toggle) ---------- */
+export function useTheme() {
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light')
+  useEffect(() => {
+    const mo = new MutationObserver(() => setTheme(document.documentElement.dataset.theme || 'light'))
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => mo.disconnect()
+  }, [])
+  return theme
+}
+
+/* ---------- Lottie (JSON) animation player ----------
+   Files: lottie-<name>-<light|dark>.json. Library + JSON are lazy-loaded. */
+const LOTTIE_FILES = import.meta.glob('./lottie-*.json', { import: 'default' })
+let lottieLib
+const loadLottie = () => (lottieLib ||= import('lottie-web/build/player/lottie_light').then((m) => m.default))
+const clone = (d) => (typeof structuredClone === 'function' ? structuredClone(d) : JSON.parse(JSON.stringify(d)))
+
+export function LottiePlayer({ name, loop = true, onComplete, className = '', label = '' }) {
+  const box = useRef(null)
+  const theme = useTheme()
+  const done = useRef(onComplete)
+  done.current = onComplete
+  const resume = useRef({ name: null, frame: 0 })
+  useEffect(() => {
+    let anim
+    let io
+    let dead = false
+    const file = LOTTIE_FILES[`./lottie-${name}-${theme}.json`]
+    if (!file) return undefined
+    Promise.all([loadLottie(), file()]).then(([lottie, data]) => {
+      if (dead || !box.current) return
+      anim = lottie.loadAnimation({
+        container: box.current, renderer: 'svg', loop, autoplay: false, animationData: clone(data),
+        rendererSettings: { preserveAspectRatio: 'xMidYMid meet' },
+      })
+      anim.addEventListener('complete', () => done.current?.())
+      if (reduceMotion()) { anim.goToAndStop(110, true); return }
+      // keep the playhead when only the theme changed
+      if (resume.current.name === name && resume.current.frame) anim.goToAndStop(resume.current.frame, true)
+      io = new IntersectionObserver(([e]) => (e.isIntersecting ? anim.play() : anim.pause()))
+      io.observe(box.current)
+    })
+    return () => {
+      dead = true
+      io?.disconnect()
+      if (anim) { resume.current = { name, frame: anim.currentFrame }; anim.destroy() }
+    }
+  }, [name, theme, loop])
+  return <div ref={box} className={`lottie ${className}`} role="img" aria-label={label} />
+}
+
+/* ---------- Monogram tile for technology names ---------- */
+export function TechTile({ t, size = 'md' }) {
+  return (
+    <span className={`tech-tile ${size}`} style={{ '--tc': t.color }}>
+      <span className="tech-mono">{t.short}</span>
+      <span className="tech-name">{t.name}</span>
+    </span>
+  )
+}
 
 /* Element moves at a different speed than the page */
 export function Parallax({ speed = 0.15, children, className = '' }) {
@@ -220,7 +292,7 @@ export function ScrollToTop() {
 
 /* ---------- Layout ---------- */
 const NAV = [
-  { label: 'Services', to: '/services', children: SERVICES.map((s) => ({ label: s.title, to: `/services/${s.slug}`, icon: s.icon })) },
+  { label: 'Services', to: '/services', mega: true },
   { label: 'Work', to: '/work' },
   { label: 'About', to: '/about' },
   {
@@ -231,6 +303,59 @@ const NAV = [
   },
   { label: 'Careers', to: '/careers' },
 ]
+
+const MEGA_TECH = [
+  ...CMS_TECH.map((t) => ({ ...t, to: '/services/web-development' })),
+  ...APP_TECH.map((t) => ({ ...t, to: t.name === 'AI / ML' ? '/services/ai-development' : ['Flutter', 'Android', 'iOS'].includes(t.name) ? '/services/mobile-apps' : '/services/web-applications' })),
+  ...HOSTING.map((t) => ({ ...t, to: '/services/cloud-hosting' })),
+]
+
+function MegaMenu() {
+  const google = PARTNERS.find((p) => p.featured)
+  return (
+    <div className="mega">
+      <div className="container mega-inner">
+        <div className="mega-cols">
+          {SERVICE_GROUPS.map((g) => (
+            <div key={g.key} className="mega-col">
+              <Link to={`/services#${g.key}`} className="mega-head">
+                <span className="drop-ico"><Icon name={g.icon} size={18} /></span>
+                <span><b>{g.label}</b><small>{g.desc}</small></span>
+              </Link>
+              <div className="mega-links">
+                {SERVICES.filter((s) => s.group === g.key).map((s) => (
+                  <NavLink key={s.slug} to={`/services/${s.slug}`} className="mega-link">
+                    <Icon name={s.icon} size={16} /><span>{s.title}</span>
+                  </NavLink>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <aside className="mega-feature">
+          <img src={google.img} alt={google.name} width="169" height="64" />
+          <h4>Certified, partner-led delivery</h4>
+          <p>Google Premier Partner, plus certified with AWS, Microsoft, Salesforce and HubSpot.</p>
+          <div className="mega-badges">
+            {PARTNERS.filter((p) => !p.featured).slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} />)}
+          </div>
+          <Link to="/contact" className="btn btn-primary sm">Start a project <Icon name="arrow" size={16} /></Link>
+        </aside>
+      </div>
+      <div className="mega-foot">
+        <div className="container mega-foot-inner">
+          <span className="mega-foot-label">Technologies</span>
+          <div className="mega-tech">
+            {MEGA_TECH.map((t) => (
+              <Link key={t.name} to={t.to} className="mega-pill" style={{ '--tc': t.color }}><i />{t.name}</Link>
+            ))}
+          </div>
+          <Link to="/services" className="mega-all">All services <Icon name="arrow" size={16} /></Link>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function Logo({ light }) {
   return (
@@ -245,6 +370,7 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [drop, setDrop] = useState(null)
+  const timer = useRef(null)
   const { pathname } = useLocation()
   useEffect(() => { setOpen(false); setDrop(null) }, [pathname])
   useEffect(() => {
@@ -253,29 +379,39 @@ export function Header() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setDrop(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+  const isDesktop = () => window.matchMedia('(min-width: 961px)').matches
+  const enter = (label) => { if (!isDesktop()) return; clearTimeout(timer.current); setDrop(label) }
+  const leave = () => { if (!isDesktop()) return; clearTimeout(timer.current); timer.current = setTimeout(() => setDrop(null), 140) }
   return (
-    <header className={`header ${scrolled || open ? 'scrolled' : ''}`}>
+    <header className={`header ${scrolled || open || drop ? 'scrolled' : ''} ${drop === 'Services' ? 'mega-open' : ''}`}>
       <div className="container nav">
         <Logo />
         <nav className={`nav-links ${open ? 'open' : ''}`} aria-label="Main">
-          {NAV.map((n) => n.children ? (
+          {NAV.map((n) => (n.children || n.mega) ? (
             <div
               key={n.label}
-              className={`has-drop ${drop === n.label ? 'show' : ''}`}
-              onMouseEnter={() => setDrop(n.label)}
-              onMouseLeave={() => setDrop(null)}
+              className={`has-drop ${n.mega ? 'is-mega' : ''} ${drop === n.label ? 'show' : ''}`}
+              onMouseEnter={() => enter(n.label)}
+              onMouseLeave={leave}
             >
               <button className="drop-btn" aria-expanded={drop === n.label} onClick={() => setDrop(drop === n.label ? null : n.label)}>
                 {n.label} <Icon name="down" size={16} />
               </button>
-              <div className={`dropdown ${n.children.length > 3 ? 'wide' : ''}`}>
-                {n.children.map((c) => (
-                  <NavLink key={c.to} to={c.to} className="drop-item">
-                    <span className="drop-ico"><Icon name={c.icon} size={18} /></span>
-                    <span><b>{c.label}</b>{c.desc && <small>{c.desc}</small>}</span>
-                  </NavLink>
-                ))}
-              </div>
+              {n.mega ? <MegaMenu /> : (
+                <div className="dropdown">
+                  {n.children.map((c) => (
+                    <NavLink key={c.to} to={c.to} className="drop-item">
+                      <span className="drop-ico"><Icon name={c.icon} size={18} /></span>
+                      <span><b>{c.label}</b>{c.desc && <small>{c.desc}</small>}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <NavLink key={n.to} to={n.to}>{n.label}</NavLink>
@@ -289,6 +425,7 @@ export function Header() {
           </button>
         </div>
       </div>
+      <div className={`mega-scrim ${drop === 'Services' ? 'on' : ''}`} aria-hidden="true" />
     </header>
   )
 }
@@ -299,14 +436,21 @@ export function Footer() {
       <div className="container foot-grid">
         <div>
           <Logo light />
-          <p className="foot-about">A full-funnel digital marketing agency helping ambitious brands turn marketing into a compounding growth engine.</p>
+          <p className="foot-about">A software development and digital marketing company — we build websites, web apps and mobile apps, then grow them with SEO, paid media and AI.</p>
+          <div className="foot-badges">
+            {PARTNERS.slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} loading="lazy" />)}
+          </div>
           <div className="socials">
             {['in', 'ig', 'fb', 'x'].map((s) => <a key={s} href="#" aria-label={s}>{s}</a>)}
           </div>
         </div>
         <div>
-          <h4>Services</h4>
-          {SERVICES.map((s) => <Link key={s.slug} to={`/services/${s.slug}`}>{s.title}</Link>)}
+          <h4>Development</h4>
+          {SERVICES.filter((s) => s.group !== 'marketing').map((s) => <Link key={s.slug} to={`/services/${s.slug}`}>{s.title}</Link>)}
+        </div>
+        <div>
+          <h4>Marketing</h4>
+          {SERVICES.filter((s) => s.group === 'marketing').map((s) => <Link key={s.slug} to={`/services/${s.slug}`}>{s.title}</Link>)}
         </div>
         <div>
           <h4>Company</h4>
@@ -333,12 +477,9 @@ export function Footer() {
 }
 
 /* ---------- Shared blocks ---------- */
-export function PageHero({ kicker, title, text, children, crumbs }) {
-  return (
-    <section className="page-hero">
-      <div className="orbs" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
-      <div className="grid-bg" aria-hidden="true" />
-      <div className="container page-hero-inner">
+export function PageHero({ kicker, title, text, children, crumbs, aside }) {
+  const body = (
+    <>
         {crumbs && (
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
@@ -351,6 +492,14 @@ export function PageHero({ kicker, title, text, children, crumbs }) {
         <SplitText as="h1" text={title} />
         {text && <p className="lead fade-in d2">{text}</p>}
         {children && <div className="fade-in d3">{children}</div>}
+    </>
+  )
+  return (
+    <section className={`page-hero ${aside ? 'with-aside' : ''}`}>
+      <div className="orbs" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
+      <div className="grid-bg" aria-hidden="true" />
+      <div className="container page-hero-inner">
+        {aside ? <div className="page-hero-grid"><div>{body}</div><div className="fade-in d2">{aside}</div></div> : body}
       </div>
     </section>
   )

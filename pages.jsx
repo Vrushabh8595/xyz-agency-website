@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
-  CASE_STUDIES, CLIENTS, COMPANY, EBOOKS, HERO_WORDS, INDUSTRIES, JOBS, POSTS, SERVICES, STATS, STEPS, VALUES,
+  APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOSTING, INDUSTRIES, JOBS, PARTNERS, POSTS,
+  SERVICE_GROUPS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
 import {
-  CaseCard, Counter, CtaBand, EbookCover, Icon, PageHero, Parallax, PostCard, Reveal, SplitText,
-  spotlight, useSectionProgress, useTitle,
+  CaseCard, Counter, CtaBand, EbookCover, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, SplitText,
+  TechTile, spotlight, useInView, useSectionProgress, useTitle,
 } from './components.jsx'
 
 const mailto = (subject, lines) =>
@@ -27,52 +28,33 @@ function RotatingWord({ words, interval = 2600 }) {
   )
 }
 
-function HeroVisual() {
+const HERO_SLIDES = [
+  { key: 'web', label: 'Web & apps', icon: 'code', chip: ['bolt', '98', 'Lighthouse score'], to: '/services/web-applications' },
+  { key: 'mobile', label: 'Mobile apps', icon: 'mobile', chip: ['star', '4.8★', 'App store rating'], to: '/services/mobile-apps' },
+  { key: 'marketing', label: 'Digital marketing', icon: 'target', chip: ['chart', '+212%', 'Pipeline growth'], to: '/services/seo' },
+]
+
+function HeroShowcase() {
+  const [i, setI] = useState(0)
+  const slide = HERO_SLIDES[i]
+  const next = () => setI((n) => (n + 1) % HERO_SLIDES.length)
   return (
-    <div className="hero-visual" aria-hidden="true">
-      <div className="orbit">
-        {['search', 'target', 'pen', 'chart'].map((ic, k) => (
-          <span key={ic} className={`orbit-ico i${k}`}><Icon name={ic} size={18} /></span>
+    <div className="showcase">
+      <div className="showcase-stage card">
+        <div className="showcase-glow" aria-hidden="true" />
+        <LottiePlayer key={slide.key} name={slide.key} loop={false} onComplete={next} className="showcase-lottie" label={`${slide.label} animation`} />
+        <Link to={slide.to} className="showcase-chip card" key={`chip-${slide.key}`}>
+          <span className="f-ico"><Icon name={slide.chip[0]} size={18} /></span>
+          <div><small>{slide.chip[2]}</small><b>{slide.chip[1]}</b></div>
+        </Link>
+      </div>
+      <div className="showcase-tabs" role="tablist" aria-label="What we do">
+        {HERO_SLIDES.map((sl, k) => (
+          <button key={sl.key} role="tab" aria-selected={k === i} className={`sc-tab ${k === i ? 'on' : ''}`} onClick={() => setI(k)}>
+            <Icon name={sl.icon} size={16} /><span>{sl.label}</span>
+            <i className="sc-bar" aria-hidden="true" />
+          </button>
         ))}
-      </div>
-      <div className="dash card mp mp-1">
-        <div className="dash-top"><span>Pipeline generated</span><span className="pill up">+212%</span></div>
-        <div className="dash-value">$4.8M</div>
-        <svg className="dash-chart" viewBox="0 0 300 110" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="hg" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stopColor="var(--primary)" stopOpacity=".35" />
-              <stop offset="1" stopColor="var(--primary)" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="hl" x1="0" x2="1">
-              <stop offset="0" stopColor="var(--primary)" />
-              <stop offset="1" stopColor="var(--cyan)" />
-            </linearGradient>
-          </defs>
-          <path className="area" d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12 L300 110 L0 110Z" fill="url(#hg)" />
-          <path className="draw" d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12" fill="none" stroke="url(#hl)" strokeWidth="3" pathLength="1" />
-          <circle className="dot-end" cx="300" cy="12" r="5" fill="var(--cyan)" />
-        </svg>
-        <div className="dash-bars">
-          {[38, 52, 46, 64, 58, 76, 88].map((h, k) => <span key={k} style={{ '--h': `${h}%`, animationDelay: `${0.9 + k * 0.08}s` }} />)}
-        </div>
-        <div className="dash-row">
-          <div><small>Organic</small><b>48%</b></div>
-          <div><small>Paid</small><b>31%</b></div>
-          <div><small>Referral</small><b>21%</b></div>
-        </div>
-      </div>
-      <div className="float card f1 mp mp-2">
-        <span className="f-ico"><Icon name="target" size={18} /></span>
-        <div><small>Cost per lead</small><b>−37%</b></div>
-      </div>
-      <div className="float card f2 mp mp-3">
-        <span className="f-ico cyan"><Icon name="search" size={18} /></span>
-        <div><small>Keywords in top 3</small><b>1,240</b></div>
-      </div>
-      <div className="toast card mp mp-2">
-        <span className="toast-dot" />
-        <div><b>New qualified lead</b><small>Demo booked · just now</small></div>
       </div>
     </div>
   )
@@ -95,18 +77,18 @@ export function Home() {
         <div className="grid-bg" aria-hidden="true" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <span className="eyebrow fade-in"><span className="pulse-dot" /> Full-funnel digital marketing agency</span>
+            <span className="eyebrow fade-in"><span className="pulse-dot" /> Software development &amp; digital marketing company</span>
             <h1 className="hero-title">
-              <span className="line"><span>Marketing that drives</span></span>
+              <span className="line"><span>We build &amp; grow</span></span>
               <span className="line"><RotatingWord words={HERO_WORDS} /></span>
             </h1>
             <p className="lead fade-in d2">
-              XYZ Agency brings SEO, paid media, content, web and AI together as one connected growth system —
-              run by senior specialists and measured against revenue.
+              XYZ Agency engineers websites, web apps, mobile apps and AI products — then grows them with SEO,
+              paid media and data-driven marketing. One senior team from first commit to first customer.
             </p>
             <div className="hero-ctas fade-in d3">
-              <Link to="/contact" className="btn btn-primary shine">Get a free growth audit <Icon name="arrow" size={18} /></Link>
-              <Link to="/work" className="btn btn-ghost">See our results</Link>
+              <Link to="/contact" className="btn btn-primary shine">Start your project <Icon name="arrow" size={18} /></Link>
+              <Link to="/services" className="btn btn-ghost">Explore services</Link>
             </div>
             <div className="hero-proof fade-in d4">
               {STATS.filter((s) => s.label !== 'Ad spend managed ($)').map((s) => (
@@ -114,7 +96,7 @@ export function Home() {
               ))}
             </div>
           </div>
-          <Parallax speed={0.08}><HeroVisual /></Parallax>
+          <div className="fade-in d2"><HeroShowcase /></div>
         </div>
         <a href="#services" className="scroll-cue" aria-label="Scroll to services"><span className="mouse"><span /></span>Scroll</a>
         <div className="logos">
@@ -127,24 +109,15 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section" id="services">
-        <div className="container">
-          <div className="section-head row">
-            <div>
-              <Reveal><span className="kicker">What we do</span></Reveal>
-              <SplitText text="We plan, build and run the systems behind your growth" />
-            </div>
-            <Reveal variant="left"><Link to="/services" className="btn btn-ghost">All services <Icon name="arrow" size={18} /></Link></Reveal>
-          </div>
-          <div className="grid-3">
-            {SERVICES.map((s, i) => (
-              <Reveal key={s.slug} delay={(i % 3) * 90}><ServiceCard s={s} /></Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PartnersBand />
+
+      <HomeServices />
+
+      <TechExpertise />
 
       <StatsBand />
+
+      <CloudSection />
 
       <section className="section alt">
         <div className="container">
@@ -224,6 +197,185 @@ export function Home() {
   )
 }
 
+function PartnersBand() {
+  return (
+    <section className="partners">
+      <div className="partners-glow" aria-hidden="true" />
+      <div className="container partners-inner">
+        <div className="partners-copy">
+          <Reveal><span className="kicker">Certified partners</span></Reveal>
+          <Reveal delay={80}><h2>Proud <span className="grad-text">Google Premier Partner</span> — certified on the platforms you run on</h2></Reveal>
+          <Reveal delay={160}><p>Our engineers and marketers hold active certifications with Google, AWS, Microsoft, Salesforce and HubSpot, so your stack is in expert hands.</p></Reveal>
+        </div>
+        <div className="partner-grid">
+          {PARTNERS.map((p, i) => (
+            <Reveal key={p.name} variant="zoom" delay={i * 70} className={`partner-tile ${p.featured ? 'featured' : ''}`}>
+              <img src={p.img} alt={p.name} loading="lazy" />
+              {p.featured && <span className="partner-tag"><Icon name="star" size={12} /> Premier</span>}
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function HomeServices() {
+  const [tab, setTab] = useState('development')
+  const group = SERVICE_GROUPS.find((g) => g.key === tab)
+  const list = SERVICES.filter((s) => s.group === tab)
+  return (
+    <section className="section" id="services">
+      <div className="container">
+        <div className="section-head row">
+          <div>
+            <Reveal><span className="kicker">What we do</span></Reveal>
+            <SplitText text="One partner to build, launch and grow your digital products" />
+          </div>
+          <Reveal variant="left"><Link to="/services" className="btn btn-ghost">All services <Icon name="arrow" size={18} /></Link></Reveal>
+        </div>
+        <Reveal className="svc-tabs">
+          <div role="tablist" aria-label="Service groups" className="svc-tabs-inner">
+            {SERVICE_GROUPS.map((g) => (
+              <button key={g.key} role="tab" aria-selected={tab === g.key} className={tab === g.key ? 'on' : ''} onClick={() => setTab(g.key)}>
+                <Icon name={g.icon} size={18} />{g.label}<small>{SERVICES.filter((s) => s.group === g.key).length}</small>
+              </button>
+            ))}
+          </div>
+          <p className="svc-tab-desc" key={tab}>{group.desc}</p>
+        </Reveal>
+        <div className="grid-3 svc-tab-grid" key={tab}>
+          {list.map((s, i) => <div key={s.slug} className="tab-in" style={{ animationDelay: `${i * 70}ms` }}><ServiceCard s={s} /></div>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const techLink = (t) => (CMS_TECH.includes(t) ? '/services/web-development'
+  : t.name === 'AI / ML' ? '/services/ai-development'
+    : ['Flutter', 'Android', 'iOS'].includes(t.name) ? '/services/mobile-apps' : '/services/web-applications')
+
+function TechExpertise() {
+  const [mode, setMode] = useState('cms')
+  const [ref, inView] = useInView()
+  const list = mode === 'cms' ? CMS_TECH : APP_TECH
+  return (
+    <section className="section alt tech-sec">
+      <div className="container tech-grid">
+        <div>
+          <Reveal><span className="kicker">Technology expertise</span></Reveal>
+          <SplitText text="Experts in every CMS and modern app stack" />
+          <Reveal delay={120}>
+            <p className="body-text">We're more than a marketing agency — we're a full software development company. Our certified developers build on the platform that fits your business, never the other way round.</p>
+          </Reveal>
+          <Reveal delay={180} className="tech-switch">
+            <div role="tablist" aria-label="Technology type">
+              <button role="tab" aria-selected={mode === 'cms'} className={mode === 'cms' ? 'on' : ''} onClick={() => setMode('cms')}><Icon name="globe" size={16} />CMS &amp; e-commerce</button>
+              <button role="tab" aria-selected={mode === 'app'} className={mode === 'app' ? 'on' : ''} onClick={() => setMode('app')}><Icon name="code" size={16} />Web &amp; mobile apps</button>
+              <span className={`tech-switch-thumb ${mode}`} aria-hidden="true" />
+            </div>
+          </Reveal>
+          <div className="tech-list" key={mode}>
+            {list.map((t, i) => (
+              <Link key={t.name} to={techLink(t)} className="tech-item tab-in" style={{ '--tc': t.color, animationDelay: `${i * 60}ms` }}>
+                <span className="tech-mono">{t.short}</span>
+                <span><b>{t.name}</b><small>{t.desc}</small></span>
+                <Icon name="arrow" size={16} />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="orbit-wrap" ref={ref} aria-hidden="true">
+          <div className={`tech-orbit ${inView ? 'in' : ''} focus-${mode}`}>
+            <span className="orbit-pulse" />
+            <div className="ring r1">
+              {CMS_TECH.map((t, k) => <span key={t.name} className="sat" style={{ '--a': `${k * 60}deg` }}><span className="sat-in"><TechTile t={t} size="sm" /></span></span>)}
+            </div>
+            <div className="ring r2">
+              {APP_TECH.map((t, k) => <span key={t.name} className="sat" style={{ '--a': `${k * 60 + 30}deg` }}><span className="sat-in"><TechTile t={t} size="sm" /></span></span>)}
+            </div>
+            <div className="hub">
+              <span className="logo-mark">X</span>
+              <b>Full-stack</b>
+              <small>12+ platforms</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="tech-marquee" aria-hidden="true">
+        {[[...CMS_TECH, ...HOSTING], [...APP_TECH, ...CMS_TECH.slice(0, 3)]].map((row, r) => (
+          <div key={r} className={`tm-row ${r ? 'rev' : ''}`}>
+            <div className="tm-track">
+              {[...row, ...row].map((t, k) => <TechTile key={k} t={t} />)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function ServerVisual() {
+  return (
+    <div className="server-vis card" aria-hidden="true">
+      <div className="srv-head"><span><i className="live" />All systems operational</span><b>99.99% uptime</b></div>
+      <div className="rack">
+        {[['web-01', 'CPU', 34], ['app-02', 'RAM', 52], ['db-01', 'I/O', 27]].map(([n, m, v], k) => (
+          <div className="unit" key={n}>
+            <span className="leds"><i /><i /><i /></span>
+            <span className="uname">{n}</span>
+            <span className="ubar"><span style={{ '--w': `${v}%`, animationDelay: `${0.3 + k * 0.2}s` }} /></span>
+            <span className="uval">{m} {v}%</span>
+          </div>
+        ))}
+      </div>
+      <div className="uptime-label"><small>Last 30 days</small><small>Response · 182 ms</small></div>
+      <div className="uptime">
+        {Array.from({ length: 30 }).map((_, k) => <i key={k} className={k === 18 ? 'warn' : ''} style={{ animationDelay: `${k * 35}ms` }} />)}
+      </div>
+      <svg className="srv-spark" viewBox="0 0 300 60" preserveAspectRatio="none">
+        <path className="draw" pathLength="1" d="M0 40 L20 36 L40 42 L60 30 L80 34 L100 22 L120 28 L140 18 L160 26 L180 20 L200 30 L220 16 L240 24 L260 14 L280 20 L300 12" fill="none" stroke="url(#srvg)" strokeWidth="2.5" />
+        <defs><linearGradient id="srvg" x1="0" x2="1"><stop offset="0" stopColor="var(--primary)" /><stop offset="1" stopColor="var(--cyan)" /></linearGradient></defs>
+      </svg>
+      <div className="srv-chip c1 card"><Icon name="shield" size={16} /> SSL A+ · Firewall on</div>
+      <div className="srv-chip c2 card"><Icon name="cloud" size={16} /> Auto-backup · 03:00</div>
+    </div>
+  )
+}
+
+function CloudSection() {
+  return (
+    <section className="section cloud-sec">
+      <div className="container cloud-grid">
+        <Reveal variant="right" className="cloud-vis-wrap"><ServerVisual /></Reveal>
+        <div>
+          <Reveal><span className="kicker">Cloud &amp; server management</span></Reveal>
+          <SplitText text="An expert server team that keeps you fast, secure and online" />
+          <Reveal delay={120}><p className="body-text">From a single WordPress site to auto-scaling applications, our certified engineers set up, migrate and manage servers on the hosting platform that fits your traffic and budget.</p></Reveal>
+          <div className="host-list">
+            {HOSTING.map((h, i) => (
+              <Reveal key={h.name} variant="left" delay={i * 70}>
+                <Link to="/services/cloud-hosting" className="host card" style={{ '--tc': h.color }}>
+                  <span className="tech-mono">{h.short}</span>
+                  <span className="host-txt"><b>{h.name}</b><small>{h.desc}</small></span>
+                  <span className="host-status"><i />Managed</span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="cloud-feats">
+            {['24/7 monitoring', 'Zero-downtime migrations', 'Daily backups', 'SSL & firewalls', 'CDN & caching'].map((f) => (
+              <span key={f}><Icon name="check" size={14} />{f}</span>
+            ))}
+          </Reveal>
+          <Reveal><Link to="/services/cloud-hosting" className="btn btn-primary">Explore cloud services <Icon name="arrow" size={18} /></Link></Reveal>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function ServiceCard({ s }) {
   return (
     <Link to={`/services/${s.slug}`} className="card service spot" onMouseMove={spotlight} style={{ '--svc': s.color }}>
@@ -290,20 +442,32 @@ export function Services() {
   useTitle('Services')
   return (
     <>
-      <PageHero kicker="Services" crumbs={[['Services']]}
-        title="Every channel your growth depends on — working as one"
-        text="Choose a single service or bring us in as your full-funnel growth partner. Every engagement is led by senior specialists and measured against pipeline." />
-      <section className="section">
-        <div className="container grid-3">
-          {SERVICES.map((s, i) => <Reveal key={s.slug} delay={(i % 3) * 90}><ServiceCard s={s} /></Reveal>)}
+      <PageHero kicker="Services" crumbs={[['Services']]} aside={<HeroShowcase />}
+        title="Software development and digital marketing — under one roof"
+        text="Build websites, web apps and mobile apps, host them on expertly managed servers, and grow them with full-funnel marketing. Every engagement is led by senior specialists.">
+        <div className="hero-ctas">
+          {SERVICE_GROUPS.map((g) => <a key={g.key} href={`#${g.key}`} className="btn btn-ghost sm"><Icon name={g.icon} size={16} />{g.label}</a>)}
         </div>
-      </section>
+      </PageHero>
+      {SERVICE_GROUPS.map((g, gi) => (
+        <section key={g.key} className={`section ${gi % 2 ? 'alt' : ''}`} id={g.key}>
+          <div className="container">
+            <div className="section-head">
+              <Reveal><span className="kicker"><Icon name={g.icon} size={16} /> {g.label}</span></Reveal>
+              <SplitText text={g.desc} />
+            </div>
+            <div className="grid-3">
+              {SERVICES.filter((s) => s.group === g.key).map((s, i) => <Reveal key={s.slug} delay={(i % 3) * 90}><ServiceCard s={s} /></Reveal>)}
+            </div>
+          </div>
+        </section>
+      ))}
       <section className="section alt">
         <div className="container">
           <div className="section-head center">
             <Reveal><span className="kicker">Better together</span></Reveal>
-            <SplitText text="One team, every channel" />
-            <Reveal delay={150}><p>When SEO, paid, content, web and analytics share one plan, each channel makes the others stronger.</p></Reveal>
+            <SplitText text="One team, from code to customers" />
+            <Reveal delay={150}><p>When the people who build your product also market it, launches are faster and every channel makes the others stronger.</p></Reveal>
           </div>
           <div className="grid-3">
             {[
@@ -325,7 +489,11 @@ export function Services() {
 }
 
 /* ---------- Unique hero visual for each service ---------- */
+const SERVICE_LOTTIE = { 'web-development': 'web', 'web-applications': 'web', 'ecommerce-development': 'web', 'mobile-apps': 'mobile' }
+
 function ServiceVisual({ slug }) {
+  if (SERVICE_LOTTIE[slug]) return <div className="sv card sv-lottie"><LottiePlayer name={SERVICE_LOTTIE[slug]} label="Service animation" /></div>
+  if (slug === 'cloud-hosting' || slug === 'devops-maintenance') return <ServerVisual />
   switch (slug) {
     case 'seo':
       return (
@@ -423,7 +591,7 @@ function ServiceVisual({ slug }) {
 
 const SERVICE_POST_CATS = {
   seo: ['SEO'], 'paid-media': ['Paid Media'], 'content-social': ['Demand Gen'],
-  'web-experience': ['CRO'], 'analytics-cro': ['Analytics', 'CRO'], 'ai-automation': ['AI'],
+  'web-experience': ['CRO'], 'analytics-cro': ['Analytics', 'CRO'], 'ai-automation': ['AI'], 'ai-development': ['AI'],
 }
 
 function Faq({ items }) {

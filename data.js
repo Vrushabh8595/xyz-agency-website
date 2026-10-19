@@ -1,5 +1,14 @@
 /* All site content lives here. Edit freely. */
 
+/* Partner badges (cropped from the brand partner strip) */
+import pClutch from './partner-clutch.png'
+import pAws from './partner-aws.png'
+import pMicrosoft from './partner-microsoft.png'
+import pSalesforce from './partner-salesforce.png'
+import pMarketo from './partner-marketo.png'
+import pHubspot from './partner-hubspot.png'
+import pGoogle from './partner-google.png'
+
 export const COMPANY = {
   name: 'XYZ Agency',
   email: 'hello@xyzagency.com',
@@ -13,7 +22,63 @@ export const COMPANY = {
 
 export const SERVICES = [
   {
+    slug: 'web-development',
+    group: 'development',
+    icon: 'globe',
+    title: 'Website & CMS Development',
+    short: 'High-performance websites on WordPress, Webflow, Shopify, Magento, Squarespace and Concrete5 — built to rank and convert.',
+    tags: ['WordPress', 'Webflow', 'Shopify'],
+    intro: 'Whatever platform your team prefers, our certified developers build fast, secure, editor-friendly websites with SEO and analytics wired in from day one.',
+    deliverables: ['Custom WordPress themes and Gutenberg blocks', 'Webflow builds with CMS collections', 'Shopify and Magento storefronts', 'Squarespace and Concrete5 sites', 'Platform migrations without SEO loss', 'Speed, security and Core Web Vitals tuning'],
+    outcomes: ['Sites your team can update in minutes', 'Faster load times and better rankings', 'Higher conversion from every visit'],
+  },
+  {
+    slug: 'web-applications',
+    group: 'development',
+    icon: 'code',
+    title: 'Custom Web Applications',
+    short: 'SaaS platforms, portals and dashboards engineered on MERN, MEAN, Next.js and Laravel — secure, scalable and tested.',
+    tags: ['MERN', 'MEAN', 'Next.js'],
+    intro: 'From MVP to enterprise platform, we design and engineer web applications with clean architecture, automated testing and the scalability to grow with you.',
+    deliverables: ['Product discovery and technical architecture', 'MERN and MEAN stack development', 'Next.js, Node.js and Laravel builds', 'REST and GraphQL APIs', 'SaaS multi-tenancy, auth and billing', 'Automated testing and CI/CD'],
+    outcomes: ['Launch your MVP in weeks, not months', 'Architecture that scales with users', 'Code your team can own and extend'],
+  },
+  {
+    slug: 'mobile-apps',
+    group: 'development',
+    icon: 'mobile',
+    title: 'Mobile App Development',
+    short: 'Native iOS and Android apps plus cross-platform Flutter and React Native apps your users will love.',
+    tags: ['Flutter', 'iOS', 'Android'],
+    intro: 'We take mobile products from idea to App Store and Google Play — with polished UX, reliable performance and analytics that show how people use your app.',
+    deliverables: ['App strategy, UX and UI design', 'Flutter and React Native cross-platform apps', 'Native iOS (Swift) and Android (Kotlin)', 'Backend, APIs and push notifications', 'App Store and Google Play launch', 'App store optimization and growth'],
+    outcomes: ['One codebase for iOS and Android', '4.5★+ store ratings', 'Higher retention and engagement'],
+  },
+  {
+    slug: 'ai-development',
+    group: 'development',
+    icon: 'cpu',
+    title: 'AI & ML Solutions',
+    short: 'Custom AI assistants, RAG search, predictive models and LLM integrations built into your products and workflows.',
+    tags: ['LLM apps', 'RAG', 'Computer vision'],
+    intro: 'We turn AI from a buzzword into shipped features — chatbots trained on your data, intelligent search, document automation and predictive analytics.',
+    deliverables: ['AI strategy and use-case discovery', 'Custom GPT and LLM-powered assistants', 'RAG knowledge search over your data', 'Document and workflow automation', 'Predictive and recommendation models', 'Secure, private AI deployment'],
+    outcomes: ['Hours of manual work automated', 'Smarter products that differentiate', 'AI with guardrails and privacy built in'],
+  },
+  {
+    slug: 'ecommerce-development',
+    group: 'development',
+    icon: 'cart',
+    title: 'E-commerce Development',
+    short: 'Shopify, Magento and WooCommerce stores with custom features, integrations and checkout flows that sell.',
+    tags: ['Shopify Plus', 'Magento', 'WooCommerce'],
+    intro: 'We build online stores that load fast, convert well and connect to your ERP, inventory and marketing stack — then help you grow revenue after launch.',
+    deliverables: ['Shopify and Shopify Plus stores', 'Magento (Adobe Commerce) development', 'WooCommerce builds', 'Payment, shipping and ERP integrations', 'Custom apps and checkout extensions', 'Conversion optimization for stores'],
+    outcomes: ['Higher conversion rates', 'Automated store operations', 'A platform ready to scale'],
+  },
+  {
     slug: 'seo',
+    group: 'marketing',
     icon: 'search',
     title: 'SEO & Organic Growth',
     short: 'Technical SEO, content strategy and authority building that turn search into a predictable pipeline channel.',
@@ -24,6 +89,7 @@ export const SERVICES = [
   },
   {
     slug: 'paid-media',
+    group: 'marketing',
     icon: 'target',
     title: 'Paid Media & Performance',
     short: 'Google, Meta and LinkedIn campaigns engineered around cost per qualified lead, not vanity clicks.',
@@ -34,6 +100,7 @@ export const SERVICES = [
   },
   {
     slug: 'content-social',
+    group: 'marketing',
     icon: 'pen',
     title: 'Content & Social',
     short: 'Thought leadership, video and social programs that build trust with buyers before they talk to sales.',
@@ -44,8 +111,9 @@ export const SERVICES = [
   },
   {
     slug: 'web-experience',
+    group: 'development',
     icon: 'layout',
-    title: 'Web Experience & Tech',
+    title: 'UI/UX & Web Experience',
     short: 'Fast, conversion-focused websites and landing pages on WordPress, Webflow, HubSpot and headless stacks.',
     tags: ['UX / UI', 'Development', 'Landing pages'],
     intro: 'Your website is your best salesperson. We design and build sites that load fast, rank well and make it easy for visitors to become customers.',
@@ -54,6 +122,7 @@ export const SERVICES = [
   },
   {
     slug: 'analytics-cro',
+    group: 'marketing',
     icon: 'chart',
     title: 'Analytics & CRO',
     short: 'Clean tracking, revenue attribution and experimentation so every dollar traces to an outcome.',
@@ -64,6 +133,7 @@ export const SERVICES = [
   },
   {
     slug: 'ai-automation',
+    group: 'marketing',
     icon: 'spark',
     title: 'AI & Marketing Automation',
     short: 'AI agents, lead scoring and lifecycle automation that let a lean team operate like a large one.',
@@ -72,6 +142,34 @@ export const SERVICES = [
     deliverables: ['HubSpot and Salesforce automation', 'Lead scoring and routing', 'AI-assisted content workflows', 'Chatbots and AI assistants', 'Lifecycle email programs', 'Reporting automation'],
     outcomes: ['Hours saved every week', 'Faster speed-to-lead', 'Better-qualified pipeline'],
   },
+  {
+    slug: 'cloud-hosting',
+    group: 'cloud',
+    icon: 'cloud',
+    title: 'Cloud Hosting & Server Management',
+    short: 'Certified engineers who set up, migrate and manage servers on AWS, Cloudways, DigitalOcean, Hostinger and HostGator.',
+    tags: ['AWS', 'DigitalOcean', 'Cloudways'],
+    intro: 'Our server team keeps your websites and applications fast, secure and online — with 24/7 monitoring, hardened configurations and zero-downtime migrations.',
+    deliverables: ['Cloud architecture on AWS and DigitalOcean', 'Managed Cloudways, Hostinger and HostGator setups', 'Zero-downtime server migrations', 'Security hardening, SSL and firewalls', 'CDN, caching and performance tuning', '24/7 uptime monitoring and backups'],
+    outcomes: ['99.9%+ uptime', 'Faster sites and lower hosting bills', 'Peace of mind with daily backups'],
+  },
+  {
+    slug: 'devops-maintenance',
+    group: 'cloud',
+    icon: 'shield',
+    title: 'DevOps, Security & Maintenance',
+    short: 'CI/CD pipelines, containerization, security patching and care plans that keep every release smooth.',
+    tags: ['CI/CD', 'Docker', 'Care plans'],
+    intro: 'We automate how code moves from commit to production and keep your platforms patched, monitored and improving every month.',
+    deliverables: ['CI/CD with GitHub Actions and GitLab', 'Docker and Kubernetes deployments', 'Infrastructure as code (Terraform)', 'Security audits and patching', 'Website care plans and updates', 'Incident response and SLAs'],
+    outcomes: ['Faster, safer releases', 'Fewer incidents and outages', 'Predictable monthly maintenance'],
+  },
+]
+
+export const SERVICE_GROUPS = [
+  { key: 'development', label: 'Software Development', icon: 'code', desc: 'Websites, web apps, mobile apps and AI products engineered to scale.' },
+  { key: 'marketing', label: 'Digital Marketing', icon: 'target', desc: 'SEO, paid media, content and analytics measured against revenue.' },
+  { key: 'cloud', label: 'Cloud & DevOps', icon: 'cloud', desc: 'Hosting, servers, security and maintenance handled by experts.' },
 ]
 
 export const CASE_STUDIES = [
@@ -92,7 +190,7 @@ export const CASE_STUDIES = [
     title: 'Scaling patient acquisition for a multi-location clinic group',
     metric: '600+', metricLabel: 'qualified patient leads per quarter',
     color: '#0891b2',
-    services: ['Paid Media & Performance', 'Web Experience & Tech'],
+    services: ['Paid Media & Performance', 'UI/UX & Web Experience'],
     challenge: 'Each location ran its own ads with no shared tracking, so leadership could not see which spend produced booked appointments.',
     solution: 'We rebuilt location landing pages, consolidated ad accounts, and connected call tracking and bookings back to campaigns.',
     results: [['600+', 'leads / quarter'], ['−34%', 'cost per booking'], ['2.1x', 'conversion rate']],
@@ -114,7 +212,7 @@ export const CASE_STUDIES = [
     title: 'A website redesign that turned visitors into consultations',
     metric: '+38%', metricLabel: 'website conversion rate after redesign',
     color: '#0284c7',
-    services: ['Web Experience & Tech', 'Analytics & CRO'],
+    services: ['UI/UX & Web Experience', 'Analytics & CRO'],
     challenge: 'An outdated, slow website was losing visitors before they ever reached the contact page.',
     solution: 'We redesigned the site around clear service paths, rebuilt it for speed, and ran A/B tests on key forms and CTAs.',
     results: [['+38%', 'conversion rate'], ['1.2s', 'load time'], ['+52%', 'consultation requests']],
@@ -299,10 +397,10 @@ export const STEPS = [
 export const INDUSTRIES = ['B2B SaaS', 'Healthcare', 'Legal', 'Financial Services', 'E-commerce', 'IT & Technology', 'Education', 'Real Estate']
 
 export const STATS = [
-  { value: 250, suffix: '+', label: 'Campaigns launched' },
+  { value: 650, suffix: '+', label: 'Projects delivered' },
   { value: 12, suffix: 'M+', label: 'Ad spend managed ($)' },
   { value: 94, suffix: '%', label: 'Client retention' },
-  { value: 40, suffix: '+', label: 'Senior specialists' },
+  { value: 85, suffix: '+', label: 'Engineers & marketers' },
 ]
 
 export const CLIENTS = ['NORTHWIND', 'Lumina', 'BRIGHTPATH', 'Vertex Labs', 'Orbitly', 'HELIX', 'Cobalt & Co', 'Summit Health']
@@ -316,6 +414,69 @@ export const VALUES = [
 
 /* ---------- Extra detail for each single service page ---------- */
 const SERVICE_EXTRAS = {
+  'web-development': {
+    color: '#2563eb',
+    tagline: 'Every CMS, one expert team.',
+    stats: [['300+', 'websites launched'], ['6', 'CMS platforms mastered'], ['95+', 'target Lighthouse score']],
+    why: ['The right platform depends on your team, content and growth plans — not on what an agency happens to know. We are fluent in all the major CMS platforms, so our advice is unbiased.', 'Every build ships with performance, SEO, accessibility and analytics baked in, plus training so your team can publish confidently.'],
+    process: [['Discover', 'Audit your current site, content and goals, then recommend the right platform.'], ['Design', 'Wireframes and a component-based UI system tailored to your brand.'], ['Develop', 'Build on WordPress, Webflow, Shopify, Magento, Squarespace or Concrete5 with clean, reusable components.'], ['Launch & care', 'QA, SEO-safe migration, go-live and ongoing care plans.']],
+    tools: ['WordPress', 'Webflow', 'Shopify', 'Magento', 'Squarespace', 'Concrete5', 'Elementor', 'HubSpot CMS'],
+    faqs: [['Which CMS is right for us?', 'WordPress suits content-heavy sites, Webflow is great for design-led marketing sites, Shopify and Magento power e-commerce, Squarespace fits small teams and Concrete5 works well for in-context editing. We recommend after discovery.'], ['Can you migrate our existing site?', 'Yes — we migrate content, redirects and SEO signals so rankings are protected.'], ['Will we be able to edit the site ourselves?', 'Absolutely. Every build includes an editor-friendly setup and a recorded training session.'], ['Do you provide hosting?', 'Yes. Our server team can host and manage your site on AWS, Cloudways, DigitalOcean, Hostinger or HostGator.']],
+  },
+  'web-applications': {
+    color: '#4f46e5',
+    tagline: 'Software that scales with your business.',
+    stats: [['120+', 'web apps shipped'], ['8–12 wks', 'typical MVP timeline'], ['99.9%', 'uptime on managed apps']],
+    why: ['Off-the-shelf tools rarely fit the way your business actually works. A custom web application removes workarounds and becomes a competitive advantage.', 'Our engineers use proven stacks like MERN and MEAN, with automated tests and CI/CD, so you get speed now and maintainability later.'],
+    process: [['Discovery', 'Workshops to define users, features, architecture and a phased roadmap.'], ['UX & prototype', 'Clickable prototypes validated with real users before code is written.'], ['Agile build', 'Two-week sprints with demos, code reviews and automated testing.'], ['Launch & scale', 'Deploy to the cloud, monitor performance and iterate on feedback.']],
+    tools: ['MongoDB', 'Express', 'React', 'Angular', 'Node.js', 'Next.js', 'PostgreSQL', 'Laravel', 'GraphQL', 'Docker'],
+    faqs: [['What is the MERN / MEAN stack?', 'MERN is MongoDB, Express, React and Node.js; MEAN swaps React for Angular. Both use JavaScript end to end, which makes apps fast to build and easy to maintain.'], ['Do we own the code?', 'Yes. You own 100% of the source code and IP, delivered in your own repository.'], ['Can you take over an existing app?', 'Yes. We start with a code and architecture audit, then stabilize and extend it.'], ['How do you price projects?', 'Fixed-price for well-defined scopes, or a dedicated team on a monthly retainer for evolving products.']],
+  },
+  'mobile-apps': {
+    color: '#0891b2',
+    tagline: 'Apps people download — and keep using.',
+    stats: [['80+', 'apps published'], ['4.7★', 'avg. store rating'], ['iOS + Android', 'from one codebase']],
+    why: ['Your customers spend most of their screen time in apps. A fast, intuitive app keeps your brand in their pocket and drives repeat business.', 'We build with Flutter and React Native for cross-platform speed, or go fully native with Swift and Kotlin when performance demands it.'],
+    process: [['Strategy', 'Define the audience, core features and monetization model.'], ['Design', 'Platform-native UX and UI with interactive prototypes.'], ['Develop', 'Flutter, React Native, Swift or Kotlin builds with a secure backend.'], ['Launch & grow', 'Store submission, ASO, analytics and continuous releases.']],
+    tools: ['Flutter', 'Dart', 'Swift', 'Kotlin', 'React Native', 'Firebase', 'App Store Connect', 'Google Play Console'],
+    faqs: [['Flutter or native?', 'Flutter covers iOS and Android from one codebase and suits most products. Native is best for heavy graphics, advanced hardware access or platform-specific experiences.'], ['How long does an app take?', 'A focused MVP typically takes 10–14 weeks from design to store launch.'], ['Do you handle App Store approval?', 'Yes — we prepare listings, handle submission and respond to review feedback.'], ['Can you market the app too?', 'Yes. Our marketing team runs app store optimization, paid user acquisition and lifecycle campaigns.']],
+  },
+  'ai-development': {
+    color: '#7c3aed',
+    tagline: 'AI features that ship — with guardrails.',
+    stats: [['40+', 'AI solutions deployed'], ['70%', 'avg. reduction in manual work'], ['2–6 wks', 'to a working prototype']],
+    why: ['AI can now read documents, answer questions and make predictions that used to need a human. The winners are the companies that build it into their products and workflows first.', 'We focus on practical, measurable use cases and deploy them securely, with your data staying private.'],
+    process: [['Discover', 'Identify high-value use cases and assess data readiness.'], ['Prototype', 'Build a working proof of concept on your real data.'], ['Productionize', 'Harden for accuracy, security, cost and scale.'], ['Monitor', 'Track quality, gather feedback and keep improving the models.']],
+    tools: ['OpenAI', 'Anthropic Claude', 'LangChain', 'Python', 'TensorFlow', 'PyTorch', 'Pinecone', 'Hugging Face'],
+    faqs: [['Is our data safe?', 'Yes. We use enterprise APIs with no training on your data, or deploy private models in your own cloud.'], ['Do we need a lot of data?', 'Not always. Many LLM solutions work with your existing documents and knowledge base.'], ['Can AI integrate with our existing software?', 'Yes — we connect AI to your CRM, ERP, help desk and internal tools via APIs.'], ['How do you measure success?', 'Against clear KPIs agreed upfront, such as time saved, accuracy or conversion lift.']],
+  },
+  'ecommerce-development': {
+    color: '#db2777',
+    tagline: 'Stores built to sell more, every day.',
+    stats: [['150+', 'stores launched'], ['+42%', 'avg. conversion lift after rebuild'], ['<2s', 'target page load']],
+    why: ['Every second of load time and every extra checkout step costs sales. A well-built store pays for itself quickly.', 'We combine e-commerce engineering with performance marketing, so your store is built to grow — not just to launch.'],
+    process: [['Plan', 'Catalog, integrations, payments and platform selection.'], ['Design', 'Conversion-focused product, cart and checkout UX.'], ['Build', 'Theme development, custom apps and system integrations.'], ['Grow', 'Launch, CRO testing and marketing campaigns.']],
+    tools: ['Shopify Plus', 'Magento', 'WooCommerce', 'BigCommerce', 'Stripe', 'Klaviyo', 'Google Merchant Center'],
+    faqs: [['Shopify or Magento?', 'Shopify is ideal for fast growth with low maintenance; Magento suits complex catalogs and B2B requirements.'], ['Can you migrate our store?', 'Yes — products, customers, orders and SEO redirects are all migrated safely.'], ['Do you integrate with our ERP?', 'Yes, we integrate with common ERP, inventory, shipping and accounting systems.'], ['Do you offer ongoing support?', 'Yes, through monthly care and growth retainers.']],
+  },
+  'cloud-hosting': {
+    color: '#0d9488',
+    tagline: 'Fast, secure servers — managed by experts.',
+    stats: [['99.99%', 'uptime across managed servers'], ['500+', 'servers under management'], ['24/7', 'monitoring and response']],
+    why: ['Slow or unreliable hosting quietly erodes SEO, conversions and trust. Most businesses do not have in-house server expertise to fix it.', 'Our certified team manages infrastructure across AWS, Cloudways, DigitalOcean, Hostinger and HostGator — choosing the right fit for your traffic and budget.'],
+    process: [['Assess', 'Review current hosting, performance, security and costs.'], ['Architect', 'Design the right setup — from shared hosting to auto-scaling cloud.'], ['Migrate', 'Zero-downtime migration with full backups and testing.'], ['Manage', '24/7 monitoring, patching, backups and performance tuning.']],
+    tools: ['AWS', 'Cloudways', 'DigitalOcean', 'Hostinger', 'HostGator', 'Cloudflare', 'Nginx', 'cPanel'],
+    faqs: [['Which hosting provider is best?', 'It depends on traffic, budget and technical needs. AWS and DigitalOcean suit apps and high traffic; Cloudways is great managed hosting; Hostinger and HostGator are cost-effective for smaller sites.'], ['Will migration cause downtime?', 'No. We stage everything, test thoroughly and switch DNS with zero or near-zero downtime.'], ['Do you handle security?', 'Yes — firewalls, SSL, malware scanning, hardening and regular patching are included.'], ['Can you reduce our hosting costs?', 'Often, yes. We right-size servers and add caching and CDN to do more with less.']],
+  },
+  'devops-maintenance': {
+    color: '#0284c7',
+    tagline: 'Ship faster. Sleep better.',
+    stats: [['10x', 'faster deployments'], ['−60%', 'avg. incident reduction'], ['<1 hr', 'critical response time']],
+    why: ['Manual deployments and unpatched systems are the root cause of most outages and security incidents.', 'We automate delivery pipelines and keep every platform maintained, so your team can focus on building features.'],
+    process: [['Audit', 'Review pipelines, infrastructure, security and incident history.'], ['Automate', 'Set up CI/CD, containers and infrastructure as code.'], ['Secure', 'Patch, harden and monitor every environment.'], ['Maintain', 'Monthly care plans with SLAs and reporting.']],
+    tools: ['GitHub Actions', 'GitLab CI', 'Docker', 'Kubernetes', 'Terraform', 'Grafana', 'Sentry', 'Cloudflare'],
+    faqs: [['Do you offer SLAs?', 'Yes — care plans include defined response times for critical, high and normal issues.'], ['Can you work with our in-house developers?', 'Absolutely. We often set up pipelines and tooling that internal teams then use daily.'], ['What does a care plan include?', 'Updates, security patches, backups, uptime monitoring, small fixes and a monthly report.'], ['Do you support legacy systems?', 'Yes, and we can plan a gradual modernization path.']],
+  },
   seo: {
     color: '#2563eb',
     tagline: 'Rank for the searches that turn into revenue.',
@@ -373,4 +534,42 @@ const SERVICE_EXTRAS = {
 }
 SERVICES.forEach((s) => Object.assign(s, SERVICE_EXTRAS[s.slug]))
 
-export const HERO_WORDS = ['compounding growth', 'qualified pipeline', 'lower CAC', 'more revenue']
+export const HERO_WORDS = ['web applications', 'mobile apps', 'AI products', 'online stores', 'qualified pipeline']
+
+/* ---------- Partners ---------- */
+export const PARTNERS = [
+  { name: 'Google Premier Partner', img: pGoogle, featured: true },
+  { name: 'AWS Partner Network', img: pAws },
+  { name: 'Microsoft Partner', img: pMicrosoft },
+  { name: 'Salesforce Partner', img: pSalesforce },
+  { name: 'HubSpot Certified Partner', img: pHubspot },
+  { name: 'Marketo', img: pMarketo },
+  { name: 'Clutch Top SEO Company', img: pClutch },
+]
+
+/* ---------- Technology expertise ---------- */
+export const CMS_TECH = [
+  { name: 'WordPress', short: 'WP', color: '#21759b', desc: 'Custom themes, Gutenberg blocks, WooCommerce' },
+  { name: 'Webflow', short: 'Wf', color: '#4353ff', desc: 'Design-led sites with CMS collections' },
+  { name: 'Shopify', short: 'Sh', color: '#5e8e3e', desc: 'Storefronts, Shopify Plus and custom apps' },
+  { name: 'Magento', short: 'Mg', color: '#ee672f', desc: 'Adobe Commerce for complex catalogs' },
+  { name: 'Squarespace', short: 'Sq', color: '#334155', desc: 'Polished sites for lean teams' },
+  { name: 'Concrete5', short: 'C5', color: '#1f8fd8', desc: 'In-context editing for enterprises' },
+]
+
+export const APP_TECH = [
+  { name: 'MERN', short: 'MR', color: '#10b981', desc: 'MongoDB, Express, React, Node.js' },
+  { name: 'MEAN', short: 'MN', color: '#dc2626', desc: 'MongoDB, Express, Angular, Node.js' },
+  { name: 'AI / ML', short: 'AI', color: '#7c3aed', desc: 'LLM apps, RAG, predictive models' },
+  { name: 'Flutter', short: 'Fl', color: '#0ea5e9', desc: 'Cross-platform iOS & Android apps' },
+  { name: 'Android', short: 'An', color: '#16a34a', desc: 'Native Kotlin apps' },
+  { name: 'iOS', short: 'iOS', color: '#475569', desc: 'Native Swift & SwiftUI apps' },
+]
+
+export const HOSTING = [
+  { name: 'AWS', short: 'AWS', color: '#f59e0b', desc: 'EC2, Lightsail, RDS, S3 and auto-scaling architectures' },
+  { name: 'Cloudways', short: 'Cw', color: '#2f39bf', desc: 'Managed cloud for WordPress, WooCommerce and PHP apps' },
+  { name: 'DigitalOcean', short: 'DO', color: '#0080ff', desc: 'Droplets, Kubernetes and managed databases' },
+  { name: 'Hostinger', short: 'Hg', color: '#673de6', desc: 'Cost-effective VPS and business hosting' },
+  { name: 'HostGator', short: 'HG', color: '#f97316', desc: 'Shared, VPS and dedicated servers with cPanel' },
+]
