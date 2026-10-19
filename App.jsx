@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { BackToTop, Footer, Header, ScrollProgress, ScrollToTop } from './components.jsx'
 import {
   About, Blog, BlogPost, Careers, CaseStudy, Contact, EbookDetail, EbookReader, Ebooks,
-  Home, NotFound, Privacy, ServiceDetail, Services, Work,
+  Home, JobDetail, NotFound, Privacy, ServiceDetail, Services, Work,
 } from './pages.jsx'
 
 export default function App() {
@@ -25,6 +25,7 @@ export default function App() {
           <Route path="/ebooks/:slug" element={<EbookDetail />} />
           <Route path="/ebooks/:slug/read" element={<EbookReader />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/careers/:slug" element={<JobDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />

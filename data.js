@@ -18,6 +18,11 @@ export const COMPANY = {
     { city: 'Dubai', country: 'UAE', address: 'Placeholder Tower, Business Bay' },
     { city: 'Pune', country: 'India', address: 'Placeholder Park, Baner' },
   ],
+  /* Replace with your real profile URLs */
+  social: [
+    { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/company/xyz-agency' },
+    { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/xyzagency' },
+  ],
 }
 
 export const SERVICES = [
@@ -378,13 +383,143 @@ export const EBOOKS = [
   },
 ]
 
+/* ---------- Careers ----------
+   Every opening gets its own page at /careers/<slug>, rendered by one shared template. */
 export const JOBS = [
-  { title: 'Senior SEO Strategist', team: 'SEO', location: 'Remote / Pune', type: 'Full-time' },
-  { title: 'Paid Media Manager', team: 'Performance', location: 'New York / Remote', type: 'Full-time' },
-  { title: 'Content Marketing Lead', team: 'Content', location: 'Remote', type: 'Full-time' },
-  { title: 'Frontend Developer (React)', team: 'Web', location: 'Pune', type: 'Full-time' },
-  { title: 'Marketing Analytics Specialist', team: 'Analytics', location: 'Dubai / Remote', type: 'Full-time' },
-  { title: 'Marketing Intern', team: 'Growth', location: 'Pune', type: 'Internship' },
+  {
+    slug: 'bde-intern',
+    title: 'Business Development Executive (BDE) Intern',
+    short: 'BDE Intern',
+    team: 'Sales',
+    icon: 'users',
+    location: 'Remote / Hybrid',
+    type: 'Internship',
+    summary: 'Help us find, qualify and win new clients for our software development and digital marketing services.',
+    about: 'You will work directly with our founders and sales leads to build pipeline — researching target accounts, starting conversations on LinkedIn and email, and supporting proposals from first call to signed deal.',
+    responsibilities: [
+      'Research and build lead lists of companies that need websites, apps or marketing',
+      'Run personalised outreach on LinkedIn, email and calls',
+      'Qualify leads and book discovery calls for the sales team',
+      'Keep the CRM clean and up to date',
+      'Help prepare proposals, pitch decks and follow-ups',
+    ],
+    requirements: [
+      'Excellent spoken and written English',
+      'Comfortable starting conversations with business owners and managers',
+      'Curious about technology, software and digital marketing',
+      'Organised, persistent and target-driven',
+      'Final-year students and recent graduates welcome',
+    ],
+    gains: ['Hands-on B2B sales experience across tech and marketing', 'Mentorship from senior sales leaders', 'Certificate and letter of recommendation', 'Chance of a full-time offer based on performance'],
+    skills: ['Lead generation', 'LinkedIn', 'CRM', 'Cold outreach', 'Communication'],
+  },
+  {
+    slug: 'ai-engineer-intern',
+    title: 'AI Engineer Intern',
+    short: 'AI Engineer Intern',
+    team: 'Engineering',
+    icon: 'cpu',
+    location: 'Remote / Hybrid',
+    type: 'Internship',
+    summary: 'Build real AI features — LLM apps, RAG pipelines and automations — that ship to client products.',
+    about: 'You will join our engineering team building AI-powered products for clients and for our own agency: chatbots, document search, content tools and workflow automation using modern LLM APIs.',
+    responsibilities: [
+      'Build LLM-powered features using APIs such as OpenAI, Anthropic and open-source models',
+      'Create retrieval-augmented generation (RAG) pipelines with vector databases',
+      'Write prompts, evaluations and tests to improve output quality',
+      'Integrate AI features into React / Node.js and Python applications',
+      'Document your work and demo it to the team',
+    ],
+    requirements: [
+      'Good programming skills in Python or JavaScript / TypeScript',
+      'Basic understanding of machine learning and LLM concepts',
+      'Familiarity with REST APIs and Git',
+      'A project, GitHub repo or demo you can show us',
+      'Students and recent graduates in CS / IT or related fields',
+    ],
+    gains: ['Ship AI features used by real clients', 'Code reviews from senior engineers', 'Certificate and letter of recommendation', 'Chance of a full-time offer based on performance'],
+    skills: ['Python', 'LLMs', 'RAG', 'Node.js', 'Prompt engineering'],
+  },
+  {
+    slug: 'paid-ads-intern',
+    title: 'Paid Ads Intern',
+    short: 'Paid Ads Intern',
+    team: 'Performance Marketing',
+    icon: 'target',
+    location: 'Remote / Hybrid',
+    type: 'Internship',
+    summary: 'Learn to plan, launch and optimise Google, Meta and LinkedIn ad campaigns that drive real leads.',
+    about: 'You will work inside our performance marketing team — a Google Premier Partner team — helping manage live client campaigns, test creatives and report on results.',
+    responsibilities: [
+      'Help set up and manage Google Ads, Meta Ads and LinkedIn Ads campaigns',
+      'Do keyword and audience research',
+      'Write ad copy and brief creative variations for testing',
+      'Monitor budgets, CPC, CPL and ROAS daily',
+      'Prepare weekly performance reports with insights',
+    ],
+    requirements: [
+      'Strong interest in digital marketing and data',
+      'Comfortable with spreadsheets and numbers',
+      'Good written English for ad copy',
+      'Google Ads or Meta Blueprint certification is a plus',
+      'Students and recent graduates welcome',
+    ],
+    gains: ['Manage real ad budgets under expert guidance', 'Google Ads and Meta certifications support', 'Certificate and letter of recommendation', 'Chance of a full-time offer based on performance'],
+    skills: ['Google Ads', 'Meta Ads', 'LinkedIn Ads', 'Excel / Sheets', 'GA4'],
+  },
+  {
+    slug: 'project-manager-intern',
+    title: 'Project Manager Intern',
+    short: 'Project Manager Intern',
+    team: 'Delivery',
+    icon: 'layers',
+    location: 'Remote / Hybrid',
+    type: 'Internship',
+    summary: 'Keep client projects on time and on track — from idea and wireframes to launch and marketing.',
+    about: 'You will support our project managers across software and marketing projects: planning sprints, running stand-ups, tracking tasks and keeping clients updated.',
+    responsibilities: [
+      'Plan project timelines, sprints and milestones with the team',
+      'Track tasks, risks and blockers in our project management tools',
+      'Take notes in client calls and share clear action items',
+      'Coordinate between designers, developers and marketers',
+      'Prepare status reports for clients and leadership',
+    ],
+    requirements: [
+      'Highly organised with strong attention to detail',
+      'Clear communicator in English, written and spoken',
+      'Basic understanding of how software or websites are built',
+      'Familiarity with tools like Jira, Asana, Trello or Notion is a plus',
+      'Students and recent graduates welcome',
+    ],
+    gains: ['Run real software and marketing projects end to end', 'Agile / Scrum experience', 'Certificate and letter of recommendation', 'Chance of a full-time offer based on performance'],
+    skills: ['Agile / Scrum', 'Planning', 'Communication', 'Jira / Asana', 'Reporting'],
+  },
+  {
+    slug: 'freelancer',
+    title: 'Join as a Freelancer',
+    short: 'Freelancer',
+    team: 'Freelance network',
+    icon: 'globe',
+    location: 'Remote · Worldwide',
+    type: 'Freelance',
+    freelance: true,
+    summary: 'Developers, designers and marketers: join our freelance network and work on client projects on your own schedule.',
+    about: 'We regularly bring in trusted freelancers to scale our teams on client projects. Join our network once and we will reach out when a project matches your skills, rate and availability.',
+    responsibilities: [
+      'Deliver project work to the agreed scope, quality and timeline',
+      'Collaborate with our project managers and in-house team',
+      'Share regular progress updates',
+      'Follow our coding, design or brand guidelines on each project',
+    ],
+    requirements: [
+      'Proven experience in your field with a portfolio to match',
+      'Reliable communication and availability during agreed hours',
+      'Your own setup and tools to work remotely',
+      'We work with: web & app developers, AI engineers, UI/UX designers, SEO & paid ads specialists, content writers and video editors',
+    ],
+    gains: ['Steady flow of vetted client projects', 'Flexible hours, fully remote', 'On-time payments', 'Long-term collaboration with a growing team'],
+    skills: ['Development', 'UI / UX design', 'SEO', 'Paid ads', 'Content', 'Video'],
+  },
 ]
 
 export const STEPS = [
@@ -564,6 +699,15 @@ export const APP_TECH = [
   { name: 'Flutter', short: 'Fl', color: '#0ea5e9', desc: 'Cross-platform iOS & Android apps' },
   { name: 'Android', short: 'An', color: '#16a34a', desc: 'Native Kotlin apps' },
   { name: 'iOS', short: 'iOS', color: '#475569', desc: 'Native Swift & SwiftUI apps' },
+]
+
+export const MARKETING_TECH = [
+  { name: 'SEO', short: 'SEO', color: '#0891b2', desc: 'Technical, on-page and content SEO', to: '/services/seo' },
+  { name: 'Google Ads', short: 'GA', color: '#2563eb', desc: 'Search, Performance Max and Shopping', to: '/services/paid-media' },
+  { name: 'Meta Ads', short: 'Me', color: '#1877f2', desc: 'Facebook and Instagram campaigns', to: '/services/paid-media' },
+  { name: 'LinkedIn Ads', short: 'Li', color: '#0a66c2', desc: 'B2B and account-based advertising', to: '/services/paid-media' },
+  { name: 'Social Media', short: 'So', color: '#db2777', desc: 'Content, reels and community management', to: '/services/content-social' },
+  { name: 'Analytics', short: 'GA4', color: '#ea580c', desc: 'GA4, tracking and conversion optimisation', to: '/services/analytics-cro' },
 ]
 
 export const HOSTING = [

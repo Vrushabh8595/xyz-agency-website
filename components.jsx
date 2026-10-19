@@ -40,6 +40,9 @@ export function Icon({ name, size = 22 }) {
     case 'shield': return <svg {...p}><path d="M12 3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6Z" /><path d="m9 12 2 2 4-4" /></svg>
     case 'server': return <svg {...p}><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" /></svg>
     case 'layers': return <svg {...p}><path d="m12 3 9 5-9 5-9-5Z" /><path d="m3 13 9 5 9-5" /></svg>
+    case 'linkedin': return <svg {...p} fill="currentColor" stroke="none"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z" /></svg>
+    case 'instagram': return <svg {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" /></svg>
+    case 'briefcase': return <svg {...p}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" /></svg>
     case 'bolt': return <svg {...p}><path d="M13 2 4 14h7l-1 8 9-12h-7Z" /></svg>
     default: return null
   }
@@ -253,20 +256,23 @@ export function BackToTop() {
 }
 
 /* ---------- Theme ---------- */
+/* Light is the default for every visitor; dark only when they pick it with the toggle. */
+const THEME_KEY = 'xyz-theme'
 function getInitialTheme() {
   try {
-    const saved = localStorage.getItem('theme')
+    const saved = localStorage.getItem(THEME_KEY)
     if (saved === 'dark' || saved === 'light') return saved
   } catch (e) { /* storage unavailable */ }
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return 'light'
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || getInitialTheme())
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try { localStorage.setItem('theme', theme) } catch (e) { /* ignore */ }
-  }, [theme])
+  const [theme, setThemeState] = useState(() => document.documentElement.dataset.theme || getInitialTheme())
+  useEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
+  const setTheme = (t) => {
+    setThemeState(t)
+    try { localStorage.setItem(THEME_KEY, t) } catch (e) { /* ignore */ }
+  }
   const dark = theme === 'dark'
   return (
     <button
@@ -440,9 +446,7 @@ export function Footer() {
           <div className="foot-badges">
             {PARTNERS.slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} loading="lazy" />)}
           </div>
-          <div className="socials">
-            {['in', 'ig', 'fb', 'x'].map((s) => <a key={s} href="#" aria-label={s}>{s}</a>)}
-          </div>
+          <Socials />
         </div>
         <div>
           <h4>Development</h4>
@@ -477,6 +481,18 @@ export function Footer() {
 }
 
 /* ---------- Shared blocks ---------- */
+export function Socials({ labels = false, className = '' }) {
+  return (
+    <div className={`socials ${labels ? 'with-labels' : ''} ${className}`}>
+      {COMPANY.social.map((x) => (
+        <a key={x.name} href={x.url} target="_blank" rel="noreferrer" aria-label={`${COMPANY.name} on ${x.name}`} className={`soc-${x.icon}`}>
+          <Icon name={x.icon} size={labels ? 18 : 17} />{labels && <span>{x.name}</span>}
+        </a>
+      ))}
+    </div>
+  )
+}
+
 export function PageHero({ kicker, title, text, children, crumbs, aside }) {
   const body = (
     <>

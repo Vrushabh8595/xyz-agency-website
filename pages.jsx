@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
-  APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOSTING, INDUSTRIES, JOBS, PARTNERS, POSTS,
+  APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOSTING, INDUSTRIES, JOBS, MARKETING_TECH, PARTNERS, POSTS,
   SERVICE_GROUPS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
 import {
   CaseCard, Counter, CtaBand, EbookCover, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, SplitText,
-  TechTile, spotlight, useInView, useSectionProgress, useTitle,
+  Socials, TechTile, spotlight, useInView, useSectionProgress, useTitle,
 } from './components.jsx'
 
 const mailto = (subject, lines) =>
@@ -112,6 +112,8 @@ export function Home() {
       <PartnersBand />
 
       <HomeServices />
+
+      <IdeaToLaunch />
 
       <TechExpertise />
 
@@ -252,27 +254,79 @@ function HomeServices() {
   )
 }
 
-const techLink = (t) => (CMS_TECH.includes(t) ? '/services/web-development'
+const IDEA_STEPS = [
+  { icon: 'spark', title: 'Understand your idea', text: 'We listen first. In a discovery session we unpack your idea, your users and your goals, then shape a clear scope and roadmap.', points: ['Discovery workshop', 'User & market research', 'Scope, timeline & budget'] },
+  { icon: 'layout', title: 'Build the wireframe', text: 'We turn the idea into wireframes and a clickable prototype, so you can see, test and refine it before a line of code is written.', points: ['User flows', 'Wireframes', 'Clickable UI prototype'] },
+  { icon: 'code', title: 'Build the software', text: 'Our engineers build your website, web app, mobile app or AI product — tested, secure and ready to scale.', points: ['Web, mobile & AI', 'Agile sprints & demos', 'QA, launch & hosting'] },
+  { icon: 'target', title: 'Market your idea', text: 'Then we bring customers to it with SEO, paid ads, social and content — measured against real leads and revenue.', points: ['Go-to-market plan', 'SEO, ads & social', 'Analytics & growth'] },
+]
+
+function IdeaToLaunch() {
+  const [ref, p] = useSectionProgress()
+  const reached = Math.min(IDEA_STEPS.length, Math.floor(p * IDEA_STEPS.length * 1.6))
+  return (
+    <section className="section idea-sec" ref={ref}>
+      <div className="orbs dim" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
+      <div className="container">
+        <div className="section-head center">
+          <Reveal><span className="kicker">From idea to growth</span></Reveal>
+          <SplitText text="Have an idea? We'll build it and grow it" />
+          <Reveal delay={150}><p>We understand your idea, design the wireframe, build the software and then market it — one team, one plan, from first sketch to first customers.</p></Reveal>
+        </div>
+        <div className="idea-track" style={{ '--prog': reached / IDEA_STEPS.length }}>
+          <span className="idea-line" aria-hidden="true"><i /></span>
+          <ol className="idea-steps">
+            {IDEA_STEPS.map((st, i) => (
+              <Reveal as="li" key={st.title} delay={i * 110} className={`idea-step ${i < reached ? 'lit' : ''}`}>
+                <div className="idea-node"><Icon name={st.icon} size={24} /><span className="idea-num">{String(i + 1).padStart(2, '0')}</span></div>
+                <div className="card idea-card">
+                  <h3>{st.title}</h3>
+                  <p>{st.text}</p>
+                  <ul>{st.points.map((x) => <li key={x}><Icon name="check" size={14} />{x}</li>)}</ul>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+        <Reveal className="idea-cta">
+          <p><b>Got an idea you want to build?</b> Tell us about it — we'll come back with a wireframe plan and estimate.</p>
+          <Link to="/contact" className="btn btn-primary shine">Share your idea <Icon name="arrow" size={18} /></Link>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+const techLink = (t) => (t.to ? t.to : CMS_TECH.includes(t) ? '/services/web-development'
   : t.name === 'AI / ML' ? '/services/ai-development'
     : ['Flutter', 'Android', 'iOS'].includes(t.name) ? '/services/mobile-apps' : '/services/web-applications')
+
+const TECH_MODES = [
+  { key: 'cms', label: 'CMS & e‑commerce', icon: 'globe', list: CMS_TECH },
+  { key: 'app', label: 'Web & mobile apps', icon: 'code', list: APP_TECH },
+  { key: 'mkt', label: 'Digital marketing', icon: 'target', list: MARKETING_TECH },
+]
 
 function TechExpertise() {
   const [mode, setMode] = useState('cms')
   const [ref, inView] = useInView()
-  const list = mode === 'cms' ? CMS_TECH : APP_TECH
+  const list = TECH_MODES.find((m) => m.key === mode).list
   return (
     <section className="section alt tech-sec">
       <div className="container tech-grid">
         <div>
           <Reveal><span className="kicker">Technology expertise</span></Reveal>
-          <SplitText text="Experts in every CMS and modern app stack" />
+          <SplitText text="Experts in every CMS, app stack and marketing channel" />
           <Reveal delay={120}>
-            <p className="body-text">We're more than a marketing agency — we're a full software development company. Our certified developers build on the platform that fits your business, never the other way round.</p>
+            <p className="body-text">We're more than a marketing agency — we're a full software development company. Our certified developers build on the platform that fits your business, and our certified marketers grow it on the channels where your buyers are.</p>
           </Reveal>
           <Reveal delay={180} className="tech-switch">
             <div role="tablist" aria-label="Technology type">
-              <button role="tab" aria-selected={mode === 'cms'} className={mode === 'cms' ? 'on' : ''} onClick={() => setMode('cms')}><Icon name="globe" size={16} />CMS &amp; e-commerce</button>
-              <button role="tab" aria-selected={mode === 'app'} className={mode === 'app' ? 'on' : ''} onClick={() => setMode('app')}><Icon name="code" size={16} />Web &amp; mobile apps</button>
+              {TECH_MODES.map((m) => (
+                <button key={m.key} role="tab" aria-selected={mode === m.key} className={mode === m.key ? 'on' : ''} onClick={() => setMode(m.key)}>
+                  <Icon name={m.icon} size={16} /><span>{m.label}</span>
+                </button>
+              ))}
               <span className={`tech-switch-thumb ${mode}`} aria-hidden="true" />
             </div>
           </Reveal>
@@ -295,16 +349,19 @@ function TechExpertise() {
             <div className="ring r2">
               {APP_TECH.map((t, k) => <span key={t.name} className="sat" style={{ '--a': `${k * 60 + 30}deg` }}><span className="sat-in"><TechTile t={t} size="sm" /></span></span>)}
             </div>
+            <div className="ring r3">
+              {MARKETING_TECH.map((t, k) => <span key={t.name} className="sat" style={{ '--a': `${k * 60 + 15}deg` }}><span className="sat-in"><TechTile t={t} size="sm" /></span></span>)}
+            </div>
             <div className="hub">
               <span className="logo-mark">X</span>
-              <b>Full-stack</b>
-              <small>12+ platforms</small>
+              <b>Build &amp; grow</b>
+              <small>18+ platforms</small>
             </div>
           </div>
         </div>
       </div>
       <div className="tech-marquee" aria-hidden="true">
-        {[[...CMS_TECH, ...HOSTING], [...APP_TECH, ...CMS_TECH.slice(0, 3)]].map((row, r) => (
+        {[[...CMS_TECH, ...HOSTING], [...APP_TECH, ...MARKETING_TECH]].map((row, r) => (
           <div key={r} className={`tm-row ${r ? 'rev' : ''}`}>
             <div className="tm-track">
               {[...row, ...row].map((t, k) => <TechTile key={k} t={t} />)}
@@ -1164,20 +1221,56 @@ export function EbookReader() {
 }
 
 /* =================== CAREERS =================== */
+const ROLES = JOBS.filter((j) => !j.freelance)
+const FREELANCE = JOBS.find((j) => j.freelance)
+
+function JobCard({ j }) {
+  return (
+    <Link to={`/careers/${j.slug}`} className="card job spot" onMouseMove={spotlight}>
+      <span className="icon-box job-ico"><Icon name={j.icon} /></span>
+      <div className="job-main">
+        <h3>{j.title}</h3>
+        <p>{j.summary}</p>
+        <small><span className="tag soft">{j.team}</span><span><Icon name="pin" size={14} /> {j.location}</span><span><Icon name="clock" size={14} /> {j.type}</span></small>
+      </div>
+      <span className="btn btn-ghost sm">View &amp; apply <Icon name="arrow" size={16} /></span>
+    </Link>
+  )
+}
+
+function FreelanceBand() {
+  return (
+    <div className="freelance-band">
+      <div className="fb-copy">
+        <span className="tag fb-tag"><Icon name="globe" size={14} /> Remote · Flexible hours</span>
+        <h3>Prefer to freelance? Join our freelance network.</h3>
+        <p>{FREELANCE.summary}</p>
+        <div className="chips left">{FREELANCE.skills.map((x) => <span key={x} className="chip sm">{x}</span>)}</div>
+      </div>
+      <Link to={`/careers/${FREELANCE.slug}`} className="btn btn-white">Join as a freelancer <Icon name="arrow" size={18} /></Link>
+    </div>
+  )
+}
+
 export function Careers() {
   useTitle('Careers')
   return (
     <>
       <PageHero kicker="Careers" crumbs={[['Careers']]}
         title="Do the best work of your career"
-        text="Join a team of curious, senior marketers and builders who care about real outcomes." />
-      <section className="section">
+        text="Join a team of curious builders and marketers who turn ideas into software — and software into growth. Start as an intern, or work with us as a freelancer.">
+        <div className="hero-ctas">
+          <a href="#openings" className="btn btn-primary">See open roles <Icon name="arrow" size={18} /></a>
+          <Link to={`/careers/${FREELANCE.slug}`} className="btn btn-ghost">Join as a freelancer</Link>
+        </div>
+      </PageHero>
+      <section className="section tight-top">
         <div className="container">
           <div className="grid-4">
             {[
               ['clock', 'Flexible work', 'Remote-friendly with offices across three countries.'],
-              ['spark', 'Learning budget', 'Annual budget for courses, certifications and events.'],
-              ['users', 'Great people', 'Work alongside senior specialists who share what they know.'],
+              ['spark', 'Learn by doing', 'Work on live client projects from week one, with senior mentors.'],
+              ['users', 'Great people', 'Work alongside specialists who share what they know.'],
               ['chart', 'Real impact', 'Own outcomes for clients — not just tasks.'],
             ].map(([ic, t, d]) => (
               <div key={t} className="card value"><span className="icon-box"><Icon name={ic} /></span><h3>{t}</h3><p>{d}</p></div>
@@ -1185,20 +1278,111 @@ export function Careers() {
           </div>
         </div>
       </section>
+      <section className="section alt" id="openings">
+        <div className="container">
+          <div className="section-head row">
+            <Reveal><span className="kicker">Open roles</span><h2>Current openings</h2></Reveal>
+            <Reveal variant="left"><span className="openings-count"><b>{ROLES.length}</b> internships · <b>1</b> freelance</span></Reveal>
+          </div>
+          <div className="jobs">
+            {ROLES.map((j, i) => <Reveal key={j.slug} delay={i * 80}><JobCard j={j} /></Reveal>)}
+          </div>
+          <Reveal><FreelanceBand /></Reveal>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container careers-social">
+          <div>
+            <h3>Follow life at {COMPANY.name}</h3>
+            <p>New openings, team stories and behind-the-scenes posts.</p>
+          </div>
+          <Socials labels />
+        </div>
+      </section>
+    </>
+  )
+}
+
+export function JobDetail() {
+  const { slug } = useParams()
+  const j = JOBS.find((x) => x.slug === slug)
+  useTitle(j ? j.title : 'Job not found')
+  const [form, setForm] = useState({ name: '', email: '', phone: '', link: '', extra: '', message: '' })
+  const [sent, setSent] = useState(false)
+  if (!j) return <NotFound />
+  const up = (k) => (e) => setForm({ ...form, [k]: e.target.value })
+  const submit = (e) => {
+    e.preventDefault()
+    window.location.href = mailto(`${j.freelance ? 'Freelancer application' : 'Application'}: ${j.title} — ${form.name}`, [
+      `Role: ${j.title}`, `Name: ${form.name}`, `Email: ${form.email}`, `Phone: ${form.phone}`,
+      `LinkedIn / Portfolio: ${form.link}`,
+      j.freelance ? `Skills & rate: ${form.extra}` : `College / availability: ${form.extra}`,
+      '', form.message, '', '(Please attach your CV / portfolio to this email.)',
+    ])
+    setSent(true)
+  }
+  const others = JOBS.filter((x) => x.slug !== j.slug)
+  return (
+    <>
+      <PageHero kicker={j.freelance ? 'Freelance network' : `${j.team} · ${j.type}`} crumbs={[['Careers', '/careers'], [j.short]]}
+        title={j.title} text={j.summary}>
+        <div className="job-meta">
+          <span><Icon name="briefcase" size={16} /> {j.type}</span>
+          <span><Icon name="pin" size={16} /> {j.location}</span>
+          <span><Icon name="users" size={16} /> {j.team}</span>
+        </div>
+      </PageHero>
+      <section className="section tight-top">
+        <div className="container job-grid">
+          <article className="job-body">
+            <h2>{j.freelance ? 'About the freelance network' : 'About the role'}</h2>
+            <p>{j.about}</p>
+            <h2>{j.freelance ? 'What you will do' : "What you'll do"}</h2>
+            <ul className="check-list">{j.responsibilities.map((x) => <li key={x}><Icon name="check" size={16} />{x}</li>)}</ul>
+            <h2>{j.freelance ? 'Who we are looking for' : "What we're looking for"}</h2>
+            <ul className="check-list">{j.requirements.map((x) => <li key={x}><Icon name="check" size={16} />{x}</li>)}</ul>
+            <h2>{j.freelance ? 'Why freelance with us' : "What you'll gain"}</h2>
+            <div className="gain-grid">{j.gains.map((x) => <div key={x} className="card gain"><Icon name="star" size={16} />{x}</div>)}</div>
+            <h2>Skills</h2>
+            <div className="chips left">{j.skills.map((x) => <span key={x} className="chip sm">{x}</span>)}</div>
+            {!j.freelance && (
+              <div className="job-alt card">
+                <span className="icon-box sm"><Icon name="globe" size={18} /></span>
+                <div><b>Not looking for an internship?</b><p>You can also work with us remotely as a freelancer.</p></div>
+                <Link to={`/careers/${FREELANCE.slug}`} className="btn btn-ghost sm">Join as a freelancer <Icon name="arrow" size={16} /></Link>
+              </div>
+            )}
+          </article>
+          <aside className="job-apply">
+            <form className="card form" onSubmit={submit}>
+              {sent ? (
+                <div className="sent">
+                  <span className="icon-box"><Icon name="check" /></span>
+                  <h3>Thanks, {form.name.split(' ')[0] || 'there'}!</h3>
+                  <p>Your email app should have opened with your application — attach your CV and hit send. If it didn't, email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.</p>
+                  <button type="button" className="btn btn-ghost" onClick={() => setSent(false)}>Edit application</button>
+                </div>
+              ) : (
+                <>
+                  <h3>{j.freelance ? 'Join the network' : 'Apply for this role'}</h3>
+                  <p className="form-sub">Takes 2 minutes. We reply within a week.</p>
+                  <label>Full name<input required value={form.name} onChange={up('name')} placeholder="Your name" /></label>
+                  <label>Email<input required type="email" value={form.email} onChange={up('email')} placeholder="you@email.com" /></label>
+                  <label>Phone<input type="tel" value={form.phone} onChange={up('phone')} placeholder="+91 00000 00000" /></label>
+                  <label>LinkedIn / portfolio / GitHub<input value={form.link} onChange={up('link')} placeholder="https://" /></label>
+                  <label>{j.freelance ? 'Your skills & hourly rate' : 'College & availability'}<input value={form.extra} onChange={up('extra')} placeholder={j.freelance ? 'E.g. React developer, $25/hr' : 'E.g. Final year, available from June'} /></label>
+                  <label>{j.freelance ? 'Tell us about your experience' : 'Why do you want this role?'}<textarea rows="4" value={form.message} onChange={up('message')} /></label>
+                  <button className="btn btn-primary full" type="submit">{j.freelance ? 'Join as a freelancer' : 'Submit application'} <Icon name="arrow" size={18} /></button>
+                </>
+              )}
+            </form>
+          </aside>
+        </div>
+      </section>
       <section className="section alt">
         <div className="container">
-          <Reveal className="section-head"><span className="kicker">Open roles</span><h2>Current openings</h2></Reveal>
-          <div className="jobs">
-            {JOBS.map((j) => (
-              <div key={j.title} className="card job">
-                <div>
-                  <h3>{j.title}</h3>
-                  <small><span className="tag soft">{j.team}</span> <Icon name="pin" size={14} /> {j.location} · {j.type}</small>
-                </div>
-                <a className="btn btn-ghost" href={mailto(`Application: ${j.title}`, ['Hi XYZ team,', '', `I'd like to apply for the ${j.title} role.`, '', 'Portfolio / LinkedIn:', ''])}>Apply <Icon name="arrow" size={16} /></a>
-              </div>
-            ))}
-          </div>
+          <Reveal className="section-head"><span className="kicker">Careers</span><h2>Other openings</h2></Reveal>
+          <div className="jobs">{others.map((x) => <JobCard key={x.slug} j={x} />)}</div>
         </div>
       </section>
     </>
@@ -1252,6 +1436,7 @@ export function Contact() {
                 <label>Interested in
                   <select value={form.service} onChange={up('service')}>
                     {SERVICES.map((s) => <option key={s.slug}>{s.title}</option>)}
+                    <option>My idea — wireframe, build &amp; marketing</option>
                     <option>Full-funnel partnership</option>
                   </select>
                 </label>
@@ -1266,6 +1451,7 @@ export function Contact() {
             {COMPANY.offices.map((o) => (
               <div key={o.city} className="card contact-item"><span className="icon-box sm"><Icon name="pin" size={18} /></span><div><small>{o.city}, {o.country}</small><span>{o.address}</span></div></div>
             ))}
+            <div className="card contact-item"><div><small>Follow us</small><Socials labels /></div></div>
           </div>
         </div>
       </section>
