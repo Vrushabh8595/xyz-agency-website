@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { COMPANY, SERVICES } from './data.js'
 
@@ -25,6 +25,11 @@ export function Icon({ name, size = 22 }) {
     case 'phone': return <svg {...p}><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" /></svg>
     case 'pin': return <svg {...p}><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
     case 'clock': return <svg {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+    case 'sun': return <svg {...p}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+    case 'moon': return <svg {...p}><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" /></svg>
+    case 'up': return <svg {...p}><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+    case 'plus': return <svg {...p}><path d="M12 5v14M5 12h14" /></svg>
+    case 'star': return <svg {...p}><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" /></svg>
     case 'lock': return <svg {...p}><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
     default: return null
   }
@@ -70,12 +75,140 @@ export function Counter({ value, suffix }) {
   return <span ref={ref}>{n}{suffix}</span>
 }
 
-export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
+export function Reveal({ children, className = '', delay = 0, variant = 'up', as: Tag = 'div' }) {
   const [ref, inView] = useInView()
   return (
-    <Tag ref={ref} className={`reveal ${inView ? 'in' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <Tag ref={ref} className={`reveal r-${variant} ${inView ? 'in' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
       {children}
     </Tag>
+  )
+}
+
+/* Heading that reveals word by word */
+export function SplitText({ text, as: Tag = 'h2', className = '' }) {
+  const [ref, inView] = useInView()
+  return (
+    <Tag ref={ref} className={`split-text ${inView ? 'in' : ''} ${className}`} aria-label={text}>
+      {text.split(' ').map((w, i) => (
+        <Fragment key={i}>
+          {i > 0 && ' '}
+          <span className="w" aria-hidden="true"><span style={{ transitionDelay: `${i * 45}ms` }}>{w}</span></span>
+        </Fragment>
+      ))}
+    </Tag>
+  )
+}
+
+/* Scroll position (rAF-throttled) */
+export function useScrollY() {
+  const [y, setY] = useState(0)
+  useEffect(() => {
+    let raf = 0
+    const on = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => setY(window.scrollY)) }
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => { window.removeEventListener('scroll', on); cancelAnimationFrame(raf) }
+  }, [])
+  return y
+}
+
+const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+/* Element moves at a different speed than the page */
+export function Parallax({ speed = 0.15, children, className = '' }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    if (reduceMotion()) return
+    let raf = 0
+    const update = () => {
+      const el = ref.current
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      const offset = (r.top + r.height / 2 - window.innerHeight / 2) * -speed
+      el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`
+    }
+    const on = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', on, { passive: true })
+    window.addEventListener('resize', on)
+    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); cancelAnimationFrame(raf) }
+  }, [speed])
+  return <div ref={ref} className={`parallax ${className}`}>{children}</div>
+}
+
+/* 0 → 1 progress of an element passing through the viewport */
+export function useSectionProgress() {
+  const ref = useRef(null)
+  const [p, setP] = useState(0)
+  useEffect(() => {
+    let raf = 0
+    const update = () => {
+      const el = ref.current
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      setP(Math.min(1, Math.max(0, (vh * 0.7 - r.top) / r.height)))
+    }
+    const on = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => { window.removeEventListener('scroll', on); cancelAnimationFrame(raf) }
+  }, [])
+  return [ref, p]
+}
+
+/* Card spotlight that follows the cursor */
+export const spotlight = (e) => {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+}
+
+export function ScrollProgress() {
+  const y = useScrollY()
+  const [max, setMax] = useState(1)
+  useEffect(() => { setMax(Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) })
+  return <div className="scroll-progress" style={{ transform: `scaleX(${Math.min(1, y / max)})` }} aria-hidden="true" />
+}
+
+export function BackToTop() {
+  const y = useScrollY()
+  return (
+    <button className={`to-top ${y > 600 ? 'show' : ''}`} aria-label="Back to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <Icon name="up" size={20} />
+    </button>
+  )
+}
+
+/* ---------- Theme ---------- */
+function getInitialTheme() {
+  try {
+    const saved = localStorage.getItem('theme')
+    if (saved === 'dark' || saved === 'light') return saved
+  } catch (e) { /* storage unavailable */ }
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+export function ThemeToggle() {
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || getInitialTheme())
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try { localStorage.setItem('theme', theme) } catch (e) { /* ignore */ }
+  }, [theme])
+  const dark = theme === 'dark'
+  return (
+    <button
+      className={`theme-toggle ${dark ? 'is-dark' : ''}`}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={dark ? 'Light mode' : 'Dark mode'}
+    >
+      <span className="tt-track">
+        <span className="tt-icon sun"><Icon name="sun" size={15} /></span>
+        <span className="tt-icon moon"><Icon name="moon" size={15} /></span>
+        <span className="tt-thumb" />
+      </span>
+    </button>
   )
 }
 
@@ -115,7 +248,7 @@ export function Header() {
   const { pathname } = useLocation()
   useEffect(() => { setOpen(false); setDrop(null) }, [pathname])
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
@@ -149,9 +282,12 @@ export function Header() {
           ))}
           <Link to="/contact" className="btn btn-primary nav-cta">Talk to us</Link>
         </nav>
-        <button className="menu-btn" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
-          <Icon name={open ? 'close' : 'menu'} size={26} />
-        </button>
+        <div className="nav-tools">
+          <ThemeToggle />
+          <button className="menu-btn" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+            <Icon name={open ? 'close' : 'menu'} size={26} />
+          </button>
+        </div>
       </div>
     </header>
   )
@@ -200,7 +336,7 @@ export function Footer() {
 export function PageHero({ kicker, title, text, children, crumbs }) {
   return (
     <section className="page-hero">
-      <div className="hero-glow" aria-hidden="true" />
+      <div className="orbs" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
       <div className="grid-bg" aria-hidden="true" />
       <div className="container page-hero-inner">
         {crumbs && (
@@ -211,10 +347,10 @@ export function PageHero({ kicker, title, text, children, crumbs }) {
             ))}
           </nav>
         )}
-        {kicker && <span className="kicker">{kicker}</span>}
-        <h1>{title}</h1>
-        {text && <p className="lead">{text}</p>}
-        {children}
+        {kicker && <span className="kicker fade-in">{kicker}</span>}
+        <SplitText as="h1" text={title} />
+        {text && <p className="lead fade-in d2">{text}</p>}
+        {children && <div className="fade-in d3">{children}</div>}
       </div>
     </section>
   )
@@ -255,7 +391,7 @@ export function EbookCover({ book, small }) {
 
 export function PostCard({ post, i = 0 }) {
   return (
-    <Link to={`/blog/${post.slug}`} className="card post">
+    <Link to={`/blog/${post.slug}`} className="card post spot" onMouseMove={spotlight}>
       <div className={`post-img p${i % 4}`}><span>{post.category}</span></div>
       <div className="post-body">
         <small className="meta">{post.date} · {post.read}</small>
@@ -269,7 +405,7 @@ export function PostCard({ post, i = 0 }) {
 
 export function CaseCard({ c }) {
   return (
-    <Link to={`/work/${c.slug}`} className="card work" style={{ '--c': c.color }}>
+    <Link to={`/work/${c.slug}`} className="card work spot" style={{ '--c': c.color }} onMouseMove={spotlight}>
       <span className="tag">{c.industry}</span>
       <div className="work-metric">{c.metric}</div>
       <p>{c.metricLabel}</p>

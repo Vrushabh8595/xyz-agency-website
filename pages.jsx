@@ -1,70 +1,122 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
-  CASE_STUDIES, CLIENTS, COMPANY, EBOOKS, INDUSTRIES, JOBS, POSTS, SERVICES, STATS, STEPS, VALUES,
+  CASE_STUDIES, CLIENTS, COMPANY, EBOOKS, HERO_WORDS, INDUSTRIES, JOBS, POSTS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
 import {
-  CaseCard, Counter, CtaBand, EbookCover, Icon, PageHero, PostCard, Reveal, useTitle,
+  CaseCard, Counter, CtaBand, EbookCover, Icon, PageHero, Parallax, PostCard, Reveal, SplitText,
+  spotlight, useSectionProgress, useTitle,
 } from './components.jsx'
 
 const mailto = (subject, lines) =>
   `mailto:${COMPANY.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
 
 /* =================== HOME =================== */
+function RotatingWord({ words, interval = 2600 }) {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), interval)
+    return () => clearInterval(t)
+  }, [words.length, interval])
+  return (
+    <span className="rotator" aria-live="polite">
+      {words.map((w, k) => (
+        <span key={w} className={`rot-word ${k === i ? 'on' : ''} ${k === (i - 1 + words.length) % words.length ? 'out' : ''}`} aria-hidden={k !== i}>{w}</span>
+      ))}
+    </span>
+  )
+}
+
+function HeroVisual() {
+  return (
+    <div className="hero-visual" aria-hidden="true">
+      <div className="orbit">
+        {['search', 'target', 'pen', 'chart'].map((ic, k) => (
+          <span key={ic} className={`orbit-ico i${k}`}><Icon name={ic} size={18} /></span>
+        ))}
+      </div>
+      <div className="dash card mp mp-1">
+        <div className="dash-top"><span>Pipeline generated</span><span className="pill up">+212%</span></div>
+        <div className="dash-value">$4.8M</div>
+        <svg className="dash-chart" viewBox="0 0 300 110" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hg" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stopColor="var(--primary)" stopOpacity=".35" />
+              <stop offset="1" stopColor="var(--primary)" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="hl" x1="0" x2="1">
+              <stop offset="0" stopColor="var(--primary)" />
+              <stop offset="1" stopColor="var(--cyan)" />
+            </linearGradient>
+          </defs>
+          <path className="area" d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12 L300 110 L0 110Z" fill="url(#hg)" />
+          <path className="draw" d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12" fill="none" stroke="url(#hl)" strokeWidth="3" pathLength="1" />
+          <circle className="dot-end" cx="300" cy="12" r="5" fill="var(--cyan)" />
+        </svg>
+        <div className="dash-bars">
+          {[38, 52, 46, 64, 58, 76, 88].map((h, k) => <span key={k} style={{ '--h': `${h}%`, animationDelay: `${0.9 + k * 0.08}s` }} />)}
+        </div>
+        <div className="dash-row">
+          <div><small>Organic</small><b>48%</b></div>
+          <div><small>Paid</small><b>31%</b></div>
+          <div><small>Referral</small><b>21%</b></div>
+        </div>
+      </div>
+      <div className="float card f1 mp mp-2">
+        <span className="f-ico"><Icon name="target" size={18} /></span>
+        <div><small>Cost per lead</small><b>−37%</b></div>
+      </div>
+      <div className="float card f2 mp mp-3">
+        <span className="f-ico cyan"><Icon name="search" size={18} /></span>
+        <div><small>Keywords in top 3</small><b>1,240</b></div>
+      </div>
+      <div className="toast card mp mp-2">
+        <span className="toast-dot" />
+        <div><b>New qualified lead</b><small>Demo booked · just now</small></div>
+      </div>
+    </div>
+  )
+}
+
 export function Home() {
   useTitle()
+  const heroRef = useRef(null)
+  const onMove = (e) => {
+    const el = heroRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3))
+    el.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3))
+  }
   return (
     <>
-      <section className="hero">
-        <div className="hero-glow" aria-hidden="true" />
+      <section className="hero home-hero" ref={heroRef} onMouseMove={onMove}>
+        <div className="orbs" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /><span className="orb o3" /></div>
         <div className="grid-bg" aria-hidden="true" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <span className="eyebrow"><span className="dot" /> Full-funnel digital marketing agency</span>
-            <h1>Marketing that drives <span className="accent">compounding</span> growth.</h1>
-            <p className="lead">
+            <span className="eyebrow fade-in"><span className="pulse-dot" /> Full-funnel digital marketing agency</span>
+            <h1 className="hero-title">
+              <span className="line"><span>Marketing that drives</span></span>
+              <span className="line"><RotatingWord words={HERO_WORDS} /></span>
+            </h1>
+            <p className="lead fade-in d2">
               XYZ Agency brings SEO, paid media, content, web and AI together as one connected growth system —
               run by senior specialists and measured against revenue.
             </p>
-            <div className="hero-ctas">
-              <Link to="/contact" className="btn btn-primary">Get a free growth audit <Icon name="arrow" size={18} /></Link>
+            <div className="hero-ctas fade-in d3">
+              <Link to="/contact" className="btn btn-primary shine">Get a free growth audit <Icon name="arrow" size={18} /></Link>
               <Link to="/work" className="btn btn-ghost">See our results</Link>
             </div>
-            <ul className="ticks">
-              <li><Icon name="check" size={16} /> No long lock-in contracts</li>
-              <li><Icon name="check" size={16} /> Senior team on every account</li>
-            </ul>
-          </div>
-          <div className="hero-visual" aria-hidden="true">
-            <div className="dash card">
-              <div className="dash-top"><span>Pipeline generated</span><span className="pill up">+212%</span></div>
-              <div className="dash-value">$4.8M</div>
-              <svg className="dash-chart" viewBox="0 0 300 110" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stopColor="#2563eb" stopOpacity=".35" />
-                    <stop offset="1" stopColor="#2563eb" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12 L300 110 L0 110Z" fill="url(#g)" />
-                <path d="M0 95 L30 88 L60 90 L90 75 L120 78 L150 60 L180 55 L210 40 L240 35 L270 20 L300 12" fill="none" stroke="#2563eb" strokeWidth="3" />
-              </svg>
-              <div className="dash-row">
-                <div><small>Organic</small><b>48%</b></div>
-                <div><small>Paid</small><b>31%</b></div>
-                <div><small>Referral</small><b>21%</b></div>
-              </div>
-            </div>
-            <div className="float card f1">
-              <span className="f-ico"><Icon name="target" size={18} /></span>
-              <div><small>Cost per lead</small><b>−37%</b></div>
-            </div>
-            <div className="float card f2">
-              <span className="f-ico cyan"><Icon name="search" size={18} /></span>
-              <div><small>Keywords in top 3</small><b>1,240</b></div>
+            <div className="hero-proof fade-in d4">
+              {STATS.filter((s) => s.label !== 'Ad spend managed ($)').map((s) => (
+                <div key={s.label}><b><Counter value={s.value} suffix={s.suffix} /></b><small>{s.label}</small></div>
+              ))}
             </div>
           </div>
+          <Parallax speed={0.08}><HeroVisual /></Parallax>
         </div>
+        <a href="#services" className="scroll-cue" aria-label="Scroll to services"><span className="mouse"><span /></span>Scroll</a>
         <div className="logos">
           <p>Trusted by growing brands worldwide</p>
           <div className="marquee">
@@ -75,18 +127,18 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="services">
         <div className="container">
-          <Reveal className="section-head row">
+          <div className="section-head row">
             <div>
-              <span className="kicker">What we do</span>
-              <h2>We plan, build and run the systems behind your growth</h2>
+              <Reveal><span className="kicker">What we do</span></Reveal>
+              <SplitText text="We plan, build and run the systems behind your growth" />
             </div>
-            <Link to="/services" className="btn btn-ghost">All services <Icon name="arrow" size={18} /></Link>
-          </Reveal>
+            <Reveal variant="left"><Link to="/services" className="btn btn-ghost">All services <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
           <div className="grid-3">
             {SERVICES.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 60}><ServiceCard s={s} /></Reveal>
+              <Reveal key={s.slug} delay={(i % 3) * 90}><ServiceCard s={s} /></Reveal>
             ))}
           </div>
         </div>
@@ -96,15 +148,15 @@ export function Home() {
 
       <section className="section alt">
         <div className="container">
-          <Reveal className="section-head row">
+          <div className="section-head row">
             <div>
-              <span className="kicker">Results</span>
-              <h2>Delivering on expectations with measurable outcomes</h2>
+              <Reveal><span className="kicker">Results</span></Reveal>
+              <SplitText text="Delivering on expectations with measurable outcomes" />
             </div>
-            <Link to="/work" className="btn btn-ghost">View case studies <Icon name="arrow" size={18} /></Link>
-          </Reveal>
+            <Reveal variant="left"><Link to="/work" className="btn btn-ghost">View case studies <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
           <div className="grid-4">
-            {CASE_STUDIES.map((c, i) => <Reveal key={c.slug} delay={i * 70}><CaseCard c={c} /></Reveal>)}
+            {CASE_STUDIES.map((c, i) => <Reveal key={c.slug} variant="zoom" delay={i * 90}><CaseCard c={c} /></Reveal>)}
           </div>
           <p className="footnote">Figures shown are illustrative sample outcomes.</p>
         </div>
@@ -114,28 +166,30 @@ export function Home() {
 
       <section className="section">
         <div className="container">
-          <Reveal className="section-head center">
-            <span className="kicker">Industries</span>
-            <h2>Specialists in the markets we serve</h2>
-            <p>Deep category knowledge means faster ramp-up and messaging that lands with your buyers.</p>
-          </Reveal>
-          <Reveal className="chips">{INDUSTRIES.map((x) => <span key={x} className="chip">{x}</span>)}</Reveal>
+          <div className="section-head center">
+            <Reveal><span className="kicker">Industries</span></Reveal>
+            <SplitText text="Specialists in the markets we serve" />
+            <Reveal delay={150}><p>Deep category knowledge means faster ramp-up and messaging that lands with your buyers.</p></Reveal>
+          </div>
+          <div className="chips">
+            {INDUSTRIES.map((x, i) => <Reveal key={x} as="span" variant="zoom" delay={i * 50} className="chip">{x}</Reveal>)}
+          </div>
         </div>
       </section>
 
       <section className="section alt">
         <div className="container">
-          <Reveal className="section-head row">
+          <div className="section-head row">
             <div>
-              <span className="kicker">Free resources</span>
-              <h2>Guides from experts driving results on the ground</h2>
+              <Reveal><span className="kicker">Free resources</span></Reveal>
+              <SplitText text="Guides from experts driving results on the ground" />
             </div>
-            <Link to="/ebooks" className="btn btn-ghost">All ebooks <Icon name="arrow" size={18} /></Link>
-          </Reveal>
+            <Reveal variant="left"><Link to="/ebooks" className="btn btn-ghost">All ebooks <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
           <div className="ebook-feature">
-            {EBOOKS.slice(0, 2).map((b) => (
-              <Reveal key={b.slug}>
-                <Link to={`/ebooks/${b.slug}`} className="card ebook-row">
+            {EBOOKS.slice(0, 2).map((b, i) => (
+              <Reveal key={b.slug} variant={i ? 'left' : 'right'}>
+                <Link to={`/ebooks/${b.slug}`} className="card ebook-row spot" onMouseMove={spotlight}>
                   <EbookCover book={b} small />
                   <div>
                     <span className="tag">Free ebook</span>
@@ -152,15 +206,15 @@ export function Home() {
 
       <section className="section">
         <div className="container">
-          <Reveal className="section-head row">
+          <div className="section-head row">
             <div>
-              <span className="kicker">From the blog</span>
-              <h2>Recent thinking</h2>
+              <Reveal><span className="kicker">From the blog</span></Reveal>
+              <SplitText text="Recent thinking" />
             </div>
-            <Link to="/blog" className="btn btn-ghost">Read the blog <Icon name="arrow" size={18} /></Link>
-          </Reveal>
+            <Reveal variant="left"><Link to="/blog" className="btn btn-ghost">Read the blog <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
           <div className="grid-3">
-            {POSTS.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 70}><PostCard post={p} i={i} /></Reveal>)}
+            {POSTS.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} i={i} /></Reveal>)}
           </div>
         </div>
       </section>
@@ -172,8 +226,8 @@ export function Home() {
 
 function ServiceCard({ s }) {
   return (
-    <Link to={`/services/${s.slug}`} className="card service">
-      <span className="icon-box"><Icon name={s.icon} /></span>
+    <Link to={`/services/${s.slug}`} className="card service spot" onMouseMove={spotlight} style={{ '--svc': s.color }}>
+      <span className="icon-box svc-ico"><Icon name={s.icon} /></span>
       <h3>{s.title}</h3>
       <p>{s.short}</p>
       <ul className="tags">{s.tags.map((t) => <li key={t}>{t}</li>)}</ul>
@@ -185,12 +239,13 @@ function ServiceCard({ s }) {
 function StatsBand() {
   return (
     <section className="stats">
+      <div className="stats-shine" aria-hidden="true" />
       <div className="container stats-grid">
-        {STATS.map((s) => (
-          <div key={s.label}>
+        {STATS.map((s, i) => (
+          <Reveal key={s.label} variant="zoom" delay={i * 90}>
             <div className="stat-num"><Counter value={s.value} suffix={s.suffix} /></div>
             <div className="stat-label">{s.label}</div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
@@ -198,23 +253,31 @@ function StatsBand() {
 }
 
 function Approach() {
-  const [active, setActive] = useState(0)
+  const [ref, p] = useSectionProgress()
+  const [hover, setHover] = useState(null)
+  const active = hover ?? Math.min(STEPS.length - 1, Math.floor(p * STEPS.length * 1.1))
   return (
     <section className="section dark">
+      <div className="orbs dim" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
       <div className="container approach">
-        <Reveal className="section-head light">
-          <span className="kicker">How we work</span>
-          <h2>GrowthOS — one operating model, compounding results</h2>
-          <p>A shared playbook, a senior pod embedded with your team, and weekly reporting that turns predictive by month four.</p>
-          <Link to="/contact" className="btn btn-primary">Start with a growth audit <Icon name="arrow" size={18} /></Link>
-        </Reveal>
-        <div className="steps">
+        <div className="section-head light">
+          <Reveal><span className="kicker">How we work</span></Reveal>
+          <SplitText text="GrowthOS — one operating model, compounding results" />
+          <Reveal delay={150}>
+            <p>A shared playbook, a senior pod embedded with your team, and weekly reporting that turns predictive by month four.</p>
+            <Link to="/contact" className="btn btn-primary">Start with a growth audit <Icon name="arrow" size={18} /></Link>
+          </Reveal>
+        </div>
+        <div className="steps" ref={ref} onMouseLeave={() => setHover(null)}>
+          <span className="steps-line" style={{ transform: `scaleY(${p})` }} aria-hidden="true" />
           {STEPS.map((s, i) => (
-            <button key={s.title} className={`step ${active === i ? 'active' : ''}`}
-              onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)}>
-              <span className="step-num">0{i + 1}</span>
-              <div><small>{s.when}</small><h3>{s.title}</h3><p>{s.text}</p></div>
-            </button>
+            <Reveal key={s.title} variant="left" delay={i * 100}>
+              <button className={`step ${active === i ? 'active' : ''} ${i <= active ? 'done' : ''}`}
+                onMouseEnter={() => setHover(i)} onFocus={() => setHover(i)}>
+                <span className="step-num">0{i + 1}</span>
+                <div><small>{s.when}</small><h3>{s.title}</h3><p>{s.text}</p></div>
+              </button>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -232,7 +295,27 @@ export function Services() {
         text="Choose a single service or bring us in as your full-funnel growth partner. Every engagement is led by senior specialists and measured against pipeline." />
       <section className="section">
         <div className="container grid-3">
-          {SERVICES.map((s, i) => <Reveal key={s.slug} delay={i * 60}><ServiceCard s={s} /></Reveal>)}
+          {SERVICES.map((s, i) => <Reveal key={s.slug} delay={(i % 3) * 90}><ServiceCard s={s} /></Reveal>)}
+        </div>
+      </section>
+      <section className="section alt">
+        <div className="container">
+          <div className="section-head center">
+            <Reveal><span className="kicker">Better together</span></Reveal>
+            <SplitText text="One team, every channel" />
+            <Reveal delay={150}><p>When SEO, paid, content, web and analytics share one plan, each channel makes the others stronger.</p></Reveal>
+          </div>
+          <div className="grid-3">
+            {[
+              ['users', 'One senior pod', 'A dedicated strategist and specialists across every channel you need.'],
+              ['chart', 'One source of truth', 'Shared dashboards that connect every channel to pipeline and revenue.'],
+              ['spark', 'One growth plan', 'A single roadmap so channels reinforce each other instead of competing.'],
+            ].map(([ic, t, d], i) => (
+              <Reveal key={t} variant="zoom" delay={i * 90}>
+                <div className="card value"><span className="icon-box"><Icon name={ic} /></span><h3>{t}</h3><p>{d}</p></div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
       <Approach />
@@ -241,29 +324,205 @@ export function Services() {
   )
 }
 
+/* ---------- Unique hero visual for each service ---------- */
+function ServiceVisual({ slug }) {
+  switch (slug) {
+    case 'seo':
+      return (
+        <div className="sv card sv-seo">
+          <div className="sv-search"><Icon name="search" size={16} /> b2b marketing agency</div>
+          {['competitor-one.com', 'industry-blog.net', 'yourbrand.com', 'directory-site.org'].map((d, k) => (
+            <div key={d} className={`serp ${k === 2 ? 'you' : ''}`}>
+              <span className="pos">{k === 2 ? '#1' : `#${k < 2 ? k + 2 : 4}`}</span>
+              <div><b>{d}</b><i /><i className="short" /></div>
+              {k === 2 && <span className="up-badge"><Icon name="up" size={12} /> 8</span>}
+            </div>
+          ))}
+          <div className="sv-chip c1"><small>Organic traffic</small><b>+180%</b></div>
+        </div>
+      )
+    case 'paid-media':
+      return (
+        <div className="sv card sv-paid">
+          <h4>Campaign performance</h4>
+          {[['Google Ads', 86], ['Meta', 68], ['LinkedIn', 54]].map(([n, v], k) => (
+            <div key={n} className="bar-row">
+              <span>{n}</span>
+              <div className="bar"><span style={{ '--w': `${v}%`, animationDelay: `${0.3 + k * 0.15}s` }} /></div>
+              <b>{(v / 20).toFixed(1)}x</b>
+            </div>
+          ))}
+          <div className="gauge">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" className="g-bg" /><circle cx="60" cy="60" r="50" className="g-fg" pathLength="100" /></svg>
+            <div><b>4.2x</b><small>Blended ROAS</small></div>
+          </div>
+          <div className="sv-chip c1"><small>Cost per lead</small><b>−37%</b></div>
+        </div>
+      )
+    case 'content-social':
+      return (
+        <div className="sv sv-content">
+          {[0, 1, 2].map((k) => (
+            <div key={k} className={`post-mock card pm${k}`}>
+              <div className="pm-head"><span className="av" /><div><i /><i className="short" /></div></div>
+              <div className={`pm-img g${k}`} />
+              <div className="pm-foot"><span>♥ {[248, 1032, 512][k]}</span><span>↻ {[36, 140, 77][k]}</span></div>
+            </div>
+          ))}
+          <div className="sv-chip c1"><small>Engagement</small><b>3x</b></div>
+        </div>
+      )
+    case 'web-experience':
+      return (
+        <div className="sv card sv-web">
+          <div className="browser-bar"><span /><span /><span /><div className="url">yourbrand.com</div></div>
+          <div className="wf">
+            <div className="wf-hero"><i /><i className="short" /><span className="wf-btn" /></div>
+            <div className="wf-grid"><span /><span /><span /></div>
+          </div>
+          <div className="scores">
+            {[['98', 'Performance'], ['100', 'SEO'], ['96', 'Accessibility']].map(([v, l], k) => (
+              <div key={l} className="score">
+                <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" className="g-bg" /><circle cx="22" cy="22" r="18" className="g-fg" pathLength="100" style={{ '--v': v, animationDelay: `${0.4 + k * 0.2}s` }} /></svg>
+                <b>{v}</b><small>{l}</small>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    case 'analytics-cro':
+      return (
+        <div className="sv card sv-analytics">
+          <h4>Funnel overview</h4>
+          {[['Visitors', 100, '48,200'], ['Leads', 62, '3,140'], ['Qualified', 38, '1,020'], ['Customers', 20, '212']].map(([l, w, v], k) => (
+            <div key={l} className="funnel-row">
+              <div className="funnel-bar" style={{ '--w': `${w}%`, animationDelay: `${0.2 + k * 0.15}s` }}><span>{l}</span></div>
+              <b>{v}</b>
+            </div>
+          ))}
+          <div className="ab">
+            <div><small>Variant A</small><b>3.1%</b></div>
+            <div className="win"><small>Variant B</small><b>4.3%</b><span>Winner</span></div>
+          </div>
+        </div>
+      )
+    default:
+      return (
+        <div className="sv card sv-ai">
+          {[['mail', 'New lead captured'], ['spark', 'AI enrichment'], ['target', 'Lead score: 92'], ['users', 'Routed to sales']].map(([ic, t], k) => (
+            <div key={t} className="node-wrap">
+              <div className="node" style={{ animationDelay: `${k * 0.6}s` }}><span className="icon-box sm"><Icon name={ic} size={16} /></span>{t}<Icon name="check" size={16} /></div>
+              {k < 3 && <span className="connector" />}
+            </div>
+          ))}
+          <div className="sv-chip c1"><small>Time saved</small><b>20+ hrs/wk</b></div>
+        </div>
+      )
+  }
+}
+
+const SERVICE_POST_CATS = {
+  seo: ['SEO'], 'paid-media': ['Paid Media'], 'content-social': ['Demand Gen'],
+  'web-experience': ['CRO'], 'analytics-cro': ['Analytics', 'CRO'], 'ai-automation': ['AI'],
+}
+
+function Faq({ items }) {
+  const [open, setOpen] = useState(0)
+  return (
+    <div className="faq">
+      {items.map(([q, a], i) => (
+        <Reveal key={q} delay={i * 70}>
+          <div className={`faq-item card ${open === i ? 'open' : ''}`}>
+            <button className="faq-q" aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)}>
+              {q}<span className="faq-ico"><Icon name="plus" size={18} /></span>
+            </button>
+            <div className="faq-a"><div><p>{a}</p></div></div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  )
+}
+
+function ServiceProcess({ steps }) {
+  const [ref, p] = useSectionProgress()
+  return (
+    <div className="timeline" ref={ref}>
+      <span className="tl-track" aria-hidden="true"><span className="tl-fill" style={{ transform: `scaleY(${p})` }} /></span>
+      {steps.map(([t, d], i) => (
+        <Reveal key={t} variant={i % 2 ? 'left' : 'right'} className={`tl-item ${p * steps.length > i + 0.2 ? 'lit' : ''}`}>
+          <span className="tl-dot">{i + 1}</span>
+          <div className="card tl-card">
+            <small>Step {i + 1}</small>
+            <h3>{t}</h3>
+            <p>{d}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  )
+}
+
 export function ServiceDetail() {
   const { slug } = useParams()
   const s = SERVICES.find((x) => x.slug === slug)
   useTitle(s?.title)
   if (!s) return <NotFound />
-  const related = CASE_STUDIES.filter((c) => c.services.includes(s.title)).slice(0, 2)
-  const others = SERVICES.filter((x) => x.slug !== slug)
+  const idx = SERVICES.indexOf(s)
+  const prev = SERVICES[(idx - 1 + SERVICES.length) % SERVICES.length]
+  const next = SERVICES[(idx + 1) % SERVICES.length]
+  let related = CASE_STUDIES.filter((c) => c.services.includes(s.title))
+  if (related.length < 2) related = [...related, ...CASE_STUDIES.filter((c) => !related.includes(c))].slice(0, 2)
+  const cats = SERVICE_POST_CATS[s.slug] || []
+  let posts = POSTS.filter((p) => cats.includes(p.category))
+  if (posts.length < 3) posts = [...posts, ...POSTS.filter((p) => !posts.includes(p))].slice(0, 3)
+
   return (
-    <>
-      <PageHero kicker="Service" crumbs={[['Services', '/services'], [s.title]]} title={s.title} text={s.intro}>
-        <div className="hero-ctas"><Link to="/contact" className="btn btn-primary">Get a proposal <Icon name="arrow" size={18} /></Link></div>
-      </PageHero>
-      <section className="section">
+    <div className="svc-page" style={{ '--svc': s.color }} key={s.slug}>
+      <section className="page-hero svc-hero">
+        <div className="orbs" aria-hidden="true"><span className="orb o1" /><span className="orb o2" /></div>
+        <div className="grid-bg" aria-hidden="true" />
+        <div className="container svc-hero-grid">
+          <div>
+            <nav className="crumbs fade-in" aria-label="Breadcrumb">
+              <Link to="/">Home</Link> / <Link to="/services">Services</Link> / <span aria-current="page">{s.title}</span>
+            </nav>
+            <span className="kicker svc-kicker fade-in"><span className="icon-box sm svc-ico"><Icon name={s.icon} size={16} /></span> Service</span>
+            <SplitText as="h1" text={s.title} />
+            <p className="svc-tagline fade-in d2">{s.tagline}</p>
+            <p className="lead fade-in d2">{s.intro}</p>
+            <div className="hero-ctas fade-in d3">
+              <Link to="/contact" className="btn btn-primary shine">Get a proposal <Icon name="arrow" size={18} /></Link>
+              <a href="#process" className="btn btn-ghost">How it works</a>
+            </div>
+          </div>
+          <Parallax speed={0.06}><div className="fade-in d2"><ServiceVisual slug={s.slug} /></div></Parallax>
+        </div>
+        <div className="container">
+          <div className="svc-stats fade-in d4">
+            {s.stats.map(([v, l]) => <div key={l}><b>{v}</b><span>{l}</span></div>)}
+          </div>
+        </div>
+      </section>
+
+      <nav className="subnav" aria-label="On this page">
+        <div className="container subnav-inner">
+          {[['Overview', '#overview'], ["What's included", '#included'], ['Process', '#process'], ['Results', '#results'], ['FAQ', '#faq']].map(([l, h]) => (
+            <a key={h} href={h}>{l}</a>
+          ))}
+          <Link to="/contact" className="btn btn-primary sm">Get a proposal</Link>
+        </div>
+      </nav>
+
+      <section className="section" id="overview">
         <div className="container split">
-          <Reveal>
-            <span className="kicker">What's included</span>
-            <h2>Deliverables</h2>
-            <ul className="check-list">
-              {s.deliverables.map((d) => <li key={d}><span className="check"><Icon name="check" size={16} /></span>{d}</li>)}
-            </ul>
-          </Reveal>
-          <Reveal className="card outcome-card">
-            <span className="icon-box"><Icon name={s.icon} /></span>
+          <div>
+            <Reveal><span className="kicker">Why it matters</span></Reveal>
+            <SplitText text={s.tagline} />
+            {s.why.map((t, i) => <Reveal key={i} delay={100 + i * 80}><p className="body-text">{t}</p></Reveal>)}
+          </div>
+          <Reveal variant="left" className="card outcome-card">
+            <span className="icon-box svc-ico"><Icon name={s.icon} /></span>
             <h3>Outcomes you can expect</h3>
             <ul className="check-list compact">
               {s.outcomes.map((o) => <li key={o}><span className="check"><Icon name="check" size={16} /></span>{o}</li>)}
@@ -272,28 +531,103 @@ export function ServiceDetail() {
           </Reveal>
         </div>
       </section>
-      {related.length > 0 && (
-        <section className="section alt">
-          <div className="container">
-            <Reveal className="section-head"><span className="kicker">Proof</span><h2>Related results</h2></Reveal>
-            <div className="grid-2">{related.map((c) => <CaseCard key={c.slug} c={c} />)}</div>
-          </div>
-        </section>
-      )}
-      <section className="section">
+
+      <section className="section alt" id="included">
         <div className="container">
-          <Reveal className="section-head"><span className="kicker">Explore more</span><h2>Other services</h2></Reveal>
-          <div className="mini-grid">
-            {others.map((o) => (
-              <Link key={o.slug} to={`/services/${o.slug}`} className="card mini">
-                <span className="icon-box sm"><Icon name={o.icon} size={18} /></span>{o.title}<Icon name="arrow" size={16} />
-              </Link>
+          <div className="section-head">
+            <Reveal><span className="kicker">What's included</span></Reveal>
+            <SplitText text="Everything you need, nothing you don't" />
+          </div>
+          <div className="grid-3">
+            {s.deliverables.map((d, i) => (
+              <Reveal key={d} variant="zoom" delay={(i % 3) * 90}>
+                <div className="card deliverable spot" onMouseMove={spotlight}>
+                  <span className="d-num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3>{d}</h3>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
-      <CtaBand />
-    </>
+
+      <section className="section" id="process">
+        <div className="container">
+          <div className="section-head center">
+            <Reveal><span className="kicker">Our process</span></Reveal>
+            <SplitText text="How we deliver results, step by step" />
+          </div>
+          <ServiceProcess steps={s.process} />
+        </div>
+      </section>
+
+      <section className="section alt" id="results">
+        <div className="container">
+          <div className="section-head row">
+            <div>
+              <Reveal><span className="kicker">Proof</span></Reveal>
+              <SplitText text="Related results" />
+            </div>
+            <Reveal variant="left"><Link to="/work" className="btn btn-ghost">All case studies <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
+          <div className="grid-2">{related.map((c, i) => <Reveal key={c.slug} variant="zoom" delay={i * 90}><CaseCard c={c} /></Reveal>)}</div>
+          <p className="footnote">Figures shown are illustrative sample outcomes.</p>
+        </div>
+      </section>
+
+      <section className="section tight">
+        <div className="container">
+          <Reveal className="tools">
+            <span className="kicker">Platforms we work with</span>
+            <div className="tool-list">
+              {s.tools.map((t, i) => <span key={t} className="chip" style={{ transitionDelay: `${i * 40}ms` }}>{t}</span>)}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section" id="faq">
+        <div className="container faq-wrap">
+          <div>
+            <Reveal><span className="kicker">FAQ</span></Reveal>
+            <SplitText text="Questions, answered" />
+            <Reveal delay={120}>
+              <p className="body-text">Can't find what you're looking for? Our team is happy to help.</p>
+              <Link to="/contact" className="btn btn-ghost mt-btn">Ask a question <Icon name="arrow" size={18} /></Link>
+            </Reveal>
+          </div>
+          <Faq items={s.faqs} />
+        </div>
+      </section>
+
+      <section className="section alt">
+        <div className="container">
+          <div className="section-head row">
+            <div>
+              <Reveal><span className="kicker">Learn more</span></Reveal>
+              <SplitText text="Related reading" />
+            </div>
+            <Reveal variant="left"><Link to="/blog" className="btn btn-ghost">Visit the blog <Icon name="arrow" size={18} /></Link></Reveal>
+          </div>
+          <div className="grid-3">{posts.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} i={POSTS.indexOf(p)} /></Reveal>)}</div>
+        </div>
+      </section>
+
+      <section className="section tight">
+        <div className="container svc-pager">
+          <Link to={`/services/${prev.slug}`} className="card pager" style={{ '--svc': prev.color }}>
+            <small><Icon name="back" size={16} /> Previous service</small>
+            <span><span className="icon-box sm svc-ico"><Icon name={prev.icon} size={16} /></span>{prev.title}</span>
+          </Link>
+          <Link to={`/services/${next.slug}`} className="card pager right" style={{ '--svc': next.color }}>
+            <small>Next service <Icon name="arrow" size={16} /></small>
+            <span>{next.title}<span className="icon-box sm svc-ico"><Icon name={next.icon} size={16} /></span></span>
+          </Link>
+        </div>
+      </section>
+
+      <CtaBand title={`Ready to talk about ${s.title.split(' &')[0]}?`} text="Get a free audit and a clear 90-day plan from our senior team." />
+    </div>
   )
 }
 

@@ -313,3 +313,64 @@ export const VALUES = [
   { icon: 'chart', title: 'Radical transparency', text: 'Shared dashboards, honest reporting and clear recommendations — even when the news is bad.' },
   { icon: 'spark', title: 'Always be testing', text: 'Curiosity drives us. We test, learn and share what we find with our clients and our team.' },
 ]
+
+/* ---------- Extra detail for each single service page ---------- */
+const SERVICE_EXTRAS = {
+  seo: {
+    color: '#2563eb',
+    tagline: 'Rank for the searches that turn into revenue.',
+    stats: [['+180%', 'avg. non-brand traffic growth'], ['1,200+', 'keywords moved into the top 3'], ['6–9 mo', 'to compounding results']],
+    why: ['Over two-thirds of B2B buyers start their research on a search engine — and most never click past page one.', 'Unlike paid media, SEO builds an asset. Every page you rank and every link you earn keeps working long after the invoice is paid.'],
+    process: [['Audit', 'Crawl the site, benchmark competitors and map every technical and content gap.'], ['Strategy', 'Prioritize keywords by buying intent and build a 6-month topic cluster roadmap.'], ['Execute', 'Ship technical fixes, publish optimized content and launch digital PR every month.'], ['Scale', 'Report on pipeline from organic, double down on winning clusters and expand.']],
+    tools: ['Google Search Console', 'GA4', 'Ahrefs', 'Semrush', 'Screaming Frog', 'Surfer', 'Looker Studio'],
+    faqs: [['How long does SEO take to work?', 'Most clients see meaningful movement in 3–4 months and compounding pipeline growth by months 6–9, depending on site authority and competition.'], ['Do you write the content too?', 'Yes. Our content team writes briefs and articles, or we can work alongside your in-house writers.'], ['Do you build links?', 'We earn links through digital PR, original research and partnerships. We never buy links.'], ['Can you help with AI search visibility?', 'Yes — we optimize content and entities so your brand is cited in AI answers from tools like ChatGPT, Gemini and Perplexity.']],
+  },
+  'paid-media': {
+    color: '#4f46e5',
+    tagline: 'Every dollar of ad spend, accountable to pipeline.',
+    stats: [['−37%', 'avg. cost per qualified lead'], ['+62%', 'avg. return on ad spend'], ['$12M+', 'annual spend managed']],
+    why: ['Ad platforms are built to spend your budget, not to protect it. Without the right structure and signals, they optimize for cheap clicks instead of customers.', 'We connect campaigns to your CRM so algorithms learn from real revenue, then test relentlessly to lower costs over time.'],
+    process: [['Audit', 'Review account structure, tracking, creative and landing pages to find wasted spend.'], ['Rebuild', 'Restructure campaigns around intent and feed CRM conversions back to the platforms.'], ['Test', 'Run a weekly creative and audience testing cadence with clear success criteria.'], ['Scale', 'Shift budget to what works and expand into new channels with confidence.']],
+    tools: ['Google Ads', 'Meta Ads', 'LinkedIn Ads', 'TikTok Ads', 'Microsoft Ads', 'GA4', 'HubSpot'],
+    faqs: [['What budget do I need?', 'We typically work with monthly ad budgets from $5k upward. We will recommend a test budget based on your goals and market.'], ['Do you create the ads?', 'Yes. Our creative team produces static, video and copy variations for testing every month.'], ['How is your fee structured?', 'A flat monthly management fee based on scope — never a percentage that rewards us for spending more.'], ['How quickly will we see results?', 'Quick wins from fixing waste often show in the first 30 days; sustained efficiency gains build over the first quarter.']],
+  },
+  'content-social': {
+    color: '#0891b2',
+    tagline: 'Content your buyers actually want to read and share.',
+    stats: [['3x', 'avg. engagement rate lift'], ['40+', 'content pieces per month'], ['+65%', 'avg. share of voice growth']],
+    why: ['Buyers complete most of their research before they ever speak to sales. The brands they trust are the ones that taught them something along the way.', 'Consistent, useful content builds that trust — and gives your sales team assets they are proud to send.'],
+    process: [['Discover', 'Interview your experts and customers to find the stories only you can tell.'], ['Plan', 'Build a themed editorial calendar across blog, social, video and email.'], ['Produce', 'Write, design and edit content with your brand voice and approvals built in.'], ['Distribute', 'Publish, promote and repurpose every piece across channels — then measure what lands.']],
+    tools: ['LinkedIn', 'Instagram', 'YouTube', 'TikTok', 'Canva', 'Figma', 'HubSpot'],
+    faqs: [['Can you write in our brand voice?', 'Yes. We start with a voice and tone guide and refine it with your feedback over the first month.'], ['Do you manage our social accounts?', 'We can fully manage publishing and community engagement, or support your in-house team.'], ['Do you produce video?', 'Yes — short-form video, reels and simple explainer videos are part of our content packages.'], ['How do you measure content success?', 'Engagement and reach, but most importantly influenced pipeline and how often sales uses each asset.']],
+  },
+  'web-experience': {
+    color: '#0284c7',
+    tagline: 'Websites that load fast, rank well and convert.',
+    stats: [['+38%', 'avg. conversion rate lift'], ['95+', 'target Lighthouse score'], ['8–12 wks', 'typical launch timeline']],
+    why: ['Your website is often the first and last thing a buyer sees before they contact you. Slow, confusing sites quietly lose deals every day.', 'We design and build sites around how your buyers decide — with speed, accessibility and SEO built in from the start.'],
+    process: [['Discover', 'Research your audience, map user journeys and define site goals and structure.'], ['Design', 'Create wireframes and a UI design system that brings your brand to life.'], ['Build', 'Develop on the right platform with performance, SEO and accessibility baked in.'], ['Launch & optimize', 'Migrate safely, launch, and keep improving with data and A/B tests.']],
+    tools: ['WordPress', 'Webflow', 'HubSpot CMS', 'React', 'Next.js', 'Figma', 'Vercel'],
+    faqs: [['Which platform should we use?', 'It depends on your team and goals. We recommend WordPress, Webflow, HubSpot or a headless React build after discovery.'], ['Will we be able to edit the site ourselves?', 'Yes. Every build includes an editor-friendly setup and a training session for your team.'], ['Will our SEO rankings be affected?', 'We plan redirects and migrations carefully to protect — and usually improve — your existing rankings.'], ['Do you offer ongoing support?', 'Yes, through monthly care plans covering updates, fixes and continuous optimization.']],
+  },
+  'analytics-cro': {
+    color: '#0d9488',
+    tagline: 'Know exactly what works — and make it work better.',
+    stats: [['100%', 'of spend traced to outcomes'], ['+24%', 'avg. lift from CRO programs'], ['1 view', 'of your full funnel']],
+    why: ['Most marketing teams make decisions on incomplete or conflicting data. Platforms over-report, tracking breaks, and leadership loses trust in the numbers.', 'We rebuild measurement from the ground up and use it to run experiments that steadily lift conversion.'],
+    process: [['Audit', 'Review tracking, data quality and reporting to find gaps and errors.'], ['Instrument', 'Implement GA4, GTM, server-side tracking and CRM integration properly.'], ['Visualize', 'Build dashboards that answer real business questions for each audience.'], ['Experiment', 'Run a prioritized CRO testing roadmap and roll out the winners.']],
+    tools: ['GA4', 'Google Tag Manager', 'Looker Studio', 'BigQuery', 'Hotjar', 'VWO', 'HubSpot'],
+    faqs: [['Our tracking is a mess. Where do we start?', 'With an audit. We document what is broken, what matters most and fix it in priority order.'], ['Can you connect ads data to our CRM?', 'Yes — we connect ad platforms, website and CRM so you can see revenue by channel and campaign.'], ['How many A/B tests do you run?', 'It depends on traffic, but most programs run two to four meaningful tests per month.'], ['Which BI tools do you support?', 'Looker Studio, Power BI and Tableau, plus BigQuery for larger data sets.']],
+  },
+  'ai-automation': {
+    color: '#7c3aed',
+    tagline: 'Let a lean team operate like a large one.',
+    stats: [['20+ hrs', 'saved per team each week'], ['5 min', 'avg. speed-to-lead'], ['+30%', 'avg. lead-to-meeting rate']],
+    why: ['Marketing teams lose hours every week to manual reporting, list cleanup and repetitive content tasks — time that should go into strategy.', 'We design practical automations and AI workflows, with the right guardrails, that remove busywork and improve lead quality.'],
+    process: [['Map', 'Document your current workflows and find the highest-value automation opportunities.'], ['Design', 'Design workflows, scoring models and AI prompts with clear guardrails.'], ['Build', 'Implement in your CRM and tools, test thoroughly and train your team.'], ['Improve', 'Monitor results, refine models and roll out the next automation.']],
+    tools: ['HubSpot', 'Salesforce', 'Zapier', 'Make', 'n8n', 'OpenAI', 'Clay'],
+    faqs: [['Is our data safe with AI tools?', 'We design every workflow with data privacy in mind and only use tools and settings that meet your security requirements.'], ['Will AI replace our team?', 'No. Our goal is to remove repetitive work so your team can focus on strategy, creativity and customers.'], ['Which CRM do you work with?', 'Mostly HubSpot and Salesforce, plus many common sales and marketing tools via Zapier, Make or n8n.'], ['How fast can we see value?', 'Most first automations go live within 2–4 weeks and start saving time immediately.']],
+  },
+}
+SERVICES.forEach((s) => Object.assign(s, SERVICE_EXTRAS[s.slug]))
+
+export const HERO_WORDS = ['compounding growth', 'qualified pipeline', 'lower CAC', 'more revenue']
