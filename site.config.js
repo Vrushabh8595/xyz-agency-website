@@ -19,9 +19,9 @@ export const LEAD_CC = import.meta.env?.VITE_LEAD_CC || 'contact@advotisagency.c
 
 /* Google reCAPTCHA v3 (invisible spam protection). Create keys at https://www.google.com/recaptcha/admin/create
    (type: "Score based (v3)", domains: advotisagency.com). Then in Vercel → Settings → Environment Variables add
-   VITE_RECAPTCHA_SITE_KEY = <site key>  and  RECAPTCHA_SECRET_KEY = <secret key>, and redeploy.
-   Set BOTH or NEITHER — with only the secret set, the server rejects every lead. */
-export const RECAPTCHA_SITE_KEY = import.meta.env?.VITE_RECAPTCHA_SITE_KEY || ''
+   RECAPTCHA_SECRET_KEY = <secret key> (Production + Preview), then redeploy. The site key below is already set
+   (override it with VITE_RECAPTCHA_SITE_KEY if you ever rotate keys). Never commit the secret key. */
+export const RECAPTCHA_SITE_KEY = import.meta.env?.VITE_RECAPTCHA_SITE_KEY || '6LfWjPotAAAAAN_ZfZ8Mbml1DECX7pPU2r6SRFz3' // public site key (safe to commit)
 
 export const DEFAULT_OG_IMAGE = '/og-default.jpg'
 export const LOGO = '/logo.png'

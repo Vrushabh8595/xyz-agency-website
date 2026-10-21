@@ -1324,7 +1324,7 @@ export function EbookDetail() {
   useTitle(b?.title)
   if (!b) return <NotFound />
   const submit = (e) => {
-    send(e, `Ebook download: ${b.title} — ${form.name}`, {
+    send(e, `Ebook download – ${form.name.trim()} (${b.title})`, {
       'Lead type': 'Ebook download', Ebook: b.title, Name: form.name, Email: form.email, Company: form.company || '—',
     }, () => {
       try { sessionStorage.setItem('ebook-access', '1') } catch (err) { /* ignore */ }
@@ -1496,7 +1496,7 @@ export function JobDetail() {
   const { form, bind, fieldError, status, error, honey, setHoney, submit: send } = useLeadForm('job', { name: '', email: '', phone: '', link: '', cv: '', extra: '', message: '' })
   if (!j) return <NotFound />
   const submit = (e) => {
-    send(e, `${j.freelance ? 'Freelancer application' : 'Job application'}: ${j.title} — ${form.name}`, {
+    send(e, `${j.freelance ? 'Freelancer application' : 'Job application'} – ${form.name.trim()} (${j.title})`, {
       'Lead type': j.freelance ? 'Freelancer application' : 'Job application',
       Role: j.title, Name: form.name, Email: form.email, Phone: form.phone || '—',
       'LinkedIn / portfolio': form.link || '—', 'CV / resume link': form.cv || '—',
@@ -1576,7 +1576,7 @@ export function Contact() {
   const navigate = useNavigate()
   const { form, bind, fieldError, status, error, honey, setHoney, submit: send } = useLeadForm('contact', { name: '', email: '', phone: '', company: '', service: SERVICES[0].title, budget: '', message: '' })
   const submit = (e) => {
-    send(e, `New enquiry: ${form.service} — ${form.name}`, {
+    send(e, `Contact enquiry – ${form.name.trim()} (${form.service})`, {
       'Lead type': 'Contact enquiry', Name: form.name, Email: form.email, Phone: form.phone || '—', Company: form.company || '—',
       Service: form.service, Budget: form.budget || '—', Message: form.message || '—',
     }, () => navigate('/thank-you', { state: { type: 'contact', name: form.name } }))

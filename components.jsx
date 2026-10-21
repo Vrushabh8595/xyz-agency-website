@@ -122,7 +122,12 @@ async function postToFormSubmit(subject, values, fields) {
   return data
 }
 
-export async function sendLead({ kind, subject, values, fields, honey = '', elapsed = 0 }) {
+export const LEAD_SUBJECT_PREFIX = 'Advotis New Lead'
+
+export async function sendLead({ kind, subject: detail, values, fields, honey = '', elapsed = 0 }) {
+  // Email subject, e.g. "Advotis New Lead | Contact enquiry – Jane Doe (SEO & Organic Growth)".
+  // The details keep each lead in its own Gmail thread instead of one long conversation.
+  const subject = detail ? `${LEAD_SUBJECT_PREFIX} | ${detail}` : LEAD_SUBJECT_PREFIX
   const allFields = {
     ...fields,
     Page: typeof window !== 'undefined' ? window.location.href : '',
