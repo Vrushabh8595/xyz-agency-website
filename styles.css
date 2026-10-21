@@ -960,7 +960,7 @@ span.reveal { display: inline-block; }
 .mega-head { display: flex; gap: 12px; align-items: flex-start; padding: 10px; margin: 0 -10px 8px; border-radius: 14px; color: var(--ink); transition: background .2s; }
 .mega-head:hover { background: var(--bg-alt); }
 .mega-head b { display: block; font-size: 15px; }
-.mega-head small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.45; margin-top: 2px; }
+.mega-head small { display: block; color: var(--muted); font-size: 11px; line-height: 1.5; margin-top: 2px; }
 .mega-links { display: grid; gap: 2px; border-top: 1px solid var(--line); padding-top: 8px; }
 .mega-link { display: flex; align-items: center; gap: 10px; padding: 8px 10px; margin: 0 -10px; border-radius: 10px; font-size: 14px; color: var(--ink-2); transition: background .2s, color .2s, transform .2s; }
 .mega-link svg { color: var(--primary); opacity: .8; }
