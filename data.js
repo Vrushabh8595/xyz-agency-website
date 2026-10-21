@@ -13,9 +13,8 @@ export const COMPANY = {
   name: 'Advotis Agency',
   email: 'contact@advotisagency.com',
   offices: [
-    { city: 'New York', country: 'USA', address: '000 Placeholder Ave, New York, NY' },
-    { city: 'Dubai', country: 'UAE', address: 'Placeholder Tower, Business Bay' },
-    { city: 'Pune', country: 'India', address: 'Placeholder Park, Baner' },
+    { city: 'Pune', country: 'India', region: 'Maharashtra', postalCode: '411014', street: 'Ashok Plaza, Pune - Nagar Rd, Sakore Nagar, Viman Nagar',
+      address: 'Ashok Plaza, Pune - Nagar Rd, Sakore Nagar, Viman Nagar, Pune, Maharashtra 411014, India' },
   ],
   social: [
     { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/company/advotis-agency/' },

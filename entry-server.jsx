@@ -26,5 +26,5 @@ export const routes = [
   '/blog', ...POSTS.map((p) => `/blog/${p.slug}`),
   '/ebooks', ...EBOOKS.flatMap((b) => [`/ebooks/${b.slug}`, `/ebooks/${b.slug}/read`]),
   '/careers', ...JOBS.map((j) => `/careers/${j.slug}`),
-  '/contact', '/privacy',
+  '/contact', '/privacy', '/thank-you',
 ]

@@ -47,6 +47,20 @@ All forms (contact, job applications, freelancer sign-ups, ebook downloads) send
 **The first submission triggers a one-time "Activate form" email to that inbox — click the link once** and every
 lead after that is delivered. Leads include the page URL and a reply-to set to the visitor's email.
 
+**Flow:** browser validation (`formguard.js`) → `POST /api/lead` (`api/lead.js`, a Vercel function) → FormSubmit.
+Contact and job forms redirect to `/thank-you` **only after** the lead is delivered; ebook forms open the reader.
+`/thank-you` is noindex and sends visitors who open it directly back to `/contact`. It pushes a `generate_lead`
+event to `dataLayer` (use it as the conversion trigger in GTM / GA4 / Google Ads).
+
+**Spam protection (layers):** hidden honeypot field · fill-time trap (bots submit in < 3s) · origin check ·
+per-IP rate limit (5 / 10 min) · the same field validation re-run on the server · spam-word / link / gibberish checks ·
+temporary-email domains blocked · **Google reCAPTCHA v3** (invisible, score based).
+
+**Turn on reCAPTCHA v3:** create keys at <https://www.google.com/recaptcha/admin/create> (type *Score based (v3)*,
+domains `advotisagency.com`), then in Vercel → Settings → Environment Variables add
+`VITE_RECAPTCHA_SITE_KEY` (site key) and `RECAPTCHA_SECRET_KEY` (secret key) and redeploy. Set both or neither.
+Optional: `RECAPTCHA_MIN_SCORE` (default `0.5`). Blocked submissions are logged in Vercel → Logs as `[lead] …`.
+
 ## Blog posts
 
 - Posts live in `posts/posts-*.js`. Each file exports an array of posts with: `slug, category, service, title, description,

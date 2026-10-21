@@ -17,6 +17,12 @@ export const FORM_ENDPOINT = `https://formsubmit.co/ajax/${LEAD_INBOX}`
 /* Extra inboxes that get a copy of every lead (comma-separated). FormSubmit sends these as CC. */
 export const LEAD_CC = import.meta.env?.VITE_LEAD_CC || 'contact@advotisagency.com'
 
+/* Google reCAPTCHA v3 (invisible spam protection). Create keys at https://www.google.com/recaptcha/admin/create
+   (type: "Score based (v3)", domains: advotisagency.com). Then in Vercel → Settings → Environment Variables add
+   VITE_RECAPTCHA_SITE_KEY = <site key>  and  RECAPTCHA_SECRET_KEY = <secret key>, and redeploy.
+   Set BOTH or NEITHER — with only the secret set, the server rejects every lead. */
+export const RECAPTCHA_SITE_KEY = import.meta.env?.VITE_RECAPTCHA_SITE_KEY || ''
+
 export const DEFAULT_OG_IMAGE = '/og-default.jpg'
 export const LOGO = '/logo.png'
 export const LOGO_FULL = '/logo-advotis.png'

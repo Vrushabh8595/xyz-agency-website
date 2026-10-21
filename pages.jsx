@@ -1,42 +1,99 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import {
   APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOME_FAQS, getPostContent, loadPostContent, HOSTING, INDUSTRIES, JOBS, MARKETING_TECH, PARTNERS, POSTS,
   SERVICE_GROUPS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
-import { LOGO_MARK, SITE_URL } from './site.config.js'
+import { LOGO_MARK, RECAPTCHA_SITE_KEY, SITE_URL } from './site.config.js'
+import { MIN_FILL_MS, validateLead } from './formguard.js'
 import {
   CaseCard, Counter, CtaBand, EbookCover, Honeypot, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, RichText, SplitText,
-  Socials, TechTile, sendLead, spotlight, useInView, useSectionProgress, useTitle,
+  Socials, TechTile, loadRecaptcha, sendLead, spotlight, useInView, useSectionProgress, useTitle,
 } from './components.jsx'
 
-/* Shared submit state for every lead form: idle → sending → sent | error */
-function useLeadForm(initial) {
+/* Shared state for every lead form: validation → idle → sending → sent | error.
+   Rules live in formguard.js and are enforced again server-side in api/lead.js. */
+function useLeadForm(kind, initial) {
   const [form, setForm] = useState(initial)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [honey, setHoney] = useState('')
-  const up = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
-  const submit = async (subject, fields, onDone) => {
-    if (honey) { setStatus('sent'); return }
+  const [touched, setTouched] = useState({})
+  const [submitted, setSubmitted] = useState(false)
+  const [serverErrors, setServerErrors] = useState({})
+  const startedAt = useRef(0)
+  useEffect(() => { startedAt.current = Date.now() }, [])
+  const errors = { ...serverErrors, ...validateLead(kind, form) }
+  const errorFor = (k) => ((submitted || touched[k]) && errors[k]) || ''
+  const up = (k) => (e) => {
+    const val = e.target.value
+    setForm((f) => ({ ...f, [k]: val }))
+    if (serverErrors[k]) setServerErrors(({ [k]: _, ...rest }) => rest)
+  }
+  /* Spread onto an input: <input {...bind('email')} /> */
+  const bind = (k) => ({
+    name: k, value: form[k], onChange: up(k),
+    onBlur: () => setTouched((t) => (t[k] ? t : { ...t, [k]: true })),
+    onFocus: () => { loadRecaptcha() },
+    'aria-invalid': errorFor(k) ? 'true' : undefined,
+    'aria-describedby': errorFor(k) ? `err-${kind}-${k}` : undefined,
+  })
+  const fieldError = (k) => (errorFor(k) ? <span className="field-error" id={`err-${kind}-${k}`} role="alert">{errorFor(k)}</span> : null)
+  const submit = async (e, subject, fields, onDone) => {
+    e?.preventDefault()
+    const formEl = e?.currentTarget
+    setSubmitted(true)
+    const errs = validateLead(kind, form)
+    const first = Object.keys(errs)[0]
+    if (first) {
+      setStatus('idle'); setError('')
+      formEl?.querySelector(`[name="${first}"]`)?.focus()
+      return
+    }
+    if (honey) { setStatus('sent'); onDone?.(); return } // bot: pretend it worked, send nothing
+    if (recentLeads() >= 4) { setError('You have sent several messages in the last few minutes — please wait a little and try again'); setStatus('error'); return }
     setStatus('sending'); setError('')
+    const wait = MIN_FILL_MS + 300 - (Date.now() - startedAt.current)
+    if (wait > 0) await new Promise((r) => setTimeout(r, wait)) // very fast submits are treated as bots server-side
     try {
-      await sendLead(subject, fields)
+      await sendLead({ kind, subject, values: form, fields, honey, elapsed: Date.now() - startedAt.current })
+      rememberLead()
       setStatus('sent')
       onDone?.()
     } catch (err) {
+      if (err.fields) { setServerErrors(err.fields); const f = Object.keys(err.fields)[0]; formEl?.querySelector(`[name="${f}"]`)?.focus() }
       setError(err.message || 'Something went wrong')
       setStatus('error')
     }
   }
-  return { form, setForm, up, status, setStatus, error, honey, setHoney, submit }
+  return { form, setForm, up, bind, fieldError, status, setStatus, error, honey, setHoney, submit }
+}
+
+/* Light client-side rate limit (the server enforces its own per-IP limit too) */
+function recentLeads() {
+  try { return JSON.parse(localStorage.getItem('lead-times') || '[]').filter((t) => Date.now() - t < 10 * 60 * 1000).length } catch (e) { return 0 }
+}
+function rememberLead() {
+  try {
+    const list = JSON.parse(localStorage.getItem('lead-times') || '[]').filter((t) => Date.now() - t < 10 * 60 * 1000)
+    localStorage.setItem('lead-times', JSON.stringify([...list, Date.now()]))
+  } catch (e) { /* storage blocked */ }
 }
 
 function FormError({ error }) {
   return (
     <p className="form-error" role="alert">
-      Sorry — we couldn't send that ({error}). Please try again, or email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
+      Sorry — we couldn't send that. {error}. Please try again, or email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
     </p>
+  )
+}
+
+function RecaptchaNote() {
+  if (!RECAPTCHA_SITE_KEY) return null
+  return (
+    <small className="fine recaptcha-note">
+      Protected by reCAPTCHA — Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms</a> apply.
+    </small>
   )
 }
 
@@ -1017,7 +1074,7 @@ export function About() {
       <section className="section">
         <div className="container">
           <Reveal className="section-head center"><span className="kicker">Where we are</span><h2>Our offices</h2></Reveal>
-          <div className="grid-3">
+          <div className={COMPANY.offices.length === 1 ? 'office-single' : 'grid-3'}>
             {COMPANY.offices.map((o) => (
               <div key={o.city} className="card office">
                 <span className="icon-box sm"><Icon name="pin" size={18} /></span>
@@ -1263,12 +1320,11 @@ export function EbookDetail() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const b = EBOOKS.find((x) => x.slug === slug)
-  const { form, up, status, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', company: '' })
+  const { form, bind, fieldError, status, error, honey, setHoney, submit: send } = useLeadForm('ebook', { name: '', email: '', company: '' })
   useTitle(b?.title)
   if (!b) return <NotFound />
   const submit = (e) => {
-    e.preventDefault()
-    send(`Ebook download: ${b.title} — ${form.name}`, {
+    send(e, `Ebook download: ${b.title} — ${form.name}`, {
       'Lead type': 'Ebook download', Ebook: b.title, Name: form.name, Email: form.email, Company: form.company || '—',
     }, () => {
       try { sessionStorage.setItem('ebook-access', '1') } catch (err) { /* ignore */ }
@@ -1296,15 +1352,16 @@ export function EbookDetail() {
               <li><span className="check"><Icon name="check" size={16} /></span>Frameworks and checklists you can reuse</li>
               <li><span className="check"><Icon name="check" size={16} /></span>Written by senior Advotis specialists</li>
             </ul>
-            <form className="card form" onSubmit={submit}>
+            <form className="card form" onSubmit={submit} noValidate>
               <h3><Icon name="lock" size={18} /> Get instant access</h3>
-              <label>Full name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Jane Doe" /></label>
-              <label>Work email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="jane@company.com" /></label>
-              <label>Company<input name="company" autoComplete="organization" value={form.company} onChange={up('company')} placeholder="Company Inc." /></label>
+              <label><span>Full name <Req /></span><input required autoComplete="name" maxLength={80} {...bind('name')} placeholder="Jane Doe" />{fieldError('name')}</label>
+              <label><span>Work email <Req /></span><input required type="email" autoComplete="email" maxLength={120} {...bind('email')} placeholder="jane@company.com" />{fieldError('email')}</label>
+              <label>Company<input autoComplete="organization" maxLength={120} {...bind('company')} placeholder="Company Inc." />{fieldError('company')}</label>
               <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
               {status === 'error' && <FormError error={error} />}
               <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Unlocking…' : <>Read the ebook <Icon name="arrow" size={18} /></>}</button>
               <small className="fine">By continuing you agree to our <Link to="/privacy">privacy policy</Link>.</small>
+              <RecaptchaNote />
             </form>
           </div>
         </div>
@@ -1435,18 +1492,17 @@ export function JobDetail() {
   const { slug } = useParams()
   const j = JOBS.find((x) => x.slug === slug)
   useTitle(j ? j.title : 'Job not found')
-  const { form, up, status, setStatus, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', phone: '', link: '', cv: '', extra: '', message: '' })
-  const sent = status === 'sent'
+  const navigate = useNavigate()
+  const { form, bind, fieldError, status, error, honey, setHoney, submit: send } = useLeadForm('job', { name: '', email: '', phone: '', link: '', cv: '', extra: '', message: '' })
   if (!j) return <NotFound />
   const submit = (e) => {
-    e.preventDefault()
-    send(`${j.freelance ? 'Freelancer application' : 'Job application'}: ${j.title} — ${form.name}`, {
+    send(e, `${j.freelance ? 'Freelancer application' : 'Job application'}: ${j.title} — ${form.name}`, {
       'Lead type': j.freelance ? 'Freelancer application' : 'Job application',
       Role: j.title, Name: form.name, Email: form.email, Phone: form.phone || '—',
       'LinkedIn / portfolio': form.link || '—', 'CV / resume link': form.cv || '—',
       [j.freelance ? 'Skills & rate' : 'College & availability']: form.extra || '—',
       Message: form.message || '—',
-    })
+    }, () => navigate('/thank-you', { state: { type: j.freelance ? 'freelancer' : 'application', name: form.name, role: j.title } }))
   }
   const others = JOBS.filter((x) => x.slug !== j.slug)
   return (
@@ -1481,28 +1537,23 @@ export function JobDetail() {
             )}
           </article>
           <aside className="job-apply">
-            <form className="card form" onSubmit={submit}>
-              {sent ? (
-                <div className="sent">
-                  <span className="icon-box"><Icon name="check" /></span>
-                  <h3>Thanks, {form.name.split(' ')[0] || 'there'}!</h3>
-                  <p>Your application for <b>{j.title}</b> has been received. Our team reviews every application and will get back to you within a week.</p>
-                  <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Submit another application</button>
-                </div>
-              ) : (
+            <form className="card form" onSubmit={submit} noValidate>
+              {(
                 <>
                   <h3>{j.freelance ? 'Join the network' : 'Apply for this role'}</h3>
                   <p className="form-sub">Takes 2 minutes. We reply within a week.</p>
-                  <label>Full name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Your name" /></label>
-                  <label>Email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="you@email.com" /></label>
-                  <label>Phone<input type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={up('phone')} placeholder="+91 00000 00000" /></label>
-                  <label>LinkedIn / portfolio / GitHub<input type="url" name="link" value={form.link} onChange={up('link')} placeholder="https://" /></label>
-                  <label>CV / resume link (Google Drive, Dropbox…)<input type="url" name="cv" value={form.cv} onChange={up('cv')} placeholder="https://drive.google.com/…" /></label>
-                  <label>{j.freelance ? 'Your skills & hourly rate' : 'College & availability'}<input value={form.extra} onChange={up('extra')} placeholder={j.freelance ? 'E.g. React developer, $25/hr' : 'E.g. Final year, available from June'} /></label>
-                  <label>{j.freelance ? 'Tell us about your experience' : 'Why do you want this role?'}<textarea rows="4" value={form.message} onChange={up('message')} /></label>
+                  <label><span>Full name <Req /></span><input required autoComplete="name" maxLength={80} {...bind('name')} placeholder="Your name" />{fieldError('name')}</label>
+                  <label><span>Email <Req /></span><input required type="email" autoComplete="email" maxLength={120} {...bind('email')} placeholder="you@email.com" />{fieldError('email')}</label>
+                  <label>Phone<input type="tel" autoComplete="tel" maxLength={20} {...bind('phone')} placeholder="+91 98765 43210" />{fieldError('phone')}</label>
+                  <label>LinkedIn / portfolio / GitHub<input type="url" maxLength={300} {...bind('link')} placeholder="https://" />{fieldError('link')}</label>
+                  <label>CV / resume link (Google Drive, Dropbox…)<input type="url" maxLength={300} {...bind('cv')} placeholder="https://drive.google.com/…" />{fieldError('cv')}</label>
+                  <small className="fine hint">Add at least one: a CV link or a LinkedIn / portfolio link.</small>
+                  <label>{j.freelance ? 'Your skills & hourly rate' : 'College & availability'}<input maxLength={200} {...bind('extra')} placeholder={j.freelance ? 'E.g. React developer, $25/hr' : 'E.g. Final year, available from June'} />{fieldError('extra')}</label>
+                  <label>{j.freelance ? 'Tell us about your experience' : 'Why do you want this role?'}<textarea rows="4" maxLength={3000} {...bind('message')} />{fieldError('message')}</label>
                   <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
                   {status === 'error' && <FormError error={error} />}
                   <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : <>{j.freelance ? 'Join as a freelancer' : 'Submit application'} <Icon name="arrow" size={18} /></>}</button>
+                  <RecaptchaNote />
                 </>
               )}
             </form>
@@ -1522,14 +1573,13 @@ export function JobDetail() {
 /* =================== CONTACT =================== */
 export function Contact() {
   useTitle('Contact')
-  const { form, up, status, setStatus, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', phone: '', company: '', service: SERVICES[0].title, budget: '', message: '' })
-  const sent = status === 'sent'
+  const navigate = useNavigate()
+  const { form, bind, fieldError, status, error, honey, setHoney, submit: send } = useLeadForm('contact', { name: '', email: '', phone: '', company: '', service: SERVICES[0].title, budget: '', message: '' })
   const submit = (e) => {
-    e.preventDefault()
-    send(`New enquiry: ${form.service} — ${form.name}`, {
+    send(e, `New enquiry: ${form.service} — ${form.name}`, {
       'Lead type': 'Contact enquiry', Name: form.name, Email: form.email, Phone: form.phone || '—', Company: form.company || '—',
       Service: form.service, Budget: form.budget || '—', Message: form.message || '—',
-    })
+    }, () => navigate('/thank-you', { state: { type: 'contact', name: form.name } }))
   }
   return (
     <>
@@ -1538,44 +1588,38 @@ export function Contact() {
         text="Tell us where you want to be in 12 months. We'll come back within one business day with next steps." />
       <section className="section tight-top">
         <div className="container contact-grid">
-          <form className="card form big" onSubmit={submit}>
-            {sent ? (
-              <div className="sent">
-                <span className="icon-box"><Icon name="check" /></span>
-                <h3>Thanks, {form.name.split(' ')[0] || 'there'}!</h3>
-                <p>Your message is with our team. We'll reply within one business day with next steps.</p>
-                <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Send another message</button>
-              </div>
-            ) : (
+          <form className="card form big" onSubmit={submit} noValidate>
+            {(
               <>
                 <div className="field-row">
-                  <label>Name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Jane Doe" /></label>
-                  <label>Work email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="jane@company.com" /></label>
+                  <label><span>Name <Req /></span><input required autoComplete="name" maxLength={80} {...bind('name')} placeholder="Jane Doe" />{fieldError('name')}</label>
+                  <label><span>Work email <Req /></span><input required type="email" autoComplete="email" maxLength={120} {...bind('email')} placeholder="jane@company.com" />{fieldError('email')}</label>
                 </div>
                 <div className="field-row">
-                  <label>Phone / WhatsApp<input type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={up('phone')} placeholder="+1 555 000 0000" /></label>
-                  <label>Company<input name="company" autoComplete="organization" value={form.company} onChange={up('company')} placeholder="Company Inc." /></label>
+                  <label>Phone / WhatsApp<input type="tel" autoComplete="tel" maxLength={20} {...bind('phone')} placeholder="+91 98765 43210" />{fieldError('phone')}</label>
+                  <label>Company<input autoComplete="organization" maxLength={120} {...bind('company')} placeholder="Company Inc." />{fieldError('company')}</label>
                 </div>
                 <div className="field-row">
                   <label>Monthly budget
-                    <select value={form.budget} onChange={up('budget')}>
+                    <select {...bind('budget')}>
                       <option value="">Select a range</option>
                       <option>Under $5k</option><option>$5k – $15k</option><option>$15k – $50k</option><option>$50k+</option>
                     </select>
                   </label>
                   <label>Interested in
-                  <select value={form.service} onChange={up('service')}>
+                  <select {...bind('service')}>
                     {SERVICES.map((s) => <option key={s.slug}>{s.title}</option>)}
                     <option>My idea — wireframe, build &amp; marketing</option>
                     <option>Full-funnel partnership</option>
                   </select>
                   </label>
                 </div>
-                <label>What are your goals?<textarea rows="5" value={form.message} onChange={up('message')} placeholder="E.g. double inbound demo requests in the next two quarters" /></label>
+                <label><span>What are your goals? <Req /></span><textarea required rows="5" maxLength={3000} {...bind('message')} placeholder="E.g. double inbound demo requests in the next two quarters" />{fieldError('message')}</label>
                 <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
                 {status === 'error' && <FormError error={error} />}
                 <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : <>Send message <Icon name="arrow" size={18} /></>}</button>
                 <small className="fine">We reply within one business day. Your details are only used to respond to your enquiry — see our <Link to="/privacy">privacy policy</Link>.</small>
+                <RecaptchaNote />
               </>
             )}
           </form>
@@ -1614,6 +1658,40 @@ export function Privacy() {
         </div>
       </section>
     </>
+  )
+}
+
+function Req() {
+  return <span className="req" aria-hidden="true">*</span>
+}
+
+/* =================== THANK YOU (shown only after a lead is delivered) =================== */
+const THANKS = {
+  contact: { kicker: 'Message received', text: "Your message is with our team. We'll reply within one business day with next steps." },
+  application: { kicker: 'Application received', text: 'Our team reviews every application and will get back to you within a week.' },
+  freelancer: { kicker: 'Welcome to the network', text: "We've received your details and will reach out when a project matches your skills." },
+}
+export function ThankYou() {
+  useTitle('Thank you')
+  const navigate = useNavigate()
+  const { state } = useLocation()
+  const [info, setInfo] = useState(null)
+  useEffect(() => {
+    // Reached only via a successful form submit; a direct visit goes back to the contact page.
+    if (!state?.type) { navigate('/contact', { replace: true }); return }
+    setInfo(state)
+    try { (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead', lead_type: state.type }) } catch (e) { /* ignore */ }
+  }, [state, navigate])
+  const t = THANKS[info?.type] || THANKS.contact
+  const first = info?.name ? info.name.trim().split(/\s+/)[0] : ''
+  return (
+    <PageHero kicker={t.kicker} title={first ? `Thank you, ${first}!` : 'Thank you!'}
+      text={info?.role ? `Your application for ${info.role} has been received. ${t.text}` : t.text}>
+      <div className="hero-ctas">
+        <Link to="/" className="btn btn-primary">Back to home</Link>
+        {info?.type === 'contact' ? <Link to="/work" className="btn btn-ghost">See our work</Link> : <Link to="/careers" className="btn btn-ghost">More openings</Link>}
+      </div>
+    </PageHero>
   )
 }
 

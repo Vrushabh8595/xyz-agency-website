@@ -1335,3 +1335,14 @@ span.reveal { display: inline-block; }
 html { overflow-x: clip; }
 body { overflow-x: clip; }
 .meta-cat { color: var(--primary); font-weight: 700; }
+
+.office-single { max-width: 440px; margin: 0 auto; text-align: center; }
+.office-single .icon-box { margin-left: auto; margin-right: auto; }
+
+/* Form validation */
+.form .req { color: #ef4444; margin-left: 2px; }
+.form .field-error { color: #dc2626; font-size: 12.5px; font-weight: 500; }
+.form [aria-invalid="true"] { border-color: #ef4444; }
+.form [aria-invalid="true"]:focus { box-shadow: 0 0 0 4px rgba(239, 68, 68, .16); }
+.form .hint { margin-top: -8px; }
+.grecaptcha-badge { visibility: hidden !important; }

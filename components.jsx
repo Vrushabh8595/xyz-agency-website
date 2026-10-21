@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { APP_TECH, CMS_TECH, COMPANY, HOSTING, PARTNERS, SERVICE_GROUPS, SERVICES } from './data.js'
-import { FORM_ENDPOINT, LEAD_CC, LOGO_FULL, LOGO_FULL_WHITE } from './site.config.js'
+import { FORM_ENDPOINT, LEAD_CC, LOGO_FULL, LOGO_FULL_WHITE, RECAPTCHA_SITE_KEY } from './site.config.js'
 import { applyHead, getSeo } from './seo.js'
 
 /* ---------- Icons ---------- */
@@ -77,18 +77,40 @@ export function SeoHead() {
 }
 
 /* ---------- Lead capture (all forms) ----------
-   Posts to FormSubmit, which emails the lead to the inbox set in site.config.js (LEAD_INBOX) and CCs LEAD_CC. */
-export async function sendLead(subject, fields) {
-  const payload = {
-    _subject: subject,
-    _template: 'table',
-    _captcha: 'false',
-    ...(LEAD_CC ? { _cc: LEAD_CC } : {}),
-    ...fields,
-    'Page': typeof window !== 'undefined' ? window.location.href : '',
-    'Submitted at': new Date().toISOString(),
+   1. Gets a Google reCAPTCHA v3 token (only when VITE_RECAPTCHA_SITE_KEY is set — invisible, no puzzles).
+   2. Posts to /api/lead (api/lead.js), which re-validates, runs the spam checks and emails the lead via FormSubmit.
+   3. Falls back to posting straight to FormSubmit only when the API isn't there (local dev / non-Vercel host)
+      or the API asks the browser to deliver an already-verified lead. */
+let recaptchaPromise
+export function loadRecaptcha() {
+  if (!RECAPTCHA_SITE_KEY || typeof window === 'undefined') return Promise.resolve(null)
+  if (!recaptchaPromise) {
+    recaptchaPromise = new Promise((resolve) => {
+      const s = document.createElement('script')
+      s.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(RECAPTCHA_SITE_KEY)}`
+      s.async = true
+      s.onload = () => window.grecaptcha.ready(() => resolve(window.grecaptcha))
+      s.onerror = () => { recaptchaPromise = null; resolve(null) }
+      document.head.appendChild(s)
+    })
   }
-  if (fields.Email) payload._replyto = fields.Email
+  return recaptchaPromise
+}
+async function recaptchaToken(action) {
+  const g = await loadRecaptcha()
+  if (!g) return ''
+  try { return await g.execute(RECAPTCHA_SITE_KEY, { action }) } catch (e) { return '' }
+}
+
+const RECAPTCHA_ACTIONS = { contact: 'contact', job: 'job_application', ebook: 'ebook' }
+
+async function postToFormSubmit(subject, values, fields) {
+  const payload = {
+    _subject: subject, _template: 'table', _captcha: 'false',
+    ...(LEAD_CC ? { _cc: LEAD_CC } : {}),
+    ...(values.email ? { _replyto: values.email.trim() } : {}),
+    ...fields,
+  }
   const res = await fetch(FORM_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -97,6 +119,35 @@ export async function sendLead(subject, fields) {
   let data = {}
   try { data = await res.json() } catch (e) { /* non-JSON */ }
   if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || `Request failed (${res.status})`)
+  return data
+}
+
+export async function sendLead({ kind, subject, values, fields, honey = '', elapsed = 0 }) {
+  const allFields = {
+    ...fields,
+    Page: typeof window !== 'undefined' ? window.location.href : '',
+    'Submitted at': new Date().toISOString(),
+  }
+  const token = await recaptchaToken(RECAPTCHA_ACTIONS[kind] || 'submit')
+  let res
+  try {
+    res = await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ kind, subject, values, fields: allFields, meta: { honey, elapsed, token } }),
+    })
+  } catch (e) {
+    throw new Error('Network error — please check your connection')
+  }
+  if (res.status === 404 || res.status === 405) return postToFormSubmit(subject, values, allFields) // no API on this host
+  let data = {}
+  try { data = await res.json() } catch (e) { /* non-JSON */ }
+  if (data.deliverFromBrowser) return postToFormSubmit(subject, values, allFields)
+  if (!res.ok || String(data.success) !== 'true') {
+    const err = new Error(data.message || `Request failed (${res.status})`)
+    if (data.errors) err.fields = data.errors
+    throw err
+  }
   return data
 }
 

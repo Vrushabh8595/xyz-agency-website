@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { BackToTop, Footer, Header, ScrollProgress, ScrollToTop, SeoHead } from './components.jsx'
 import {
   About, Blog, BlogPost, Careers, CaseStudy, Contact, EbookDetail, EbookReader, Ebooks,
-  Home, JobDetail, NotFound, Privacy, ServiceDetail, Services, Work,
+  Home, JobDetail, NotFound, Privacy, ServiceDetail, Services, ThankYou, Work,
 } from './pages.jsx'
 
 export default function App() {
@@ -29,6 +29,7 @@ export default function App() {
           <Route path="/careers/:slug" element={<JobDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/thank-you" element={<ThankYou />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

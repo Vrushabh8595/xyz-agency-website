@@ -23,7 +23,7 @@ export const organization = () => ({
   description: 'Software development and digital marketing company building websites, web apps, mobile apps, AI solutions and e-commerce stores, with managed cloud hosting, SEO, paid media, content and analytics.',
   ...(isPlaceholder(COMPANY.email) ? {} : { email: COMPANY.email }),
   ...(isPlaceholder(COMPANY.phone) ? {} : { telephone: COMPANY.phone }),
-  address: COMPANY.offices.map((o) => ({ '@type': 'PostalAddress', addressLocality: o.city, addressCountry: o.country })),
+  address: COMPANY.offices.map((o) => ({ '@type': 'PostalAddress', ...(o.street ? { streetAddress: o.street } : {}), addressLocality: o.city, ...(o.region ? { addressRegion: o.region } : {}), ...(o.postalCode ? { postalCode: o.postalCode } : {}), addressCountry: o.country === 'India' ? 'IN' : o.country })),
   areaServed: ['United States', 'United Arab Emirates', 'India', 'Worldwide'],
   sameAs: COMPANY.social.map((s) => s.url),
   knowsAbout: ['Software development', 'Web application development', 'Mobile app development', 'Flutter', 'MERN stack', 'Artificial intelligence', 'E-commerce development', 'Cloud hosting', 'DevOps', 'Search engine optimization', 'Answer engine optimization', 'Generative engine optimization', 'Pay-per-click advertising', 'Content marketing', 'Marketing analytics'],
@@ -226,6 +226,10 @@ export function getSeo(pathname = '/') {
       pageType: 'ContactPage',
       schema: [crumbs([['Contact', '/contact']])],
     })
+  }
+
+  if (path === '/thank-you') {
+    return page({ title: 'Thank you', description: 'Thanks for getting in touch with Advotis Agency.', robots: 'noindex,nofollow', schema: [] })
   }
 
   if (path === '/privacy') {
