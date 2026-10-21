@@ -14,6 +14,9 @@ export const SITE_URL = (import.meta.env?.VITE_SITE_URL || 'https://www.advotisa
 export const LEAD_INBOX = import.meta.env?.VITE_LEAD_INBOX || 'gulhanev33@gmail.com'
 export const FORM_ENDPOINT = `https://formsubmit.co/ajax/${LEAD_INBOX}`
 
+/* Extra inboxes that get a copy of every lead (comma-separated). FormSubmit sends these as CC. */
+export const LEAD_CC = import.meta.env?.VITE_LEAD_CC || 'contact@advotisagency.com'
+
 export const DEFAULT_OG_IMAGE = '/og-default.jpg'
 export const LOGO = '/logo.png'
 export const LOGO_FULL = '/logo-advotis.png'

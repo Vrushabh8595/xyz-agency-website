@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { APP_TECH, CMS_TECH, COMPANY, HOSTING, PARTNERS, SERVICE_GROUPS, SERVICES } from './data.js'
-import { FORM_ENDPOINT, LOGO_FULL, LOGO_FULL_WHITE } from './site.config.js'
+import { FORM_ENDPOINT, LEAD_CC, LOGO_FULL, LOGO_FULL_WHITE } from './site.config.js'
 import { applyHead, getSeo } from './seo.js'
 
 /* ---------- Icons ---------- */
@@ -77,12 +77,13 @@ export function SeoHead() {
 }
 
 /* ---------- Lead capture (all forms) ----------
-   Posts to FormSubmit, which emails the lead to the inbox set in site.config.js. */
+   Posts to FormSubmit, which emails the lead to the inbox set in site.config.js (LEAD_INBOX) and CCs LEAD_CC. */
 export async function sendLead(subject, fields) {
   const payload = {
     _subject: subject,
     _template: 'table',
     _captcha: 'false',
+    ...(LEAD_CC ? { _cc: LEAD_CC } : {}),
     ...fields,
     'Page': typeof window !== 'undefined' ? window.location.href : '',
     'Submitted at': new Date().toISOString(),
