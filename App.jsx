@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { BackToTop, Footer, Header, ScrollProgress, ScrollToTop } from './components.jsx'
+import { BackToTop, Footer, Header, ScrollProgress, ScrollToTop, SeoHead } from './components.jsx'
 import {
   About, Blog, BlogPost, Careers, CaseStudy, Contact, EbookDetail, EbookReader, Ebooks,
   Home, JobDetail, NotFound, Privacy, ServiceDetail, Services, Work,
@@ -9,9 +9,10 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
+      <SeoHead />
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />

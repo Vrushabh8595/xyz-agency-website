@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { APP_TECH, CMS_TECH, COMPANY, HOSTING, PARTNERS, SERVICE_GROUPS, SERVICES } from './data.js'
+import { FORM_ENDPOINT } from './site.config.js'
+import { applyHead, getSeo } from './seo.js'
 
 /* ---------- Icons ---------- */
 export function Icon({ name, size = 22 }) {
@@ -64,10 +66,62 @@ export function useInView() {
   return [ref, inView]
 }
 
-export function useTitle(title) {
-  useEffect(() => {
-    document.title = title ? `${title} | ${COMPANY.name}` : `${COMPANY.name} | Software Development & Digital Marketing`
-  }, [title])
+/* Page <head> (title, meta, canonical, JSON-LD) comes from seo.js for every route.
+   It is prerendered into each HTML file at build time and refreshed here on client-side navigation. */
+export function useTitle() {}
+
+export function SeoHead() {
+  const { pathname } = useLocation()
+  useEffect(() => { applyHead(getSeo(pathname)) }, [pathname])
+  return null
+}
+
+/* ---------- Lead capture (all forms) ----------
+   Posts to FormSubmit, which emails the lead to the inbox set in site.config.js. */
+export async function sendLead(subject, fields) {
+  const payload = {
+    _subject: subject,
+    _template: 'table',
+    _captcha: 'false',
+    ...fields,
+    'Page': typeof window !== 'undefined' ? window.location.href : '',
+    'Submitted at': new Date().toISOString(),
+  }
+  if (fields.Email) payload._replyto = fields.Email
+  const res = await fetch(FORM_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  let data = {}
+  try { data = await res.json() } catch (e) { /* non-JSON */ }
+  if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || `Request failed (${res.status})`)
+  return data
+}
+
+/* Honeypot field: hidden from people, bots fill it in and get silently dropped */
+export function Honeypot({ value, onChange }) {
+  return (
+    <label className="hp" aria-hidden="true">Leave this empty<input tabIndex={-1} autoComplete="off" name="_honey" value={value} onChange={onChange} /></label>
+  )
+}
+
+/* Renders text with markdown-style [links](/path) — internal paths use the router */
+export function RichText({ text }) {
+  const parts = []
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)/g
+  let last = 0
+  let m
+  while ((m = re.exec(text))) {
+    if (m.index > last) parts.push(text.slice(last, m.index))
+    const [, label, href] = m
+    parts.push(href.startsWith('/')
+      ? <Link key={m.index} to={href}>{label}</Link>
+      : <a key={m.index} href={href} target="_blank" rel="noopener">{label}</a>)
+    last = m.index + m[0].length
+  }
+  if (last < text.length) parts.push(text.slice(last))
+  return <>{parts}</>
 }
 
 export function Counter({ value, suffix }) {
@@ -129,8 +183,9 @@ const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia?.(
 
 /* ---------- Theme hook (reacts to the header toggle) ---------- */
 export function useTheme() {
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light')
+  const [theme, setTheme] = useState('light')
   useEffect(() => {
+    setTheme(document.documentElement.dataset.theme || 'light')
     const mo = new MutationObserver(() => setTheme(document.documentElement.dataset.theme || 'light'))
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     return () => mo.disconnect()
@@ -267,10 +322,11 @@ function getInitialTheme() {
 }
 
 export function ThemeToggle() {
-  const [theme, setThemeState] = useState(() => document.documentElement.dataset.theme || getInitialTheme())
-  useEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
+  const [theme, setThemeState] = useState('light')
+  useEffect(() => { setThemeState(document.documentElement.dataset.theme || getInitialTheme()) }, [])
   const setTheme = (t) => {
     setThemeState(t)
+    document.documentElement.dataset.theme = t
     try { localStorage.setItem(THEME_KEY, t) } catch (e) { /* ignore */ }
   }
   const dark = theme === 'dark'
@@ -339,11 +395,11 @@ function MegaMenu() {
           ))}
         </div>
         <aside className="mega-feature">
-          <img src={google.img} alt={google.name} width="169" height="64" />
+          <img src={google.img} alt={google.name} width="169" height="64" loading="lazy" />
           <h4>Certified, partner-led delivery</h4>
           <p>Google Premier Partner, plus certified with AWS, Microsoft, Salesforce and HubSpot.</p>
           <div className="mega-badges">
-            {PARTNERS.filter((p) => !p.featured).slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} />)}
+            {PARTNERS.filter((p) => !p.featured).slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} width={p.w} height={p.h} loading="lazy" />)}
           </div>
           <Link to="/contact" className="btn btn-primary sm">Start a project <Icon name="arrow" size={16} /></Link>
         </aside>
@@ -444,7 +500,7 @@ export function Footer() {
           <Logo light />
           <p className="foot-about">A software development and digital marketing company — we build websites, web apps and mobile apps, then grow them with SEO, paid media and AI.</p>
           <div className="foot-badges">
-            {PARTNERS.slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} loading="lazy" />)}
+            {PARTNERS.slice(0, 4).map((p) => <img key={p.name} src={p.img} alt={p.name} width={p.w} height={p.h} loading="lazy" />)}
           </div>
           <Socials />
         </div>
@@ -554,12 +610,14 @@ export function EbookCover({ book, small }) {
   )
 }
 
-export function PostCard({ post, i = 0 }) {
+export function PostCard({ post, eager = false }) {
   return (
     <Link to={`/blog/${post.slug}`} className="card post spot" onMouseMove={spotlight}>
-      <div className={`post-img p${i % 4}`}><span>{post.category}</span></div>
+      <div className="post-img photo">
+        <img src={post.image} alt={post.imageAlt} width="1200" height="630" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      </div>
       <div className="post-body">
-        <small className="meta">{post.date} · {post.read}</small>
+        <small className="meta"><b className="meta-cat">{post.category}</b> · <time dateTime={post.date}>{post.dateLabel}</time> · {post.read}</small>
         <h3>{post.title}</h3>
         <p>{post.excerpt}</p>
         <span className="link">Read article <Icon name="arrow" size={16} /></span>

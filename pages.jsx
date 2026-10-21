@@ -1,16 +1,44 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
-  APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOSTING, INDUSTRIES, JOBS, MARKETING_TECH, PARTNERS, POSTS,
+  APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOME_FAQS, getPostContent, loadPostContent, HOSTING, INDUSTRIES, JOBS, MARKETING_TECH, PARTNERS, POSTS,
   SERVICE_GROUPS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
+import { SITE_URL } from './site.config.js'
 import {
-  CaseCard, Counter, CtaBand, EbookCover, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, SplitText,
-  Socials, TechTile, spotlight, useInView, useSectionProgress, useTitle,
+  CaseCard, Counter, CtaBand, EbookCover, Honeypot, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, RichText, SplitText,
+  Socials, TechTile, sendLead, spotlight, useInView, useSectionProgress, useTitle,
 } from './components.jsx'
 
-const mailto = (subject, lines) =>
-  `mailto:${COMPANY.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
+/* Shared submit state for every lead form: idle → sending → sent | error */
+function useLeadForm(initial) {
+  const [form, setForm] = useState(initial)
+  const [status, setStatus] = useState('idle')
+  const [error, setError] = useState('')
+  const [honey, setHoney] = useState('')
+  const up = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
+  const submit = async (subject, fields, onDone) => {
+    if (honey) { setStatus('sent'); return }
+    setStatus('sending'); setError('')
+    try {
+      await sendLead(subject, fields)
+      setStatus('sent')
+      onDone?.()
+    } catch (err) {
+      setError(err.message || 'Something went wrong')
+      setStatus('error')
+    }
+  }
+  return { form, setForm, up, status, setStatus, error, honey, setHoney, submit }
+}
+
+function FormError({ error }) {
+  return (
+    <p className="form-error" role="alert">
+      Sorry — we couldn't send that ({error}). Please try again, or email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
+    </p>
+  )
+}
 
 /* =================== HOME =================== */
 function RotatingWord({ words, interval = 2600 }) {
@@ -80,7 +108,8 @@ export function Home() {
             <span className="eyebrow fade-in"><span className="pulse-dot" /> Software development &amp; digital marketing company</span>
             <h1 className="hero-title">
               <span className="line"><span>We build &amp; grow</span></span>
-              <span className="line"><RotatingWord words={HERO_WORDS} /></span>
+              <span className="sr-only"> web applications, mobile apps, AI products, online stores and qualified pipeline</span>
+              <span className="line" aria-hidden="true"><RotatingWord words={HERO_WORDS} /></span>
             </h1>
             <p className="lead fade-in d2">
               XYZ Agency engineers websites, web apps, mobile apps and AI products — then grows them with SEO,
@@ -189,8 +218,22 @@ export function Home() {
             <Reveal variant="left"><Link to="/blog" className="btn btn-ghost">Read the blog <Icon name="arrow" size={18} /></Link></Reveal>
           </div>
           <div className="grid-3">
-            {POSTS.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} i={i} /></Reveal>)}
+            {POSTS.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} /></Reveal>)}
           </div>
+        </div>
+      </section>
+
+      <section className="section alt" id="faq">
+        <div className="container faq-wrap">
+          <div>
+            <Reveal><span className="kicker">FAQ</span></Reveal>
+            <SplitText text="Questions clients ask us most" />
+            <Reveal delay={120}>
+              <p className="body-text">Quick answers about how we build, launch and grow digital products. Have another question? Our team replies within one business day.</p>
+              <Link to="/contact" className="btn btn-ghost mt-btn">Ask a question <Icon name="arrow" size={18} /></Link>
+            </Reveal>
+          </div>
+          <Faq items={HOME_FAQS} />
         </div>
       </section>
 
@@ -212,7 +255,7 @@ function PartnersBand() {
         <div className="partner-grid">
           {PARTNERS.map((p, i) => (
             <Reveal key={p.name} variant="zoom" delay={i * 70} className={`partner-tile ${p.featured ? 'featured' : ''}`}>
-              <img src={p.img} alt={p.name} loading="lazy" />
+              <img src={p.img} alt={p.name} width={p.w} height={p.h} loading="lazy" />
               {p.featured && <span className="partner-tag"><Icon name="star" size={12} /> Premier</span>}
             </Reveal>
           ))}
@@ -647,8 +690,17 @@ function ServiceVisual({ slug }) {
 }
 
 const SERVICE_POST_CATS = {
-  seo: ['SEO'], 'paid-media': ['Paid Media'], 'content-social': ['Demand Gen'],
-  'web-experience': ['CRO'], 'analytics-cro': ['Analytics', 'CRO'], 'ai-automation': ['AI'], 'ai-development': ['AI'],
+  'web-development': ['Web Development'], 'web-applications': ['Web Development', 'AI'], 'mobile-apps': ['Mobile Apps'],
+  'ai-development': ['AI'], 'ecommerce-development': ['E-commerce'], seo: ['SEO'], 'paid-media': ['Paid Media'],
+  'content-social': ['Content', 'Demand Gen'], 'web-experience': ['CRO', 'Web Development'], 'analytics-cro': ['Analytics', 'CRO'],
+  'ai-automation': ['AI'], 'cloud-hosting': ['Cloud & DevOps'], 'devops-maintenance': ['Cloud & DevOps'],
+}
+const postsForService = (slug, n = 3) => {
+  const cats = SERVICE_POST_CATS[slug] || []
+  const direct = POSTS.filter((p) => p.service === slug)
+  const near = POSTS.filter((p) => !direct.includes(p) && cats.includes(p.category))
+  const rest = POSTS.filter((p) => !direct.includes(p) && !near.includes(p))
+  return [...direct, ...near, ...rest].slice(0, n)
 }
 
 function Faq({ items }) {
@@ -698,9 +750,7 @@ export function ServiceDetail() {
   const next = SERVICES[(idx + 1) % SERVICES.length]
   let related = CASE_STUDIES.filter((c) => c.services.includes(s.title))
   if (related.length < 2) related = [...related, ...CASE_STUDIES.filter((c) => !related.includes(c))].slice(0, 2)
-  const cats = SERVICE_POST_CATS[s.slug] || []
-  let posts = POSTS.filter((p) => cats.includes(p.category))
-  if (posts.length < 3) posts = [...posts, ...POSTS.filter((p) => !posts.includes(p))].slice(0, 3)
+  const posts = postsForService(s.slug)
 
   return (
     <div className="svc-page" style={{ '--svc': s.color }} key={s.slug}>
@@ -834,7 +884,7 @@ export function ServiceDetail() {
             </div>
             <Reveal variant="left"><Link to="/blog" className="btn btn-ghost">Visit the blog <Icon name="arrow" size={18} /></Link></Reveal>
           </div>
-          <div className="grid-3">{posts.slice(0, 3).map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} i={POSTS.indexOf(p)} /></Reveal>)}</div>
+          <div className="grid-3">{posts.map((p, i) => <Reveal key={p.slug} delay={i * 90}><PostCard post={p} /></Reveal>)}</div>
         </div>
       </section>
 
@@ -983,47 +1033,51 @@ export function About() {
 }
 
 /* =================== BLOG =================== */
+const slugify = (t) => t.toLowerCase().replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
 export function Blog() {
   useTitle('Blog')
   const cats = ['All', ...new Set(POSTS.map((p) => p.category))]
   const [cat, setCat] = useState('All')
   const [q, setQ] = useState('')
-  const list = useMemo(() => POSTS.filter((p) =>
-    (cat === 'All' || p.category === cat) &&
-    (p.title + p.excerpt).toLowerCase().includes(q.toLowerCase())), [cat, q])
   const featured = POSTS[0]
+  const list = useMemo(() => POSTS.filter((p) =>
+    p !== featured && (cat === 'All' || p.category === cat) &&
+    (p.title + p.excerpt + p.keywords.join(' ')).toLowerCase().includes(q.toLowerCase())), [cat, q, featured])
   return (
     <>
       <PageHero kicker="Blog" crumbs={[['Blog']]}
-        title="Insights from experts driving results on the ground"
-        text="Practical playbooks on SEO, paid media, analytics, content and AI — written by the people doing the work." />
+        title="Insights on software, AI search and growth marketing"
+        text="Practical, up-to-date playbooks on AEO and GEO, SEO, AI agents, web and app development, paid media, analytics and cloud — written by the people doing the work." />
       <section className="section tight-top">
         <div className="container">
           <Link to={`/blog/${featured.slug}`} className="card featured-post">
-            <div className="post-img p0 big"><span>Featured</span></div>
+            <div className="post-img photo big">
+              <img src={featured.image} alt={featured.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
+            </div>
             <div className="post-body">
-              <span className="tag">{featured.category}</span>
+              <span className="tag">Latest · {featured.category}</span>
               <h2>{featured.title}</h2>
               <p>{featured.excerpt}</p>
-              <small className="meta">{featured.date} · {featured.read}</small>
+              <small className="meta"><time dateTime={featured.date}>{featured.dateLabel}</time> · {featured.read}</small>
             </div>
           </Link>
 
           <div className="filter-bar">
-            <div className="filters" role="tablist">
+            <div className="filters" role="toolbar" aria-label="Filter by category">
               {cats.map((c) => (
-                <button key={c} className={`filter ${cat === c ? 'on' : ''}`} onClick={() => setCat(c)}>{c}</button>
+                <button key={c} className={`filter ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
               ))}
             </div>
             <label className="search">
               <Icon name="search" size={18} />
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search articles" aria-label="Search articles" />
+              <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search articles" aria-label="Search articles" />
             </label>
           </div>
 
           {list.length ? (
             <div className="grid-3">
-              {list.map((p) => <PostCard key={p.slug} post={p} i={POSTS.indexOf(p)} />)}
+              {list.map((p) => <PostCard key={p.slug} post={p} />)}
             </div>
           ) : (
             <p className="empty">No articles match your search. <button className="text-btn" onClick={() => { setQ(''); setCat('All') }}>Clear filters</button></p>
@@ -1035,45 +1089,112 @@ export function Blog() {
   )
 }
 
+function Block({ b }) {
+  const [type, v] = b
+  switch (type) {
+    case 'h': return <h2 id={slugify(v)}>{v}</h2>
+    case 'h3': return <h3>{v}</h3>
+    case 'q': return <blockquote>{v}</blockquote>
+    case 'tip': return <aside className="tip"><span className="tip-ico"><Icon name="bolt" size={18} /></span><p><b>Pro tip: </b><RichText text={v} /></p></aside>
+    case 'ul': return <ul className="art-list">{v.map((x, i) => <li key={i}><RichText text={x} /></li>)}</ul>
+    case 'ol': return <ol className="art-list num">{v.map((x, i) => <li key={i}><RichText text={x} /></li>)}</ol>
+    case 'table': return (
+      <div className="table-wrap">
+        <table>
+          <thead><tr>{v.head.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
+          <tbody>{v.rows.map((r, i) => <tr key={i}>{r.map((c, k) => (k === 0 ? <th key={k} scope="row"><RichText text={c} /></th> : <td key={k}><RichText text={c} /></td>))}</tr>)}</tbody>
+        </table>
+      </div>
+    )
+    default: return <p><RichText text={v} /></p>
+  }
+}
+
 export function BlogPost() {
   const { slug } = useParams()
-  const post = POSTS.find((p) => p.slug === slug)
-  useTitle(post?.title)
-  if (!post) return <NotFound />
-  const related = POSTS.filter((p) => p.slug !== slug).slice(0, 3)
-  const book = EBOOKS[POSTS.indexOf(post) % EBOOKS.length]
-  const url = typeof window !== 'undefined' ? window.location.href : ''
+  const meta = POSTS.find((p) => p.slug === slug)
+  const [, rerender] = useState(0)
+  const content = meta && getPostContent(meta.slug)
+  useEffect(() => {
+    if (meta && !content) loadPostContent(meta.slug).then(() => rerender((n) => n + 1))
+  }, [meta, content])
+  if (!meta) return <NotFound />
+  const post = { ...meta, ...(content || { body: [], takeaways: [], faqs: [], sources: [] }) }
+  const same = POSTS.filter((p) => p.slug !== slug && p.category === post.category)
+  const related = [...same, ...POSTS.filter((p) => p.slug !== slug && !same.includes(p))].slice(0, 3)
+  const service = SERVICES.find((s) => s.slug === post.service)
+  const book = EBOOKS[POSTS.indexOf(meta) % EBOOKS.length]
+  const url = `${SITE_URL}/blog/${post.slug}`
+  const toc = post.body.filter(([t]) => t === 'h').map(([, v]) => v)
   return (
     <>
-      <PageHero kicker={post.category} crumbs={[['Blog', '/blog'], [post.category]]} title={post.title}>
-        <p className="meta light-meta">{post.author} · {post.date} · {post.read}</p>
+      <PageHero kicker={post.category} crumbs={[['Blog', '/blog'], [post.title]]} title={post.title}>
+        <p className="meta light-meta">
+          By {post.author} · <time dateTime={post.date}>{post.dateLabel}</time>
+          {post.updated !== post.date && <> · Updated <time dateTime={post.updated}>{post.updated}</time></>} · {post.read}
+        </p>
       </PageHero>
       <section className="section tight-top">
         <div className="container article-wrap">
           <article className="article">
-            {post.body.map(([type, text], i) =>
-              type === 'h' ? <h2 key={i}>{text}</h2>
-                : type === 'q' ? <blockquote key={i}>{text}</blockquote>
-                  : <p key={i}>{text}</p>)}
+            <figure className="art-figure">
+              <img src={post.image} alt={post.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
+            </figure>
+            {!content && <p className="empty">Loading article…</p>}
+            <div className="quick-answer">
+              <span className="qa-label"><Icon name="spark" size={16} /> Quick answer</span>
+              <p>{post.summary}</p>
+            </div>
+            {content && <div className="takeaways">
+              <h2 className="no-top">Key takeaways</h2>
+              <ul>{post.takeaways.map((t) => <li key={t}><Icon name="check" size={16} />{t}</li>)}</ul>
+            </div>}
+            {post.body.map((b, i) => <Block key={i} b={b} />)}
+            {post.faqs.length > 0 && <>
+              <h2 id="faq">Frequently asked questions</h2>
+              <Faq items={post.faqs} key={post.slug} />
+            </>}
+            {post.sources?.length > 0 && (
+              <div className="sources">
+                <h2 id="sources">Sources</h2>
+                <ol>{post.sources.map(([label, href]) => <li key={href}><a href={href} target="_blank" rel="noopener">{label}</a></li>)}</ol>
+              </div>
+            )}
+            <div className="author-box card">
+              <span className="logo-mark">X</span>
+              <div>
+                <b>{post.author}</b>
+                <p>Written and reviewed by the {post.author.replace(/^XYZ /, '')} at {COMPANY.name} — specialists who build and grow websites, apps and AI products for clients every day. <Link to="/about">About us</Link></p>
+              </div>
+            </div>
             <div className="share">
               <span>Share:</span>
-              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer">LinkedIn</a>
-              <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noreferrer">X</a>
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener">LinkedIn</a>
+              <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener">X</a>
+              <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${url}`)}`} target="_blank" rel="noopener">WhatsApp</a>
               <a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(url)}`}>Email</a>
             </div>
             <Link to="/blog" className="back-link"><Icon name="back" size={18} /> Back to blog</Link>
           </article>
           <aside className="sidebar">
+            <nav className="card side-card toc" aria-label="On this page">
+              <h3>On this page</h3>
+              {toc.map((h) => <a key={h} href={`#${slugify(h)}`}>{h}</a>)}
+              <a href="#faq">Frequently asked questions</a>
+            </nav>
+            {service && (
+              <div className="card side-card">
+                <span className="icon-box sm"><Icon name={service.icon} size={18} /></span>
+                <h3>{service.title}</h3>
+                <p>{service.short}</p>
+                <Link to={`/services/${service.slug}`} className="btn btn-primary full">Explore the service</Link>
+              </div>
+            )}
             <div className="card side-card">
               <EbookCover book={book} small />
               <h3>{book.title}</h3>
               <p>{book.subtitle}</p>
-              <Link to={`/ebooks/${book.slug}`} className="btn btn-primary full">Get the free ebook</Link>
-            </div>
-            <div className="card side-card">
-              <h3>Need a hand?</h3>
-              <p>Talk to a specialist about your growth goals.</p>
-              <Link to="/contact" className="btn btn-ghost full">Contact us</Link>
+              <Link to={`/ebooks/${book.slug}`} className="btn btn-ghost full">Get the free ebook</Link>
             </div>
           </aside>
         </div>
@@ -1081,9 +1202,10 @@ export function BlogPost() {
       <section className="section alt">
         <div className="container">
           <Reveal className="section-head"><span className="kicker">Keep reading</span><h2>Related articles</h2></Reveal>
-          <div className="grid-3">{related.map((p) => <PostCard key={p.slug} post={p} i={POSTS.indexOf(p)} />)}</div>
+          <div className="grid-3">{related.map((p) => <PostCard key={p.slug} post={p} />)}</div>
         </div>
       </section>
+      <CtaBand title={service ? `Need help with ${service.title.split(' &')[0].toLowerCase()}?` : 'Need a hand?'} text="Talk to a senior specialist — we reply within one business day with a clear plan." />
     </>
   )
 }
@@ -1141,13 +1263,17 @@ export function EbookDetail() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const b = EBOOKS.find((x) => x.slug === slug)
-  const [form, setForm] = useState({ name: '', email: '', company: '' })
+  const { form, up, status, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', company: '' })
   useTitle(b?.title)
   if (!b) return <NotFound />
   const submit = (e) => {
     e.preventDefault()
-    try { sessionStorage.setItem('ebook-access', '1') } catch (err) { /* ignore */ }
-    navigate(`/ebooks/${b.slug}/read`)
+    send(`Ebook download: ${b.title} — ${form.name}`, {
+      'Lead type': 'Ebook download', Ebook: b.title, Name: form.name, Email: form.email, Company: form.company || '—',
+    }, () => {
+      try { sessionStorage.setItem('ebook-access', '1') } catch (err) { /* ignore */ }
+      navigate(`/ebooks/${b.slug}/read`)
+    })
   }
   return (
     <>
@@ -1172,10 +1298,12 @@ export function EbookDetail() {
             </ul>
             <form className="card form" onSubmit={submit}>
               <h3><Icon name="lock" size={18} /> Get instant access</h3>
-              <label>Full name<input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Jane Doe" /></label>
-              <label>Work email<input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="jane@company.com" /></label>
-              <label>Company<input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} placeholder="Company Inc." /></label>
-              <button className="btn btn-primary full" type="submit">Read the ebook <Icon name="arrow" size={18} /></button>
+              <label>Full name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Jane Doe" /></label>
+              <label>Work email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="jane@company.com" /></label>
+              <label>Company<input name="company" autoComplete="organization" value={form.company} onChange={up('company')} placeholder="Company Inc." /></label>
+              <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
+              {status === 'error' && <FormError error={error} />}
+              <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Unlocking…' : <>Read the ebook <Icon name="arrow" size={18} /></>}</button>
               <small className="fine">By continuing you agree to our <Link to="/privacy">privacy policy</Link>.</small>
             </form>
           </div>
@@ -1307,19 +1435,18 @@ export function JobDetail() {
   const { slug } = useParams()
   const j = JOBS.find((x) => x.slug === slug)
   useTitle(j ? j.title : 'Job not found')
-  const [form, setForm] = useState({ name: '', email: '', phone: '', link: '', extra: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const { form, up, status, setStatus, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', phone: '', link: '', cv: '', extra: '', message: '' })
+  const sent = status === 'sent'
   if (!j) return <NotFound />
-  const up = (k) => (e) => setForm({ ...form, [k]: e.target.value })
   const submit = (e) => {
     e.preventDefault()
-    window.location.href = mailto(`${j.freelance ? 'Freelancer application' : 'Application'}: ${j.title} — ${form.name}`, [
-      `Role: ${j.title}`, `Name: ${form.name}`, `Email: ${form.email}`, `Phone: ${form.phone}`,
-      `LinkedIn / Portfolio: ${form.link}`,
-      j.freelance ? `Skills & rate: ${form.extra}` : `College / availability: ${form.extra}`,
-      '', form.message, '', '(Please attach your CV / portfolio to this email.)',
-    ])
-    setSent(true)
+    send(`${j.freelance ? 'Freelancer application' : 'Job application'}: ${j.title} — ${form.name}`, {
+      'Lead type': j.freelance ? 'Freelancer application' : 'Job application',
+      Role: j.title, Name: form.name, Email: form.email, Phone: form.phone || '—',
+      'LinkedIn / portfolio': form.link || '—', 'CV / resume link': form.cv || '—',
+      [j.freelance ? 'Skills & rate' : 'College & availability']: form.extra || '—',
+      Message: form.message || '—',
+    })
   }
   const others = JOBS.filter((x) => x.slug !== j.slug)
   return (
@@ -1359,20 +1486,23 @@ export function JobDetail() {
                 <div className="sent">
                   <span className="icon-box"><Icon name="check" /></span>
                   <h3>Thanks, {form.name.split(' ')[0] || 'there'}!</h3>
-                  <p>Your email app should have opened with your application — attach your CV and hit send. If it didn't, email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.</p>
-                  <button type="button" className="btn btn-ghost" onClick={() => setSent(false)}>Edit application</button>
+                  <p>Your application for <b>{j.title}</b> has been received. Our team reviews every application and will get back to you within a week.</p>
+                  <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Submit another application</button>
                 </div>
               ) : (
                 <>
                   <h3>{j.freelance ? 'Join the network' : 'Apply for this role'}</h3>
                   <p className="form-sub">Takes 2 minutes. We reply within a week.</p>
-                  <label>Full name<input required value={form.name} onChange={up('name')} placeholder="Your name" /></label>
-                  <label>Email<input required type="email" value={form.email} onChange={up('email')} placeholder="you@email.com" /></label>
-                  <label>Phone<input type="tel" value={form.phone} onChange={up('phone')} placeholder="+91 00000 00000" /></label>
-                  <label>LinkedIn / portfolio / GitHub<input value={form.link} onChange={up('link')} placeholder="https://" /></label>
+                  <label>Full name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Your name" /></label>
+                  <label>Email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="you@email.com" /></label>
+                  <label>Phone<input type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={up('phone')} placeholder="+91 00000 00000" /></label>
+                  <label>LinkedIn / portfolio / GitHub<input type="url" name="link" value={form.link} onChange={up('link')} placeholder="https://" /></label>
+                  <label>CV / resume link (Google Drive, Dropbox…)<input type="url" name="cv" value={form.cv} onChange={up('cv')} placeholder="https://drive.google.com/…" /></label>
                   <label>{j.freelance ? 'Your skills & hourly rate' : 'College & availability'}<input value={form.extra} onChange={up('extra')} placeholder={j.freelance ? 'E.g. React developer, $25/hr' : 'E.g. Final year, available from June'} /></label>
                   <label>{j.freelance ? 'Tell us about your experience' : 'Why do you want this role?'}<textarea rows="4" value={form.message} onChange={up('message')} /></label>
-                  <button className="btn btn-primary full" type="submit">{j.freelance ? 'Join as a freelancer' : 'Submit application'} <Icon name="arrow" size={18} /></button>
+                  <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
+                  {status === 'error' && <FormError error={error} />}
+                  <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : <>{j.freelance ? 'Join as a freelancer' : 'Submit application'} <Icon name="arrow" size={18} /></>}</button>
                 </>
               )}
             </form>
@@ -1392,16 +1522,14 @@ export function JobDetail() {
 /* =================== CONTACT =================== */
 export function Contact() {
   useTitle('Contact')
-  const [form, setForm] = useState({ name: '', email: '', company: '', service: SERVICES[0].title, budget: '', message: '' })
-  const [sent, setSent] = useState(false)
-  const up = (k) => (e) => setForm({ ...form, [k]: e.target.value })
+  const { form, up, status, setStatus, error, honey, setHoney, submit: send } = useLeadForm({ name: '', email: '', phone: '', company: '', service: SERVICES[0].title, budget: '', message: '' })
+  const sent = status === 'sent'
   const submit = (e) => {
     e.preventDefault()
-    window.location.href = mailto(`New enquiry from ${form.name}`, [
-      `Name: ${form.name}`, `Email: ${form.email}`, `Company: ${form.company}`,
-      `Service: ${form.service}`, `Budget: ${form.budget}`, '', form.message,
-    ])
-    setSent(true)
+    send(`New enquiry: ${form.service} — ${form.name}`, {
+      'Lead type': 'Contact enquiry', Name: form.name, Email: form.email, Phone: form.phone || '—', Company: form.company || '—',
+      Service: form.service, Budget: form.budget || '—', Message: form.message || '—',
+    })
   }
   return (
     <>
@@ -1415,33 +1543,39 @@ export function Contact() {
               <div className="sent">
                 <span className="icon-box"><Icon name="check" /></span>
                 <h3>Thanks, {form.name.split(' ')[0] || 'there'}!</h3>
-                <p>Your email app should have opened with your message. If it didn't, email us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.</p>
-                <button type="button" className="btn btn-ghost" onClick={() => setSent(false)}>Send another message</button>
+                <p>Your message is with our team. We'll reply within one business day with next steps.</p>
+                <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Send another message</button>
               </div>
             ) : (
               <>
                 <div className="field-row">
-                  <label>Name<input required value={form.name} onChange={up('name')} placeholder="Jane Doe" /></label>
-                  <label>Work email<input required type="email" value={form.email} onChange={up('email')} placeholder="jane@company.com" /></label>
+                  <label>Name<input required name="name" autoComplete="name" value={form.name} onChange={up('name')} placeholder="Jane Doe" /></label>
+                  <label>Work email<input required type="email" name="email" autoComplete="email" value={form.email} onChange={up('email')} placeholder="jane@company.com" /></label>
                 </div>
                 <div className="field-row">
-                  <label>Company<input value={form.company} onChange={up('company')} placeholder="Company Inc." /></label>
+                  <label>Phone / WhatsApp<input type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={up('phone')} placeholder="+1 555 000 0000" /></label>
+                  <label>Company<input name="company" autoComplete="organization" value={form.company} onChange={up('company')} placeholder="Company Inc." /></label>
+                </div>
+                <div className="field-row">
                   <label>Monthly budget
                     <select value={form.budget} onChange={up('budget')}>
                       <option value="">Select a range</option>
                       <option>Under $5k</option><option>$5k – $15k</option><option>$15k – $50k</option><option>$50k+</option>
                     </select>
                   </label>
-                </div>
-                <label>Interested in
+                  <label>Interested in
                   <select value={form.service} onChange={up('service')}>
                     {SERVICES.map((s) => <option key={s.slug}>{s.title}</option>)}
                     <option>My idea — wireframe, build &amp; marketing</option>
                     <option>Full-funnel partnership</option>
                   </select>
-                </label>
+                  </label>
+                </div>
                 <label>What are your goals?<textarea rows="5" value={form.message} onChange={up('message')} placeholder="E.g. double inbound demo requests in the next two quarters" /></label>
-                <button className="btn btn-primary full" type="submit">Send message <Icon name="arrow" size={18} /></button>
+                <Honeypot value={honey} onChange={(e) => setHoney(e.target.value)} />
+                {status === 'error' && <FormError error={error} />}
+                <button className="btn btn-primary full" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : <>Send message <Icon name="arrow" size={18} /></>}</button>
+                <small className="fine">We reply within one business day. Your details are only used to respond to your enquiry — see our <Link to="/privacy">privacy policy</Link>.</small>
               </>
             )}
           </form>
@@ -1472,6 +1606,7 @@ export function Privacy() {
             <p>We collect information you provide directly, such as your name, email address and company when you contact us or request a resource, and basic analytics data about how you use this website.</p>
             <h2>How we use information</h2>
             <p>We use your information to respond to enquiries, deliver requested content, improve our website and, where you have agreed, send relevant marketing communications.</p>
+            <p>Information you submit through forms on this website is delivered to our team by email through a third-party form processing service (FormSubmit). We do not sell your personal information.</p>
             <h2>Your choices</h2>
             <p>You can ask us to access, correct or delete your personal information at any time by emailing {COMPANY.email}.</p>
             <h2 id="terms">Terms of use</h2>

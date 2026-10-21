@@ -224,104 +224,8 @@ export const CASE_STUDIES = [
   },
 ]
 
-export const POSTS = [
-  {
-    slug: 'b2b-demand-generation-playbook',
-    category: 'Demand Gen',
-    title: 'The B2B demand generation playbook for 2027',
-    excerpt: 'A practical framework for building a pipeline engine that does not depend on a single channel.',
-    date: 'Oct 12, 2026', read: '8 min read', author: 'XYZ Strategy Team',
-    body: [
-      ['p', 'Most B2B teams confuse lead generation with demand generation. Lead gen captures people who are already looking. Demand gen creates the reason to look in the first place. A healthy pipeline needs both.'],
-      ['h', '1. Start with your ideal customer profile'],
-      ['p', 'Define the companies and roles that close fastest and stay longest. Every channel decision that follows — keywords, audiences, content topics — should map back to this profile.'],
-      ['h', '2. Build a content engine, not one-off campaigns'],
-      ['p', 'Pick three to five themes your buyers care about and publish consistently around them: in-depth articles, short video, LinkedIn posts and a monthly newsletter. Consistency beats volume.'],
-      ['h', '3. Capture and convert intent'],
-      ['p', 'Pair your content engine with high-intent paid search, retargeting and clear conversion paths. Make it easy for a ready buyer to book a meeting in under a minute.'],
-      ['h', '4. Measure what sales actually cares about'],
-      ['p', 'Report on qualified pipeline and revenue, not just form fills. Connect your ad platforms and website to the CRM so you can see which programs create opportunities that close.'],
-      ['q', 'Demand generation is a system. The teams that win treat it like one.'],
-    ],
-  },
-  {
-    slug: 'seo-agency-vs-in-house',
-    category: 'SEO',
-    title: 'SEO agency vs. in-house team: how to decide',
-    excerpt: 'Cost, speed, expertise and control — a clear comparison to help you choose the right model.',
-    date: 'Oct 3, 2026', read: '6 min read', author: 'XYZ SEO Team',
-    body: [
-      ['p', 'There is no single right answer, but there is a right answer for your stage, budget and goals. Here is how to think about it.'],
-      ['h', 'When an in-house team makes sense'],
-      ['p', 'If SEO is your primary growth channel and you publish at high volume, a dedicated in-house team gives you speed and deep product knowledge.'],
-      ['h', 'When an agency makes sense'],
-      ['p', 'Agencies bring specialists across technical SEO, content and digital PR that would be expensive to hire individually. They are ideal when you need results quickly or lack senior SEO leadership.'],
-      ['h', 'The hybrid model'],
-      ['p', 'Many growing companies keep a content owner in-house and use an agency for strategy, technical work and link building. It combines control with expertise.'],
-    ],
-  },
-  {
-    slug: 'attribution-your-cfo-will-trust',
-    category: 'Analytics',
-    title: 'Attribution that your CFO will actually trust',
-    excerpt: 'Why most attribution reports get ignored — and how to build one leadership relies on.',
-    date: 'Sep 24, 2026', read: '7 min read', author: 'XYZ Analytics Team',
-    body: [
-      ['p', 'Attribution models are only useful if people believe them. The fastest way to lose trust is a report that credits marketing with more revenue than the business actually earned.'],
-      ['h', 'Start from the CRM, not the ad platform'],
-      ['p', 'Ad platforms each claim credit for the same conversion. Begin with closed revenue in your CRM and work backwards to the touchpoints that influenced it.'],
-      ['h', 'Use more than one lens'],
-      ['p', 'Combine first-touch, multi-touch and self-reported attribution ("How did you hear about us?"). Where they agree, you can act with confidence.'],
-      ['h', 'Report trends, not decimals'],
-      ['p', 'Leadership needs direction, not false precision. Show how efficiency is moving over time and what you plan to do about it.'],
-    ],
-  },
-  {
-    slug: 'ai-in-marketing-operations',
-    category: 'AI',
-    title: 'Where AI fits in a modern marketing operation',
-    excerpt: 'Five practical places AI saves time today — and two places it still needs a human in the loop.',
-    date: 'Sep 15, 2026', read: '5 min read', author: 'XYZ Automation Team',
-    body: [
-      ['p', 'AI is most valuable when it removes repetitive work so your team can spend more time on strategy and creativity.'],
-      ['h', 'Where AI works well today'],
-      ['p', 'Research summaries, first drafts of briefs, ad copy variations, lead enrichment and reporting commentary are all areas where AI can save hours each week.'],
-      ['h', 'Where humans still matter most'],
-      ['p', 'Brand voice, final editorial judgment and anything involving sensitive customer data still need careful human review.'],
-      ['q', 'Use AI to go faster, and people to go in the right direction.'],
-    ],
-  },
-  {
-    slug: 'landing-page-conversion-checklist',
-    category: 'CRO',
-    title: 'The 12-point landing page conversion checklist',
-    excerpt: 'Small changes that consistently lift conversion rates on paid and organic landing pages.',
-    date: 'Sep 2, 2026', read: '6 min read', author: 'XYZ Web Team',
-    body: [
-      ['p', 'Before you spend more on traffic, make sure the page that receives it is doing its job. These are the checks we run on every landing page.'],
-      ['h', 'Message match'],
-      ['p', 'The headline should mirror the ad or search query that brought the visitor. If they searched for "B2B SEO agency", say exactly that.'],
-      ['h', 'One clear action'],
-      ['p', 'Remove competing links and give the page a single primary call to action, repeated at natural decision points.'],
-      ['h', 'Speed and trust'],
-      ['p', 'Aim for a load time under two seconds and show proof early: results, recognizable logos and short testimonials.'],
-    ],
-  },
-  {
-    slug: 'linkedin-ads-for-b2b',
-    category: 'Paid Media',
-    title: 'LinkedIn Ads for B2B: what works in 2026',
-    excerpt: 'Targeting, creative and bidding strategies that keep LinkedIn costs under control.',
-    date: 'Aug 20, 2026', read: '7 min read', author: 'XYZ Paid Media Team',
-    body: [
-      ['p', 'LinkedIn is expensive, but for reaching specific job titles at specific companies, nothing else comes close. The key is spending efficiently.'],
-      ['h', 'Narrow audiences, broad creative'],
-      ['p', 'Keep audiences tight around your ideal customer profile and test a wide range of creative formats: document ads, short video and thought-leader ads.'],
-      ['h', 'Nurture before you ask'],
-      ['p', 'Warm up audiences with valuable content before asking for a demo. Retarget engaged viewers with a stronger offer.'],
-    ],
-  },
-]
+/* Blog posts live in /posts (one file per batch) — see posts/index.js */
+export { POSTS, POST_CATEGORIES, getPostContent, loadPostContent } from './posts/index.js'
 
 export const EBOOKS = [
   {
@@ -671,15 +575,25 @@ SERVICES.forEach((s) => Object.assign(s, SERVICE_EXTRAS[s.slug]))
 
 export const HERO_WORDS = ['web applications', 'mobile apps', 'AI products', 'online stores', 'qualified pipeline']
 
+/* ---------- Home page FAQ (also published as FAQPage structured data) ---------- */
+export const HOME_FAQS = [
+  ['What does XYZ Agency do?', 'XYZ Agency is a software development and digital marketing company. We design and build websites on every major CMS, custom web applications (MERN, MEAN, Next.js, Laravel), Flutter, iOS and Android apps, AI solutions and online stores, host them on managed cloud servers, and grow them with SEO, paid media, content and analytics.'],
+  ['Can one agency handle both development and marketing?', 'Yes. One senior team plans, builds, launches and markets your product, so the website or app is built to rank and convert from day one and every channel reports into the same dashboard.'],
+  ['How much does a website or app cost with XYZ Agency?', 'It depends on scope. Marketing websites, e-commerce stores, custom web apps and mobile apps are priced as fixed-price projects for clear scopes or as a monthly dedicated team for evolving products. Share your idea and we will send a wireframe plan and estimate.'],
+  ['Do you help brands show up in AI search like ChatGPT, Gemini and Google AI Overviews?', 'Yes. Our SEO team covers answer engine optimization (AEO) and generative engine optimization (GEO): technical SEO, structured data, answer-first content and authority building so your brand is cited in AI answers as well as ranking in classic search.'],
+  ['Which industries do you work with?', 'We work with B2B SaaS, healthcare, legal, financial services, e-commerce, IT, education and real estate companies across the USA, UAE, India and beyond.'],
+  ['How fast can we get started?', 'Most projects start with a free discovery call within one business day of your enquiry, followed by a scoped proposal. Typical MVPs launch in 8–14 weeks, and marketing programs usually show early wins within the first 30–90 days.'],
+]
+
 /* ---------- Partners ---------- */
 export const PARTNERS = [
-  { name: 'Google Premier Partner', img: pGoogle, featured: true },
-  { name: 'AWS Partner Network', img: pAws },
-  { name: 'Microsoft Partner', img: pMicrosoft },
-  { name: 'Salesforce Partner', img: pSalesforce },
-  { name: 'HubSpot Certified Partner', img: pHubspot },
-  { name: 'Marketo', img: pMarketo },
-  { name: 'Clutch Top SEO Company', img: pClutch },
+  { name: 'Google Premier Partner', img: pGoogle, w: 169, h: 64, featured: true },
+  { name: 'AWS Partner Network', img: pAws, w: 178, h: 74 },
+  { name: 'Microsoft Partner', img: pMicrosoft, w: 180, h: 44 },
+  { name: 'Salesforce Partner', img: pSalesforce, w: 171, h: 74 },
+  { name: 'HubSpot Certified Partner', img: pHubspot, w: 150, h: 70 },
+  { name: 'Marketo', img: pMarketo, w: 154, h: 60 },
+  { name: 'Clutch Top SEO Company', img: pClutch, w: 96, h: 102 },
 ]
 
 /* ---------- Technology expertise ---------- */

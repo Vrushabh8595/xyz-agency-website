@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "node posts/build-meta.mjs && vite",
+    "build": "node posts/build-meta.mjs && vite build && vite build --ssr entry-server.jsx --outDir dist-ssr && node prerender.mjs",
+    "preview": "npx serve dist"
   },
   "dependencies": {
     "lottie-web": "^5.12.2",
@@ -17,5 +17,8 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "vite": "^5.4.11"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
