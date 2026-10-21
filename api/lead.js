@@ -31,7 +31,7 @@ function allowedOrigin(origin) {
   try {
     const { hostname } = new URL(origin)
     return hostname === 'advotisagency.com' || hostname.endsWith('.advotisagency.com') ||
-      (hostname.endsWith('.vercel.app') && hostname.includes('advotis')) || hostname === 'localhost' || hostname === '127.0.0.1'
+      (hostname.endsWith('.vercel.app') && /advotis|xyz-agency-website/.test(hostname)) || hostname === 'localhost' || hostname === '127.0.0.1'
   } catch { return false }
 }
 
