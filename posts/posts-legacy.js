@@ -8,7 +8,7 @@ export default [
     description: "A B2B demand generation playbook for 2027: define your ICP, build a content engine, capture intent and measure pipeline. Get the full framework inside.",
     excerpt: "A practical framework for building a B2B pipeline engine that creates demand, captures intent and does not depend on a single channel.",
     date: '2026-10-12',
-    author: 'XYZ Strategy Team',
+    author: 'Advotis Strategy Team',
     keywords: ['B2B demand generation', 'demand generation strategy', 'B2B demand generation playbook', 'demand generation vs lead generation', 'B2B pipeline generation', 'B2B marketing strategy 2027'],
     summary: "B2B demand generation creates awareness and preference among buyers before they are ready to talk to sales, while lead generation captures those already in market. A 2027 playbook has five parts: a sharp ideal customer profile, a consistent content engine, high-intent paid capture, fast conversion paths, and measurement tied to qualified pipeline and revenue in the CRM.",
     takeaways: [
@@ -83,8 +83,8 @@ export default [
         "Revenue indicators: win rate, sales cycle length and closed-won revenue by program."
       ]],
       ['p', "Feed closed-won outcomes back to ad platforms so their bidding optimizes toward revenue instead of cheap form fills. Google's enhanced conversions for leads, an upgraded form of offline conversion import, matches hashed lead data from your CRM back to ad interactions. For a model leadership will believe, read [attribution your CFO will actually trust](/blog/attribution-your-cfo-will-trust)."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency builds demand generation programs that connect content, paid media and CRM reporting into one system. Explore our [content and social services](/services/content-social) or [contact our team](/contact) to plan your 2027 pipeline engine."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency builds demand generation programs that connect content, paid media and CRM reporting into one system. Explore our [content and social services](/services/content-social) or [contact our team](/contact) to plan your 2027 pipeline engine."]
     ],
     faqs: [
       ['What is B2B demand generation?', "B2B demand generation is the set of marketing programs that build awareness of a problem and preference for your solution among buyers who are not yet in market. It includes content, social, video, events and thought leadership. Its goal is a larger pool of future buyers who already trust you when they start evaluating vendors."],
@@ -108,7 +108,7 @@ export default [
     description: "SEO agency vs in-house team: compare cost, speed, skills and control, see when a hybrid model wins, and get the questions to ask before you hire anyone.",
     excerpt: "Cost, speed, expertise and control: a clear comparison to help you choose between an SEO agency, an in-house team or a hybrid.",
     date: '2026-10-03',
-    author: 'XYZ SEO Team',
+    author: 'Advotis SEO Team',
     keywords: ['SEO agency vs in-house', 'in-house SEO team', 'hire an SEO agency', 'SEO outsourcing', 'hybrid SEO model', 'how to choose an SEO agency'],
     summary: "Choose an in-house SEO team when organic search is a primary growth channel, you publish at high volume and SEO must be embedded in daily product work. Choose an SEO agency when you need results before you can hire, lack senior SEO leadership or need specialist skills part-time. Many growing companies use a hybrid: an internal owner plus agency specialists.",
     takeaways: [
@@ -186,7 +186,7 @@ export default [
       ]],
       ['tip', "Before signing a long retainer, commission a paid audit. You get a prioritized roadmap you own, and you see how the agency communicates, documents and pushes back before committing further."],
       ['h', 'Next steps'],
-      ['p', "If you are weighing the options, XYZ Agency can start with an audit and help you decide which work to keep in-house. Explore our [SEO services](/services/seo) or [contact our team](/contact) to talk it through."]
+      ['p', "If you are weighing the options, Advotis Agency can start with an audit and help you decide which work to keep in-house. Explore our [SEO services](/services/seo) or [contact our team](/contact) to talk it through."]
     ],
     faqs: [
       ['Is it cheaper to hire an SEO agency or build an in-house team?', "It depends on scope. One in-house generalist can cost less than an agency retainer, but covering technical SEO, content, digital PR and analytics in-house usually requires several hires plus tools. Compare the fully loaded cost of the team you would actually need against agency proposals for the same scope."],
@@ -209,7 +209,7 @@ export default [
     description: "Marketing attribution your CFO will trust: anchor it in CRM revenue, combine models, add incrementality tests and report trends. See the framework inside.",
     excerpt: "Why most marketing attribution reports get ignored by finance, and how to build one leadership actually relies on.",
     date: '2026-09-24',
-    author: 'XYZ Analytics Team',
+    author: 'Advotis Analytics Team',
     keywords: ['marketing attribution', 'marketing attribution for CFOs', 'multi-touch attribution', 'GA4 data-driven attribution', 'marketing mix modeling', 'self-reported attribution', 'incrementality testing'],
     summary: "Marketing attribution a CFO will trust starts from closed revenue in the CRM, not ad platform dashboards that double-count conversions. Combine several lenses, such as first touch, data-driven, self-reported attribution, incrementality tests and marketing mix modeling, then act where they agree. Report trends, ranges and decisions rather than false precision, and document the methodology so finance can audit it.",
     takeaways: [
@@ -278,8 +278,8 @@ export default [
       ['p', "Attribution is one input into a broader pipeline system. Our [B2B demand generation playbook](/blog/b2b-demand-generation-playbook) shows how measurement connects to content and paid programs."],
       ['q', 'A number your CFO can reproduce beats a number your dashboard can decorate.'],
       ['tip', "Invite someone from finance to review your attribution methodology before it reaches a board deck. Their objections early are far cheaper than their skepticism later."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency connects ad platforms, analytics and CRM data into reporting finance can reconcile. See our [analytics and CRO services](/services/analytics-cro) or [contact our team](/contact) to review your current setup."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency connects ad platforms, analytics and CRM data into reporting finance can reconcile. See our [analytics and CRO services](/services/analytics-cro) or [contact our team](/contact) to review your current setup."]
     ],
     faqs: [
       ['What is the best attribution model for B2B?', "No single model is best. B2B teams get the most reliable picture by combining CRM-based first touch, a data-driven or multi-touch view, and self-reported attribution, then validating big budget decisions with incrementality tests. Act where the lenses agree."],
@@ -303,7 +303,7 @@ export default [
     description: "Where AI fits in marketing operations: five tasks it handles well today, two that still need a human in the loop, and a simple governance model. Read more.",
     excerpt: "Five practical places AI saves marketing teams time today, two places it still needs a human in the loop, and how to govern it.",
     date: '2026-09-15',
-    author: 'XYZ Automation Team',
+    author: 'Advotis Automation Team',
     keywords: ['AI in marketing operations', 'AI for marketing teams', 'marketing operations automation', 'AI marketing workflows', 'human in the loop AI', 'generative AI marketing governance'],
     summary: "AI fits best in marketing operations where work is high-volume, repeatable and quick to review: research summaries, briefs and first drafts, ad copy variations, lead enrichment and routing, and reporting commentary. Humans must still own brand voice, final editorial judgment and anything involving sensitive customer data. Start with one low-risk workflow, add a review step and a short written policy, then scale.",
     takeaways: [
@@ -373,8 +373,8 @@ export default [
         "Document the workflow so it survives staff changes."
       ]],
       ['tip', "Keep a shared prompt library with an owner, version history and example outputs. It turns individual experiments into team capability and makes quality easier to audit."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency designs and builds AI workflows for marketing teams, with review steps and data controls built in. Explore our [AI automation services](/services/ai-automation) or [contact our team](/contact) to pick your first pilot."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency designs and builds AI workflows for marketing teams, with review steps and data controls built in. Explore our [AI automation services](/services/ai-automation) or [contact our team](/contact) to pick your first pilot."]
     ],
     faqs: [
       ['What marketing tasks can AI automate?', "AI handles repetitive, reviewable tasks well: summarizing research, drafting briefs and first drafts, generating ad copy variations, enriching and routing leads, and writing reporting commentary. It works best when a person reviews the output before it reaches customers or leadership."],
@@ -397,7 +397,7 @@ export default [
     description: "A 12-point landing page conversion checklist covering message match, forms, trust, Core Web Vitals and testing. Run it before you buy more traffic.",
     excerpt: "Twelve checks that consistently lift conversion rates on paid and organic landing pages, from message match to testing.",
     date: '2026-09-02',
-    author: 'XYZ Web Team',
+    author: 'Advotis Web Team',
     keywords: ['landing page conversion checklist', 'landing page optimization', 'landing page best practices', 'improve landing page conversion rate', 'landing page CRO', 'high-converting landing page'],
     summary: "A landing page conversion checklist confirms a page turns traffic into leads or sales. The 12 checks: match the ad or query, state the outcome, show the CTA on load, keep one action, cut form fields, build mobile-friendly forms, show proof early, explain next steps, answer objections, pass Core Web Vitals, stay readable and accessible, and track and test.",
     takeaways: [
@@ -487,8 +487,8 @@ export default [
       ]],
       ['p', "For tracking that respects consent choices and survives browser restrictions, see [server-side tracking and consent mode](/blog/server-side-tracking-consent-mode)."],
       ['tip', "Watch five session recordings of visitors who did not convert before writing a single test hypothesis. You will usually spot the real friction faster than any best-practice list."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency designs, builds and tests landing pages for paid and organic campaigns. See our [web experience services](/services/web-experience) or [contact our team](/contact) to request a landing page review."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency designs, builds and tests landing pages for paid and organic campaigns. See our [web experience services](/services/web-experience) or [contact our team](/contact) to request a landing page review."]
     ],
     faqs: [
       ['What is a good landing page conversion rate?', "There is no universal benchmark, because conversion rates vary widely by industry, offer, traffic source and how a conversion is defined. The most useful benchmark is your own baseline. Measure it accurately, then aim to improve it through structured tests."],
@@ -513,7 +513,7 @@ export default [
     description: "LinkedIn Ads for B2B in 2026: targeting structure, Thought Leader and Document Ads, nurture sequences and measurement that keep costs in check. Learn how.",
     excerpt: "Targeting, creative, nurture and measurement strategies that keep LinkedIn ad costs under control for B2B teams.",
     date: '2026-08-20',
-    author: 'XYZ Paid Media Team',
+    author: 'Advotis Paid Media Team',
     keywords: ['LinkedIn Ads for B2B', 'LinkedIn advertising strategy', 'LinkedIn Thought Leader Ads', 'LinkedIn Document Ads', 'LinkedIn ad targeting', 'LinkedIn Conversions API', 'reduce LinkedIn ad costs'],
     summary: "LinkedIn Ads work for B2B when deal values can absorb premium click costs and buyers can be defined by role, seniority or company. In 2026, keep audiences anchored to your ideal customer profile but large enough to learn, rotate Thought Leader Ads, Document Ads and video, nurture before asking for a demo, and measure pipeline through the Insight Tag and Conversions API.",
     takeaways: [
@@ -591,8 +591,8 @@ export default [
         "Send clicks to fast, focused pages; our [landing page conversion checklist](/blog/landing-page-conversion-checklist) covers the essentials."
       ]],
       ['tip', "Ask two or three internal experts to publish one useful post a week. Strong organic posts become ready-made Thought Leader Ads, and posts that perform organically usually perform when promoted."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency plans and manages LinkedIn campaigns tied to CRM pipeline, not vanity metrics. Explore our [paid media services](/services/paid-media) or [contact our team](/contact) to review your account."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency plans and manages LinkedIn campaigns tied to CRM pipeline, not vanity metrics. Explore our [paid media services](/services/paid-media) or [contact our team](/contact) to review your account."]
     ],
     faqs: [
       ['How much do LinkedIn Ads cost?', "LinkedIn Ads are sold through an auction, so costs depend on your audience, objective, bid strategy, competition and creative quality. Senior, narrowly defined B2B audiences generally cost more to reach than broad ones. Judge cost by cost per qualified opportunity, not cost per click."],

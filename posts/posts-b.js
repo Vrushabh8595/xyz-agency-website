@@ -7,7 +7,7 @@ export default [
     description: `Explore 12 practical AI agents for business use cases, from support to DevOps, plus how to pick your first agent and set safe autonomy levels. Read the guide.`,
     excerpt: `Twelve proven ways companies use AI agents in 2026, how to choose your first one, and how much autonomy to give it.`,
     date: `2026-10-18`,
-    author: `XYZ AI Team`,
+    author: `Advotis AI Team`,
     keywords: [`AI agents for business`, `AI agent use cases`, `enterprise AI agents`, `agentic AI examples`, `AI agents for customer support`, `how to deploy AI agents`],
     summary: `AI agents for business are LLM-powered systems that plan steps, call tools like your CRM or database, and check results to finish multi-step tasks. The most practical 2026 use cases are support resolution, lead research, reporting, invoice processing, coding, incident triage and marketing operations. Start with a high-volume, easy-to-verify task, keep a human approving actions, and expand autonomy only with evidence.`,
     takeaways: [
@@ -96,8 +96,8 @@ export default [
         ],
       }],
       ['q', `Autonomy is earned with evidence, not granted with enthusiasm.`],
-      ['h', `How XYZ Agency can help`],
-      ['p', `XYZ Agency helps teams pick the right first use case, connect agents to their CRM, help desk and data, and ship them with evaluations and guardrails in place. Explore our [AI development services](/services/ai-development) or [contact our team](/contact) to scope your first agent.`],
+      ['h', `How Advotis Agency can help`],
+      ['p', `Advotis Agency helps teams pick the right first use case, connect agents to their CRM, help desk and data, and ship them with evaluations and guardrails in place. Explore our [AI development services](/services/ai-development) or [contact our team](/contact) to scope your first agent.`],
     ],
     faqs: [
       [`What is an AI agent in business?`, `An AI agent is software that uses a large language model to complete a goal by planning steps, calling business tools and checking results. Unlike a chatbot, it can take actions such as updating a CRM record or opening a ticket. Most businesses run agents with guardrails and human approval for risky actions.`],
@@ -120,7 +120,7 @@ export default [
     description: `Model Context Protocol (MCP) explained in plain English: how it connects AI to your tools, what changed in 2026 and the security risks. Read before you build.`,
     excerpt: `A plain-English guide to MCP: how it works, why it matters for your AI roadmap, what changed in 2026 and how to adopt it safely.`,
     date: `2026-10-11`,
-    author: `XYZ AI Team`,
+    author: `Advotis AI Team`,
     keywords: [`Model Context Protocol`, `MCP explained`, `what is MCP in AI`, `MCP server`, `MCP security`, `MCP for business`],
     summary: `The Model Context Protocol (MCP) is an open standard that lets AI applications such as ChatGPT, Claude, Gemini, Copilot and VS Code connect to business tools and data through one common interface. A company builds an MCP server once, and any compatible AI app can use it. MCP is now governed by the Linux Foundation's Agentic AI Foundation, and its 2026-07-28 specification made the protocol stateless.`,
     takeaways: [
@@ -207,8 +207,8 @@ export default [
         ],
       }],
       ['p', `A custom server also lets you design tools around business tasks rather than raw API calls. A single tool such as summarize account health is easier for an AI model to use correctly than a dozen low-level endpoints, and it is easier for your team to permission and audit.`],
-      ['h', `How XYZ Agency can help`],
-      ['p', `XYZ Agency designs and builds secure MCP servers, connects them to your CRM, analytics and internal tools, and upgrades existing servers to the 2026 specification. Learn about our [AI development services](/services/ai-development) or [contact our team](/contact) to plan your first integration.`],
+      ['h', `How Advotis Agency can help`],
+      ['p', `Advotis Agency designs and builds secure MCP servers, connects them to your CRM, analytics and internal tools, and upgrades existing servers to the 2026 specification. Learn about our [AI development services](/services/ai-development) or [contact our team](/contact) to plan your first integration.`],
     ],
     faqs: [
       [`What is MCP in simple terms?`, `MCP, the Model Context Protocol, is an open standard that lets AI apps connect to business tools and data through one shared interface. You build an MCP server for a system once, and any compatible AI assistant can use it. It works like a universal adapter between AI and software.`],
@@ -232,7 +232,7 @@ export default [
     description: `RAG vs fine-tuning compared: what each changes, cost, freshness and when to combine them, with a step-by-step decision path. Choose the right approach today.`,
     excerpt: `RAG changes what a model knows; fine-tuning changes how it behaves. Here is how to pick the right one for your AI product.`,
     date: `2026-10-04`,
-    author: `XYZ AI Team`,
+    author: `Advotis AI Team`,
     keywords: [`RAG vs fine-tuning`, `retrieval-augmented generation`, `fine-tuning LLM`, `when to fine-tune a model`, `RAG architecture`, `LLM customization`],
     summary: `RAG (retrieval-augmented generation) retrieves relevant passages from your data and adds them to the prompt, so it is best for facts that change, need citations or need per-user permissions. Fine-tuning trains a model on examples, so it is best for consistent format, tone or narrow classification at scale. Most AI products should start with prompting and RAG, and fine-tune only when evaluations show a behavior gap.`,
     takeaways: [
@@ -320,8 +320,8 @@ export default [
       ['tip', `Tag every failed evaluation case as either knowledge (the model lacked the facts) or behavior (it had the facts but answered the wrong way). Knowledge failures point to RAG; behavior failures point to better prompting first and fine-tuning second.`],
       ['q', `Retrieval decides what the model knows; tuning decides how it acts.`],
       ['p', `If your product needs to take actions as well as answer questions, see how [MCP connects AI to business tools](/blog/model-context-protocol-mcp-explained) and how [AI agents](/blog/ai-agents-for-business-use-cases) build on both patterns.`],
-      ['h', `How XYZ Agency can help`],
-      ['p', `XYZ Agency builds RAG pipelines, evaluation suites and fine-tuned models for products that need accurate, fast and affordable AI. See our [AI development services](/services/ai-development) or [contact our team](/contact) for an architecture review of your AI product.`],
+      ['h', `How Advotis Agency can help`],
+      ['p', `Advotis Agency builds RAG pipelines, evaluation suites and fine-tuned models for products that need accurate, fast and affordable AI. See our [AI development services](/services/ai-development) or [contact our team](/contact) for an architecture review of your AI product.`],
     ],
     faqs: [
       [`Is RAG better than fine-tuning?`, `Neither is better in general; they solve different problems. RAG is better for facts that change, need citations or need per-user access control. Fine-tuning is better for consistent format, tone or narrow tasks at high volume.`],
@@ -344,7 +344,7 @@ export default [
     description: `AI-assisted development can speed delivery or create rework. See the guardrails, review rules and rollout plan that keep code quality high. Get the playbook.`,
     excerpt: `How engineering teams use AI coding assistants and agents to ship faster while protecting quality, security and stability.`,
     date: `2026-09-26`,
-    author: `XYZ Engineering Team`,
+    author: `Advotis Engineering Team`,
     keywords: [`AI-assisted development`, `AI coding assistants`, `AI coding agents`, `AI code quality`, `DORA AI report`, `AI in software development`],
     summary: `AI-assisted development uses coding assistants and agents to plan, write, test and review software while engineers direct the work and own the result. Google's 2025 DORA research found AI improves delivery throughput but still hurts stability when fundamentals are weak. Teams ship faster without losing quality by writing specs first, keeping changes small, requiring tests and human review, and scanning every change automatically.`,
     takeaways: [
@@ -437,8 +437,8 @@ export default [
         `Expand team by team and recheck metrics every quarter.`,
       ]],
       ['p', `Treat AI tools like any other vendor with access to your code. Confirm how each tool handles prompts and repository data, use enterprise plans with admin controls where possible, and keep API keys and customer data out of prompts. Clear rules make adoption faster, because engineers stop guessing what is allowed.`],
-      ['h', `How XYZ Agency can help`],
-      ['p', `XYZ Agency builds web applications with AI-assisted workflows backed by tests, code review and automated CI pipelines. Explore our [web application development services](/services/web-applications) and [DevOps and maintenance](/services/devops-maintenance), or [contact our team](/contact) to modernize your delivery process.`],
+      ['h', `How Advotis Agency can help`],
+      ['p', `Advotis Agency builds web applications with AI-assisted workflows backed by tests, code review and automated CI pipelines. Explore our [web application development services](/services/web-applications) and [DevOps and maintenance](/services/devops-maintenance), or [contact our team](/contact) to modernize your delivery process.`],
     ],
     faqs: [
       [`Does AI-generated code reduce software quality?`, `It can when teams merge large, untested changes. DORA's 2025 research links AI adoption to higher throughput but lower delivery stability. Small batches, automated tests and human review keep quality high.`],
@@ -461,7 +461,7 @@ export default [
     description: `Ten AI marketing automation workflows that save hours, from lead scoring to reporting, with build steps, guardrails and ROI metrics. Start automating smarter.`,
     excerpt: `Ten practical AI workflows for marketing teams, how to build them step by step, and the guardrails that keep them on-brand.`,
     date: `2026-09-17`,
-    author: `XYZ AI Team`,
+    author: `Advotis AI Team`,
     keywords: [`AI marketing automation`, `AI marketing workflows`, `marketing automation with AI`, `AI agents for marketing`, `HubSpot AI workflows`, `AI content automation`],
     summary: `AI marketing automation adds large language model steps, such as researching, drafting, classifying and summarizing, to triggered marketing workflows. The workflows that save the most hours are lead enrichment, follow-up drafts, content briefs, repurposing, ad copy variants, performance reports, campaign QA, review replies, feedback analysis and churn alerts. Keep humans approving anything public, and fact-check all AI output before it ships.`,
     takeaways: [
@@ -552,8 +552,8 @@ export default [
         `Running cost, including credits, API fees and review time.`,
       ]],
       ['p', `Once workflows prove reliable, some teams graduate to more autonomous [AI agents](/blog/ai-agents-for-business-use-cases) that handle several of these steps end to end.`],
-      ['h', `How XYZ Agency can help`],
-      ['p', `XYZ Agency designs and builds AI marketing workflows in HubSpot, Salesforce and custom stacks, with brand guardrails, approvals and reporting built in. Explore our [AI automation services](/services/ai-automation) or [contact our team](/contact) to find the workflows that will save your team the most time.`],
+      ['h', `How Advotis Agency can help`],
+      ['p', `Advotis Agency designs and builds AI marketing workflows in HubSpot, Salesforce and custom stacks, with brand guardrails, approvals and reporting built in. Explore our [AI automation services](/services/ai-automation) or [contact our team](/contact) to find the workflows that will save your team the most time.`],
     ],
     faqs: [
       [`What is AI marketing automation?`, `AI marketing automation adds AI steps, such as researching, drafting, classifying or summarizing, to triggered marketing workflows. A form fill might trigger an AI step that scores the lead and drafts a follow-up. Humans typically approve anything customer-facing.`],

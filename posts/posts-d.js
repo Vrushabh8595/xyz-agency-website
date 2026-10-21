@@ -8,7 +8,7 @@ export default [
     description: "Google Ads AI Max and Performance Max in 2026: the brand, URL, text and negative keyword controls that keep automation on target. Get the checklist.",
     excerpt: "The guardrails, experiments and reports that let you use Google's most automated campaign types without losing control of spend or message.",
     date: '2026-10-15',
-    author: 'XYZ Paid Media Team',
+    author: 'Advotis Paid Media Team',
     keywords: ['google ads ai max', 'ai max for search campaigns', 'performance max', 'performance max negative keywords', 'ai max vs performance max', 'google ads text guidelines'],
     summary: "To stay in control of Google Ads AI Max and Performance Max, set guardrails before you scale: negative keyword lists, brand inclusions and exclusions, URL exclusions and text guidelines. Feed both campaign types conversion goals that reflect real business value, test AI Max with Google's 50/50 experiment, and review search terms, asset and channel reports every one to two weeks.",
     takeaways: [
@@ -93,8 +93,8 @@ export default [
       ]],
       ['p', "Review these every one to two weeks. Add negatives only for terms that consistently underperform, and push revenue or qualified-lead data back into Google Ads so bidding learns from real outcomes. Our guide to [server-side tracking and Consent Mode](/blog/server-side-tracking-consent-mode) explains how to protect those signals."],
       ['q', "Automation decides how to bid; you still decide what counts as a win."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency's [paid media team](/services/paid-media) audits AI Max and Performance Max setups, builds the guardrails covered here, and connects ad platforms to CRM revenue through our [analytics and CRO services](/services/analytics-cro). If you want a second opinion on your automation settings, [contact our team](/contact)."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency's [paid media team](/services/paid-media) audits AI Max and Performance Max setups, builds the guardrails covered here, and connects ad platforms to CRM revenue through our [analytics and CRO services](/services/analytics-cro). If you want a second opinion on your automation settings, [contact our team](/contact)."]
     ],
     faqs: [
       ["Is AI Max the same as Performance Max?", "No. AI Max for Search is a set of features you switch on inside a Search campaign, so it only serves on Google Search inventory. Performance Max is a separate campaign type that buys across Search, Shopping, YouTube, Display, Discover, Gmail and Maps from a single budget."],
@@ -120,7 +120,7 @@ export default [
     description: "Server-side tracking and Consent Mode v2 explained: how to respect user consent, protect conversion data and set up GTM, tag gateway and CAPI. See the plan.",
     excerpt: "How server-side tagging and Consent Mode v2 work together to keep measurement accurate while honoring every visitor's privacy choices.",
     date: '2026-10-07',
-    author: 'XYZ Analytics Team',
+    author: 'Advotis Analytics Team',
     keywords: ['server-side tracking', 'consent mode v2', 'server-side tagging google tag manager', 'google tag gateway', 'meta conversions api', 'privacy-first measurement'],
     summary: "Server-side tracking sends measurement data to a server you control, which then forwards only approved data to analytics and ad platforms. Combined with Consent Mode v2, which tells Google tags what each visitor agreed to, it lets you honor consent centrally, reduce third-party scripts and still give ad platforms reliable conversion signals. It is not a way around consent.",
     takeaways: [
@@ -206,8 +206,8 @@ export default [
         "Skipping monitoring, so a broken container silently drops conversions for weeks."
       ]],
       ['p', "Accurate signals also make automated bidding safer. Our guide to [Google Ads AI Max and Performance Max](/blog/google-ads-ai-max-performance-max) shows how those signals drive campaign decisions."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency's [analytics and CRO team](/services/analytics-cro) designs consent-aware server-side setups, from CMP configuration to server containers and conversion APIs. If your conversion data looks unreliable, [contact our team](/contact) for a measurement audit."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency's [analytics and CRO team](/services/analytics-cro) designs consent-aware server-side setups, from CMP configuration to server containers and conversion APIs. If your conversion data looks unreliable, [contact our team](/contact) for a measurement audit."]
     ],
     faqs: [
       ["Is server-side tracking GDPR compliant?", "Server-side tracking can support GDPR compliance, but it does not make tracking compliant on its own. You still need a lawful basis, usually consent for advertising, and the server must block or redact data when consent is refused. Review your setup with legal counsel."],
@@ -233,7 +233,7 @@ export default [
     description: "Social search explained: why buyers search TikTok, Instagram and YouTube first, and how to optimize short-form video to get found. Get the playbook.",
     excerpt: "Why buyers now search inside TikTok, Instagram and YouTube, and how to make short-form video that ranks there and in Google.",
     date: '2026-09-30',
-    author: 'XYZ Content Team',
+    author: 'Advotis Content Team',
     keywords: ['social search', 'tiktok seo', 'instagram seo', 'youtube seo', 'short-form video marketing', 'social media search optimization'],
     summary: "Social search is using TikTok, Instagram and YouTube as search engines to find products, places, tutorials and reviews. It rivals Google for experience-based questions because short videos show real use and real people. To compete, research the words people type in each app, put them in speech, on-screen text and captions, and make one video per question.",
     takeaways: [
@@ -317,8 +317,8 @@ export default [
         "Paid tests with [TikTok's Search Ads Campaign](https://ads.tiktok.com/help/article/about-search-ads-campaign?lang=en), which uses keywords to place ads on the TikTok search results page."
       ]],
       ['p', "Expect social search to work as an assist channel. Buyers often watch on one platform and convert on another, so pair platform analytics with post-purchase surveys asking where customers first heard of you, and compare results across quarters rather than week to week."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency's [content and social team](/services/content-social) researches social search demand, scripts and edits short-form video, and connects it to your [SEO program](/services/seo). If you want your brand to show up wherever buyers search, [contact our team](/contact)."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency's [content and social team](/services/content-social) researches social search demand, scripts and edits short-form video, and connects it to your [SEO program](/services/seo). If you want your brand to show up wherever buyers search, [contact our team](/contact)."]
     ],
     faqs: [
       ["What is social search?", "Social search is using social and video platforms such as TikTok, Instagram and YouTube as search engines. People type queries into the app to find products, places, tutorials and reviews, and get videos and creator posts back instead of a list of links."],
@@ -344,7 +344,7 @@ export default [
     description: "A website security checklist for 2026: 20 essentials covering MFA, patching, supply chain, headers, backups and incident response. Use it to audit your site.",
     excerpt: "Twenty practical controls, grouped by priority, that protect your website, users and data from the attacks most likely to hit you in 2026.",
     date: '2026-09-22',
-    author: 'XYZ Engineering Team',
+    author: 'Advotis Engineering Team',
     keywords: ['website security checklist', 'website security best practices', 'owasp top 10 2025', 'web application security', 'content security policy', 'wordpress security checklist'],
     summary: "A 2026 website security checklist should start with phishing-resistant MFA and least-privilege access, then fast patching and supply chain control, since exploited vulnerabilities are now the top breach entry point. Add HTTPS with HSTS, a web application firewall, secure DNS, input validation, a Content Security Policy, payment page script monitoring, centralized logging, tested backups and a written incident plan.",
     takeaways: [
@@ -435,8 +435,8 @@ export default [
         "Quarterly: test a full restore, review vendor access and rescan for vulnerabilities.",
         "Annually: run a penetration test, update the incident plan and refresh team security training."
       ]],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency's [DevOps and maintenance team](/services/devops-maintenance) handles patching, monitoring, backups and hardening for websites and web apps, and our [managed cloud hosting](/services/cloud-hosting) includes many of these controls by default. To review your site against this checklist, [contact our team](/contact)."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency's [DevOps and maintenance team](/services/devops-maintenance) handles patching, monitoring, backups and hardening for websites and web apps, and our [managed cloud hosting](/services/cloud-hosting) includes many of these controls by default. To review your site against this checklist, [contact our team](/contact)."]
     ],
     faqs: [
       ["What is the most important website security measure?", "There is no single fix, but two controls block the most common attacks: multi-factor authentication on every admin account and fast patching of known vulnerabilities. Verizon's 2026 DBIR found exploited software vulnerabilities are now the top initial entry point for breaches."],
@@ -461,7 +461,7 @@ export default [
     description: "Cloud cost optimization with FinOps: a practical playbook for growing teams covering tagging, rightsizing, commitments and AI spend. Start cutting waste now.",
     excerpt: "A practical FinOps playbook for growing teams: get visibility, cut waste, control AI spend and make cost part of everyday engineering decisions.",
     date: '2026-09-12',
-    author: 'XYZ Cloud Team',
+    author: 'Advotis Cloud Team',
     keywords: ['cloud cost optimization', 'finops', 'finops framework', 'cloud cost management', 'reduce cloud costs', 'rightsizing cloud resources'],
     summary: "Cloud cost optimization means cutting cloud spend without hurting performance or delivery speed. Growing teams do it best with FinOps: tag every resource to an owner, report unit costs, remove idle resources, rightsize, schedule non-production environments, buy commitments only for steady usage, cap AI spend per feature, and hold a monthly cost review with engineering, finance and product.",
     takeaways: [
@@ -556,8 +556,8 @@ export default [
       ]],
       ['tip', "Add a cost line to your definition of done for every new service: an owner tag, a budget alert and a dashboard. It takes minutes at launch and saves hours of detective work later."],
       ['q', "The goal of FinOps is not a smaller bill; it is a bill you can explain."],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency's [managed cloud hosting](/services/cloud-hosting) and [DevOps team](/services/devops-maintenance) set up tagging, dashboards, rightsizing and automation across AWS, Azure and Google Cloud. If your cloud bill is growing faster than your business, [contact our team](/contact) for a cost review."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency's [managed cloud hosting](/services/cloud-hosting) and [DevOps team](/services/devops-maintenance) set up tagging, dashboards, rightsizing and automation across AWS, Azure and Google Cloud. If your cloud bill is growing faster than your business, [contact our team](/contact) for a cost review."]
     ],
     faqs: [
       ["What is FinOps in simple terms?", "FinOps is a way of managing cloud and technology spend where engineering, finance and business teams share responsibility for costs. Teams get accurate, timely cost data, own the spend they create, and make trade-offs based on business value rather than cutting costs blindly."],

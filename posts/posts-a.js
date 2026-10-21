@@ -8,7 +8,7 @@ export default [
     description: "Answer engine optimization (AEO) explained: how ChatGPT, Google AI Mode and Copilot pick sources, and a 30-day plan to get your pages cited by AI.",
     excerpt: "How AI answer engines choose sources, and the content, technical and measurement steps that make your pages the ones they cite.",
     date: '2026-10-20',
-    author: 'XYZ SEO Team',
+    author: 'Advotis SEO Team',
     keywords: ['answer engine optimization', 'AEO', 'how to get cited by AI', 'AI search optimization', 'ChatGPT search citations', 'Google AI Mode optimization'],
     summary: "Answer engine optimization (AEO) is the practice of making your content easy for AI systems like Google AI Mode, ChatGPT search and Microsoft Copilot to find, understand and cite. To get cited, keep pages crawlable and indexed, lead each section with a direct answer, back claims with sources and data, build brand authority off-site, and track citations and AI referrals.",
     takeaways: [
@@ -92,8 +92,8 @@ export default [
         "Week 3: add original data, attributed statistics, author details and update dates.",
         "Week 4: set up GA4 segments for AI referrals, verify Bing Webmaster Tools and repeat the citation check."
       ]],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency combines technical SEO, content strategy and analytics to make your pages easier for AI engines to find and cite. Explore our [SEO services](/services/seo) or [contact our team](/contact) for an AEO audit of your most important pages."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency combines technical SEO, content strategy and analytics to make your pages easier for AI engines to find and cite. Explore our [SEO services](/services/seo) or [contact our team](/contact) for an AEO audit of your most important pages."]
     ],
     faqs: [
       ['Is AEO different from SEO?', "AEO builds on SEO but targets a different outcome. SEO aims for ranking positions, while AEO aims for your content to be cited inside AI-generated answers. The technical foundation is shared, but AEO puts more weight on answer-first structure, clear definitions and verifiable sources."],
@@ -119,7 +119,7 @@ export default [
     description: "GEO vs SEO vs AEO in 2026: clear definitions, a side-by-side comparison and a practical way to prioritize search, answer and generative engine work.",
     excerpt: "Clear definitions of SEO, AEO and GEO, how they overlap, and how to split effort between them without wasting budget.",
     date: '2026-10-13',
-    author: 'XYZ SEO Team',
+    author: 'Advotis SEO Team',
     keywords: ['GEO vs SEO', 'GEO vs SEO vs AEO', 'generative engine optimization', 'answer engine optimization', 'what is GEO', 'AI search optimization'],
     summary: "SEO optimizes pages to rank in search results, AEO optimizes content to be quoted as a direct answer, and GEO (generative engine optimization) optimizes content and brand presence to be cited in AI-generated responses from tools like ChatGPT and Google AI Mode. They share one foundation, so treat AEO and GEO as layers on top of strong SEO, not replacements.",
     takeaways: [
@@ -206,7 +206,7 @@ export default [
         "Myth: AI visibility cannot be measured. Search Console, GA4 referrals and Bing Webmaster Tools' AI reporting all provide signals."
       ]],
       ['h', 'Next steps'],
-      ['p', "XYZ Agency runs SEO, AEO and GEO as one integrated program so you get visibility in search results and AI answers without paying twice. See our [SEO services](/services/seo) or [contact our team](/contact) to benchmark your AI visibility against competitors."]
+      ['p', "Advotis Agency runs SEO, AEO and GEO as one integrated program so you get visibility in search results and AI answers without paying twice. See our [SEO services](/services/seo) or [contact our team](/contact) to benchmark your AI visibility against competitors."]
     ],
     faqs: [
       ['Is GEO replacing SEO?', "No. GEO builds on SEO because most generative AI systems retrieve information from search indexes before generating answers. If your pages are not crawlable and indexed, GEO tactics have nothing to work with."],
@@ -231,7 +231,7 @@ export default [
     description: "Google AI Mode and zero-click search are reshaping organic traffic in 2026. See what the data shows and seven practical moves to protect your pipeline.",
     excerpt: "What AI Mode and rising zero-click searches mean for organic traffic, and seven moves to protect visibility and leads.",
     date: '2026-10-06',
-    author: 'XYZ SEO Team',
+    author: 'Advotis SEO Team',
     keywords: ['Google AI Mode', 'zero-click search', 'AI Mode SEO', 'zero-click searches 2026', 'AI Overviews traffic', 'organic traffic decline'],
     summary: "Google AI Mode is a conversational search experience that answers complex questions with an AI-generated response and supporting links. Combined with AI Overviews, it is pushing more searches to end without a click. To respond, make pages citable, target questions AI cannot fully answer, strengthen brand demand, and measure conversions and visibility rather than clicks alone.",
     takeaways: [
@@ -308,7 +308,7 @@ export default [
         "Review the trade-off: less exposure in answers usually means less visibility overall."
       ]],
       ['h', 'Next steps'],
-      ['p', "XYZ Agency helps teams audit AI Mode exposure, restructure content for citations and rebuild reporting around visibility and revenue. Explore our [SEO services](/services/seo) or [contact our team](/contact) for a zero-click impact review."]
+      ['p', "Advotis Agency helps teams audit AI Mode exposure, restructure content for citations and rebuild reporting around visibility and revenue. Explore our [SEO services](/services/seo) or [contact our team](/contact) for a zero-click impact review."]
     ],
     faqs: [
       ['Is Google AI Mode reducing website traffic?', "It changes where traffic goes. Third-party studies show fewer clicks when AI summaries appear, while Google says overall organic clicks have been roughly stable and shifting between sites. The effect varies by query type, so check your own Search Console data."],
@@ -334,7 +334,7 @@ export default [
     description: "Technical SEO for AI crawlers: which bots to allow in robots.txt, whether llms.txt and schema help, and why server-rendered HTML matters for AI search.",
     excerpt: "Robots.txt rules, llms.txt, schema and JavaScript rendering: the technical checklist that decides whether AI engines can read your site.",
     date: '2026-09-28',
-    author: 'XYZ SEO Team',
+    author: 'Advotis SEO Team',
     keywords: ['technical SEO for AI crawlers', 'AI crawlers robots.txt', 'llms.txt', 'OAI-SearchBot', 'GPTBot', 'schema markup for AI search', 'JavaScript rendering AI crawlers'],
     summary: "Technical SEO for AI crawlers means making sure bots like Googlebot, OAI-SearchBot, Bingbot and PerplexityBot can access, render and understand your pages. Allow the search crawlers you want citations from, decide separately on training bots like GPTBot, serve key content in server HTML, keep schema accurate, and treat llms.txt as optional rather than a ranking requirement.",
     takeaways: [
@@ -431,8 +431,8 @@ export default [
         "Server logs are monitored for AI crawler activity and errors.",
         "llms.txt is published if your site is documentation-heavy."
       ]],
-      ['h', 'How XYZ Agency can help'],
-      ['p', "XYZ Agency audits crawler access, rendering and structured data so AI engines can read and cite your site. Explore our [SEO services](/services/seo), or [contact our team](/contact) for a technical AI-readiness review."]
+      ['h', 'How Advotis Agency can help'],
+      ['p', "Advotis Agency audits crawler access, rendering and structured data so AI engines can read and cite your site. Explore our [SEO services](/services/seo), or [contact our team](/contact) for a technical AI-readiness review."]
     ],
     faqs: [
       ['Should I block GPTBot?', "That depends on whether you want your content used to train OpenAI's models. Blocking GPTBot does not remove you from ChatGPT search, which uses OAI-SearchBot, so you can block training while still allowing search visibility."],
@@ -458,7 +458,7 @@ export default [
     description: "JavaScript SEO for React: how Google renders JS, when to use SSR, SSG or ISR, and a practical checklist to make React sites rank in search and AI answers.",
     excerpt: "How Google and AI crawlers handle React, when to choose SSR, SSG or ISR, and the fixes that make JavaScript sites rank.",
     date: '2026-09-19',
-    author: 'XYZ Engineering Team',
+    author: 'Advotis Engineering Team',
     keywords: ['JavaScript SEO', 'React SEO', 'SSR vs SSG', 'server-side rendering SEO', 'Next.js SEO', 'client-side rendering SEO'],
     summary: "JavaScript SEO is the practice of making JavaScript-heavy sites crawlable, renderable and indexable. React sites can rank well, but pure client-side rendering is risky because Google renders in a queue and many AI crawlers do not run JavaScript. Use static generation for stable pages, server-side rendering for dynamic ones, and ship real links, titles and status codes in HTML.",
     takeaways: [
@@ -546,7 +546,7 @@ export default [
         "Heavy hydration that delays interactivity and hurts INP; see our [INP optimization guide](/blog/core-web-vitals-inp-guide)."
       ]],
       ['h', 'Next steps'],
-      ['p', "XYZ Agency builds and migrates React applications with SEO-ready rendering from day one. Explore our [web application development services](/services/web-applications) or [contact our team](/contact) for a JavaScript SEO and rendering audit."]
+      ['p', "Advotis Agency builds and migrates React applications with SEO-ready rendering from day one. Explore our [web application development services](/services/web-applications) or [contact our team](/contact) for a JavaScript SEO and rendering audit."]
     ],
     faqs: [
       ['Is React bad for SEO?', "No. React is not bad for SEO, but client-side-only rendering can be. Using a framework with server-side rendering or static generation gives crawlers full HTML and avoids most JavaScript SEO problems."],

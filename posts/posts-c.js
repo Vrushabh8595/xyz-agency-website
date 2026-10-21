@@ -10,7 +10,7 @@ export default [
     description: "A practical INP optimization guide for 2026: measure Interaction to Next Paint in the field, find slow interactions and apply fixes that pass Core Web Vitals.",
     excerpt: "How to measure, diagnose and fix Interaction to Next Paint so your site feels instant and passes Core Web Vitals.",
     date: "2026-10-16",
-    author: "XYZ Engineering Team",
+    author: "Advotis Engineering Team",
     keywords: ["INP optimization", "Interaction to Next Paint", "Core Web Vitals 2026", "improve INP score", "scheduler.yield", "reduce input delay"],
     summary: "INP optimization means shortening the time between a user's click, tap or key press and the next visual update. Google rates INP of 200 ms or less as good at the 75th percentile of field visits. To improve it, find slow interactions with field data, then cut input delay, break up long event handlers by yielding to the main thread, and reduce rendering work.",
     takeaways: [
@@ -91,7 +91,7 @@ export default [
           ["Marketing landing pages", "Tag managers, chat, video embeds", "Load embeds on interaction, consolidate tags, defer chat widgets"]
         ]
       }],
-      ["h", "How XYZ Agency can help"],
+      ["h", "How Advotis Agency can help"],
       ["p", "INP improvements stick when they are measured, prioritized and protected in your release process. Our [web experience team](/services/web-experience) sets up RUM, traces your slowest interactions and ships targeted fixes, and our [analytics and CRO specialists](/services/analytics-cro) connect responsiveness to conversion. [Contact our team](/contact) for an INP audit of your key templates."]
     ],
     faqs: [
@@ -120,7 +120,7 @@ export default [
     description: "Headless CMS vs WordPress in 2026: compare cost, speed, editing, SEO and security, see when hybrid headless WordPress wins, and use our checklist to decide.",
     excerpt: "A clear-eyed comparison of headless CMS platforms and WordPress in 2026, with a decision checklist for marketing and product teams.",
     date: "2026-10-09",
-    author: "XYZ Engineering Team",
+    author: "Advotis Engineering Team",
     keywords: ["headless CMS vs WordPress", "headless WordPress", "best headless CMS 2026", "WordPress 7.0", "decoupled CMS", "WordPress vs Contentful"],
     summary: "Choose WordPress when your team needs fast publishing, a huge plugin ecosystem and a lower total cost for a content-led marketing site. Choose a headless CMS when content must feed several channels, such as a web app, mobile app and kiosks, or when developers need full control of the front end. Headless WordPress is a middle path that keeps the familiar editor.",
     takeaways: [
@@ -201,7 +201,7 @@ export default [
         "Plan migration: content modeling, URL mapping and redirects are where most replatforming risk sits."
       ]],
       ["p", "Whichever you choose, rendering strategy matters for search. Our guide to [JavaScript SEO with SSR and SSG](/blog/javascript-seo-react-ssr-ssg) explains how to keep a decoupled front end crawlable."],
-      ["h", "How XYZ Agency can help"],
+      ["h", "How Advotis Agency can help"],
       ["p", "We build on WordPress, headless platforms and hybrid stacks, so our recommendation follows your requirements rather than a preferred tool. Explore our [web development services](/services/web-development) or [contact our team](/contact) for an architecture review before your next rebuild."]
     ],
     faqs: [
@@ -230,7 +230,7 @@ export default [
     description: "Flutter vs React Native in 2026: an honest comparison of performance, architecture, tooling, hiring and long-term risk, with clear advice on which to choose.",
     excerpt: "Both frameworks matured fast this year. Here is how Flutter and React Native really compare in 2026, and how to pick.",
     date: "2026-10-02",
-    author: "XYZ Mobile Team",
+    author: "Advotis Mobile Team",
     keywords: ["Flutter vs React Native", "Flutter vs React Native 2026", "cross-platform app development", "React Native New Architecture", "Flutter Impeller", "best framework for mobile app"],
     summary: "Flutter and React Native are both production-ready in 2026. Choose Flutter when you want pixel-identical custom UI across platforms and a single toolkit that also targets desktop. Choose React Native when your team already knows React and TypeScript, wants native platform components, or shares code with a web app. Team skills usually matter more than raw performance.",
     takeaways: [
@@ -322,7 +322,7 @@ export default [
       ]],
       ["tip", "Whichever framework you pick, schedule an upgrade sprint every quarter. Falling several releases behind is the most common reason cross-platform apps become expensive to maintain."],
       ["p", "Budget is the other half of the decision; our guide to [app development cost in 2026](/blog/app-development-cost-2026) breaks down what drives the price of a cross-platform build."],
-      ["h", "How XYZ Agency can help"],
+      ["h", "How Advotis Agency can help"],
       ["p", "We build production apps in both Flutter and React Native, so we can recommend the one that fits your product rather than our habits. Learn more about our [mobile app development services](/services/mobile-apps), or [contact our team](/contact) to run a short framework evaluation for your app."]
     ],
     faqs: [
@@ -351,7 +351,7 @@ export default [
     description: "How much does it cost to build an app in 2026? Learn what drives app development cost, which store fees apply, and how to scope an MVP that fits your budget.",
     excerpt: "The real drivers of app development cost in 2026, the fixed fees you cannot avoid, and a simple way to estimate your own budget.",
     date: "2026-09-24",
-    author: "XYZ Mobile Team",
+    author: "Advotis Mobile Team",
     keywords: ["app development cost", "cost to build an app 2026", "mobile app development cost", "MVP app cost", "app maintenance cost", "how much does an app cost"],
     summary: "App development cost in 2026 is driven mainly by scope, the number of platforms, backend complexity, design depth and the team's location and seniority. Estimate it as total hours multiplied by a blended hourly rate, then add third-party services, store fees and ongoing maintenance. A focused MVP built cross-platform is the most reliable way to control the first budget.",
     takeaways: [
@@ -444,7 +444,7 @@ export default [
         "Reuse a web admin panel or headless CMS for content instead of hard-coding it."
       ]],
       ["q", "The cheapest app is the one that solves one problem extremely well before it tries to solve ten."],
-      ["h", "How XYZ Agency can help"],
+      ["h", "How Advotis Agency can help"],
       ["p", "We scope apps feature by feature, so you see where every hour goes and what can wait for version two. Explore our [mobile app development services](/services/mobile-apps), see how we approach [AI development](/services/ai-development), or [contact our team](/contact) for a transparent estimate and MVP plan."]
     ],
     faqs: [
@@ -473,7 +473,7 @@ export default [
     description: "Agentic commerce explained for 2026: how AI shopping agents find and buy products, what UCP and ACP mean, and the steps to make your store agent-ready now.",
     excerpt: "AI agents now research and buy products for shoppers. Here is how agentic commerce works and how to get your store ready.",
     date: "2026-09-15",
-    author: "XYZ Commerce Team",
+    author: "Advotis Commerce Team",
     keywords: ["agentic commerce", "AI shopping agents", "Universal Commerce Protocol", "Agentic Commerce Protocol", "AI shopping optimization", "agent-ready ecommerce"],
     summary: "Agentic commerce is shopping where AI agents discover, compare and sometimes buy products on a shopper's behalf inside tools like ChatGPT, Google AI Mode, Gemini and Microsoft Copilot. To prepare, keep product data complete and accurate in feeds and structured data, allow AI crawlers access, connect to platform channels or protocols like UCP and ACP, and keep checkout, policies and fulfillment agent-friendly.",
     takeaways: [
@@ -554,7 +554,7 @@ export default [
         "Fraud and disputes: agent-initiated orders need clear authorization trails, which is what AP2 mandates and Stripe's scoped payment tokens aim to provide.",
         "Platform volatility: OpenAI's checkout pivot shows that channels can change quickly, so avoid single-channel dependence."
       ]],
-      ["h", "How XYZ Agency can help"],
+      ["h", "How Advotis Agency can help"],
       ["p", "Agent-ready commerce combines clean product data, solid platform engineering and measurement. Our [e-commerce development team](/services/ecommerce-development) audits your catalog, structured data and integrations, and our SEO specialists align it with AI search visibility. [Contact our team](/contact) to plan your store's agentic commerce roadmap."]
     ],
     faqs: [
