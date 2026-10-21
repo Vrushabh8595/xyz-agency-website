@@ -92,7 +92,7 @@ export default async function handler(req, res) {
 
   const page = typeof fields.Page === 'string' && fields.Page.startsWith('http') ? fields.Page : `${SITE_URL}/contact`
   const payload = {
-    _subject: subject.slice(0, 200),
+    _subject: (subject.startsWith("Advotis New Lead") ? subject : `Advotis New Lead | ${subject}`).slice(0, 200),
     _template: 'table',
     _captcha: 'false',
     ...(LEAD_CC ? { _cc: LEAD_CC } : {}),
