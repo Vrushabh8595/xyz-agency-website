@@ -69,7 +69,7 @@ export function getSeo(pathname = '/') {
   if (path === '/') {
     return page({
       fullTitle: `${BRAND} | Software Development & Digital Marketing Company`,
-      description: 'XYZ Agency builds websites, web apps, mobile apps and AI products, hosts them on managed cloud servers, and grows them with SEO, AEO, paid media and content.',
+      description: 'Advotis Agency builds websites, web apps, mobile apps and AI products, hosts them on managed cloud servers, and grows them with SEO, AEO, paid media and content.',
       schema: [faqPage(HOME_FAQS, '/'), itemList(SERVICES.map((s) => [s.title, `/services/${s.slug}`]))],
     })
   }
@@ -128,7 +128,7 @@ export function getSeo(pathname = '/') {
   if (path === '/about') {
     return page({
       title: 'About Us — Software & Marketing Experts',
-      description: 'XYZ Agency is a team of senior engineers and marketers across the USA, UAE and India who build software and grow it with data-driven digital marketing.',
+      description: 'Advotis Agency is a team of senior engineers and marketers across the USA, UAE and India who build software and grow it with data-driven digital marketing.',
       pageType: 'AboutPage',
       schema: [crumbs([['About', '/about']])],
     })
@@ -137,7 +137,7 @@ export function getSeo(pathname = '/') {
   if (path === '/blog') {
     return page({
       title: 'Blog: Software, AI, SEO & Marketing Insights',
-      description: 'Practical, up-to-date guides on AI search (AEO and GEO), SEO, AI agents, web and app development, paid media, analytics and cloud — from the XYZ Agency team.',
+      description: 'Practical, up-to-date guides on AI search (AEO and GEO), SEO, AI agents, web and app development, paid media, analytics and cloud — from the Advotis Agency team.',
       pageType: 'CollectionPage',
       schema: [
         crumbs([['Blog', '/blog']]),
@@ -204,7 +204,7 @@ export function getSeo(pathname = '/') {
   if (path === '/careers') {
     return page({
       title: 'Careers & Internships',
-      description: 'Join XYZ Agency: internships in business development, AI engineering, paid ads and project management, plus a remote freelance network for developers and marketers.',
+      description: 'Join Advotis Agency: internships in business development, AI engineering, paid ads and project management, plus a remote freelance network for developers and marketers.',
       schema: [crumbs([['Careers', '/careers']]), itemList(JOBS.map((j) => [j.title, `/careers/${j.slug}`]))],
     })
   }
@@ -222,7 +222,7 @@ export function getSeo(pathname = '/') {
   if (path === '/contact') {
     return page({
       title: 'Contact Us — Get a Free Proposal',
-      description: 'Tell us about your website, app, AI or marketing project. XYZ Agency replies within one business day with next steps, a plan and an estimate.',
+      description: 'Tell us about your website, app, AI or marketing project. Advotis Agency replies within one business day with next steps, a plan and an estimate.',
       pageType: 'ContactPage',
       schema: [crumbs([['Contact', '/contact']])],
     })
@@ -231,7 +231,7 @@ export function getSeo(pathname = '/') {
   if (path === '/privacy') {
     return page({
       title: 'Privacy Policy & Terms',
-      description: 'How XYZ Agency collects, uses and protects the information you submit through this website, your privacy choices, and our website terms of use.',
+      description: 'How Advotis Agency collects, uses and protects the information you submit through this website, your privacy choices, and our website terms of use.',
       schema: [crumbs([['Privacy Policy', '/privacy']])],
     })
   }

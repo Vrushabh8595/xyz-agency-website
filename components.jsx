@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { APP_TECH, CMS_TECH, COMPANY, HOSTING, PARTNERS, SERVICE_GROUPS, SERVICES } from './data.js'
-import { FORM_ENDPOINT } from './site.config.js'
+import { FORM_ENDPOINT, LOGO_FULL, LOGO_FULL_WHITE } from './site.config.js'
 import { applyHead, getSeo } from './seo.js'
 
 /* ---------- Icons ---------- */
@@ -422,8 +422,14 @@ function MegaMenu() {
 export function Logo({ light }) {
   return (
     <Link to="/" className={`logo ${light ? 'light' : ''}`} aria-label={`${COMPANY.name} home`}>
-      <span className="logo-mark">X</span>
-      <span>XYZ<b>Agency</b></span>
+      {light ? (
+        <img src={LOGO_FULL_WHITE} alt={COMPANY.name} width="527" height="120" className="logo-img" />
+      ) : (
+        <>
+          <img src={LOGO_FULL} alt={COMPANY.name} width="527" height="120" className="logo-img logo-img-light" />
+          <img src={LOGO_FULL_WHITE} alt="" aria-hidden="true" width="527" height="120" className="logo-img logo-img-dark" />
+        </>
+      )}
     </Link>
   )
 }
@@ -525,7 +531,6 @@ export function Footer() {
           <Link to="/ebooks">Ebooks</Link>
           <h4 className="mt">Get in touch</h4>
           <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
-          <a href="tel:+10000000000">{COMPANY.phone}</a>
         </div>
       </div>
       <div className="container foot-bottom">
@@ -597,7 +602,7 @@ export function EbookCover({ book, small }) {
   const [a, b] = book.gradient
   return (
     <div className={`ebook-cover ${small ? 'small' : ''}`} style={{ background: `linear-gradient(150deg, ${a}, ${b})` }}>
-      <span className="ec-brand">XYZ Agency · Guide</span>
+      <span className="ec-brand">Advotis Agency · Guide</span>
       <h3>{book.title}</h3>
       <p>{book.subtitle}</p>
       <span className="ec-foot">{book.pages} pages</span>

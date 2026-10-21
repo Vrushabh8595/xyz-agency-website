@@ -10,18 +10,16 @@ import pHubspot from './partner-hubspot.png'
 import pGoogle from './partner-google.png'
 
 export const COMPANY = {
-  name: 'XYZ Agency',
+  name: 'Advotis Agency',
   email: 'hello@xyzagency.com',
-  phone: '+1 (000) 000-0000',
   offices: [
     { city: 'New York', country: 'USA', address: '000 Placeholder Ave, New York, NY' },
     { city: 'Dubai', country: 'UAE', address: 'Placeholder Tower, Business Bay' },
     { city: 'Pune', country: 'India', address: 'Placeholder Park, Baner' },
   ],
-  /* Replace with your real profile URLs */
   social: [
-    { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/company/xyz-agency' },
-    { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/xyzagency' },
+    { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/company/advotis-agency/' },
+    { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/advotisagency' },
   ],
 }
 
@@ -577,9 +575,9 @@ export const HERO_WORDS = ['web applications', 'mobile apps', 'AI products', 'on
 
 /* ---------- Home page FAQ (also published as FAQPage structured data) ---------- */
 export const HOME_FAQS = [
-  ['What does XYZ Agency do?', 'XYZ Agency is a software development and digital marketing company. We design and build websites on every major CMS, custom web applications (MERN, MEAN, Next.js, Laravel), Flutter, iOS and Android apps, AI solutions and online stores, host them on managed cloud servers, and grow them with SEO, paid media, content and analytics.'],
+  ['What does Advotis Agency do?', 'Advotis Agency is a software development and digital marketing company. We design and build websites on every major CMS, custom web applications (MERN, MEAN, Next.js, Laravel), Flutter, iOS and Android apps, AI solutions and online stores, host them on managed cloud servers, and grow them with SEO, paid media, content and analytics.'],
   ['Can one agency handle both development and marketing?', 'Yes. One senior team plans, builds, launches and markets your product, so the website or app is built to rank and convert from day one and every channel reports into the same dashboard.'],
-  ['How much does a website or app cost with XYZ Agency?', 'It depends on scope. Marketing websites, e-commerce stores, custom web apps and mobile apps are priced as fixed-price projects for clear scopes or as a monthly dedicated team for evolving products. Share your idea and we will send a wireframe plan and estimate.'],
+  ['How much does a website or app cost with Advotis Agency?', 'It depends on scope. Marketing websites, e-commerce stores, custom web apps and mobile apps are priced as fixed-price projects for clear scopes or as a monthly dedicated team for evolving products. Share your idea and we will send a wireframe plan and estimate.'],
   ['Do you help brands show up in AI search like ChatGPT, Gemini and Google AI Overviews?', 'Yes. Our SEO team covers answer engine optimization (AEO) and generative engine optimization (GEO): technical SEO, structured data, answer-first content and authority building so your brand is cited in AI answers as well as ranking in classic search.'],
   ['Which industries do you work with?', 'We work with B2B SaaS, healthcare, legal, financial services, e-commerce, IT, education and real estate companies across the USA, UAE, India and beyond.'],
   ['How fast can we get started?', 'Most projects start with a free discovery call within one business day of your enquiry, followed by a scoped proposal. Typical MVPs launch in 8–14 weeks, and marketing programs usually show early wins within the first 30–90 days.'],

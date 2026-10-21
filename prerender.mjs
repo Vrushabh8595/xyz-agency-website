@@ -51,7 +51,7 @@ write('sitemap.xml', sitemap)
 
 /* ---------- robots.txt (AI answer engines explicitly welcome) ---------- */
 const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Bingbot', 'CCBot', 'meta-externalagent', 'DuckAssistBot', 'MistralAI-User']
-write('robots.txt', `# XYZ Agency — all search engines and AI answer engines are welcome
+write('robots.txt', `# Advotis Agency — all search engines and AI answer engines are welcome
 User-agent: *
 Allow: /
 Disallow: /ebooks/*/read
@@ -63,9 +63,9 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
 /* ---------- llms.txt (plain-language site guide for LLMs / AI agents) ---------- */
 const plain = (t) => t.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-write('llms.txt', `# XYZ Agency
+write('llms.txt', `# Advotis Agency
 
-> XYZ Agency is a software development and digital marketing company with teams in the USA, UAE and India. We design and build websites on every major CMS, custom web applications (MERN, MEAN, Next.js, Laravel), Flutter, iOS and Android apps, AI solutions (LLM assistants, RAG, AI agents) and e-commerce stores; host and manage them on AWS, DigitalOcean, Cloudways, Hostinger and HostGator; and grow them with SEO, answer engine optimization (AEO), generative engine optimization (GEO), paid media, content and analytics.
+> Advotis Agency is a software development and digital marketing company with teams in the USA, UAE and India. We design and build websites on every major CMS, custom web applications (MERN, MEAN, Next.js, Laravel), Flutter, iOS and Android apps, AI solutions (LLM assistants, RAG, AI agents) and e-commerce stores; host and manage them on AWS, DigitalOcean, Cloudways, Hostinger and HostGator; and grow them with SEO, answer engine optimization (AEO), generative engine optimization (GEO), paid media, content and analytics.
 
 Contact: ${SITE_URL}/contact
 
@@ -76,7 +76,7 @@ ${SERVICES.map((s) => `- [${s.title}](${SITE_URL}/services/${s.slug}): ${s.short
 ${POSTS.map((p) => `- [${p.title}](${SITE_URL}/blog/${p.slug}): ${plain(p.summary)}`).join('\n')}
 
 ## Company
-- [About XYZ Agency](${SITE_URL}/about)
+- [About Advotis Agency](${SITE_URL}/about)
 - [Case studies](${SITE_URL}/work)
 - [Careers and internships](${SITE_URL}/careers)
 - [Free ebooks](${SITE_URL}/ebooks)
@@ -87,9 +87,9 @@ const x = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&
 write('rss.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
 <channel>
-  <title>XYZ Agency Blog</title>
+  <title>Advotis Agency Blog</title>
   <link>${SITE_URL}/blog</link>
-  <description>Software development, AI, SEO and growth marketing insights from XYZ Agency.</description>
+  <description>Software development, AI, SEO and growth marketing insights from Advotis Agency.</description>
   <language>en</language>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
   <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />

@@ -1,4 +1,4 @@
-/* ============ XYZ Agency — Blue theme (light + dark) ============ */
+/* ============ Advotis Agency — Blue theme (light + dark) ============ */
 :root {
   --ink: #0b1b3a;
   --ink-2: #334766;
@@ -125,6 +125,15 @@ button { font: inherit; cursor: pointer; }
   transition: transform .4s var(--ease);
 }
 .logo:hover .logo-mark { transform: rotate(-8deg) scale(1.06); }
+.logo-img { display: block; height: 40px; width: auto; transition: transform .4s var(--ease); }
+.header.scrolled .logo-img { height: 36px; }
+.logo:hover .logo-img { transform: scale(1.03); }
+.logo-img-dark { display: none; }
+[data-theme="dark"] .logo-img-light { display: none; }
+[data-theme="dark"] .logo-img-dark { display: block; }
+.logo-mark.logo-mark-img { background: #fff; padding: 4px; box-shadow: 0 0 0 1px var(--line); }
+.logo-mark.logo-mark-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 480px) { .logo-img { height: 32px; } .header.scrolled .logo-img { height: 30px; } }
 .nav-links { display: flex; align-items: center; gap: 28px; font-weight: 500; font-size: 15px; color: var(--ink-2); margin-left: auto; }
 .nav-links > a:not(.btn), .drop-btn { padding: 8px 0; position: relative; }
 .nav-links > a:not(.btn)::after {

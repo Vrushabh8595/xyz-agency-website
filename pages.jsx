@@ -4,7 +4,7 @@ import {
   APP_TECH, CASE_STUDIES, CLIENTS, CMS_TECH, COMPANY, EBOOKS, HERO_WORDS, HOME_FAQS, getPostContent, loadPostContent, HOSTING, INDUSTRIES, JOBS, MARKETING_TECH, PARTNERS, POSTS,
   SERVICE_GROUPS, SERVICES, STATS, STEPS, VALUES,
 } from './data.js'
-import { SITE_URL } from './site.config.js'
+import { LOGO_MARK, SITE_URL } from './site.config.js'
 import {
   CaseCard, Counter, CtaBand, EbookCover, Honeypot, Icon, LottiePlayer, PageHero, Parallax, PostCard, Reveal, RichText, SplitText,
   Socials, TechTile, sendLead, spotlight, useInView, useSectionProgress, useTitle,
@@ -112,7 +112,7 @@ export function Home() {
               <span className="line" aria-hidden="true"><RotatingWord words={HERO_WORDS} /></span>
             </h1>
             <p className="lead fade-in d2">
-              XYZ Agency engineers websites, web apps, mobile apps and AI products — then grows them with SEO,
+              Advotis Agency engineers websites, web apps, mobile apps and AI products — then grows them with SEO,
               paid media and data-driven marketing. One senior team from first commit to first customer.
             </p>
             <div className="hero-ctas fade-in d3">
@@ -396,7 +396,7 @@ function TechExpertise() {
               {MARKETING_TECH.map((t, k) => <span key={t.name} className="sat" style={{ '--a': `${k * 60 + 15}deg` }}><span className="sat-in"><TechTile t={t} size="sm" /></span></span>)}
             </div>
             <div className="hub">
-              <span className="logo-mark">X</span>
+              <span className="logo-mark logo-mark-img"><img src={LOGO_MARK} alt="" width="44" height="44" /></span>
               <b>Build &amp; grow</b>
               <small>18+ platforms</small>
             </div>
@@ -981,13 +981,13 @@ export function About() {
     <>
       <PageHero kicker="About us" crumbs={[['About']]}
         title="A growth partner built for compounding outcomes"
-        text="XYZ Agency was founded on a simple idea: marketing works best when every channel is planned, built and measured as one connected system." />
+        text="Advotis Agency was founded on a simple idea: marketing works best when every channel is planned, built and measured as one connected system." />
       <section className="section">
         <div className="container split">
           <Reveal>
             <span className="kicker">Our story</span>
             <h2>Senior specialists, one connected system</h2>
-            <p className="body-text">Too many companies juggle separate vendors for SEO, ads, web and analytics — each reporting their own version of success. We built XYZ Agency to fix that.</p>
+            <p className="body-text">Too many companies juggle separate vendors for SEO, ads, web and analytics — each reporting their own version of success. We built Advotis Agency to fix that.</p>
             <p className="body-text">Today our team of specialists works across offices in the USA, UAE and India, partnering with B2B and growth-stage brands to turn marketing into a predictable revenue engine.</p>
           </Reveal>
           <Reveal className="about-visual">
@@ -1161,10 +1161,10 @@ export function BlogPost() {
               </div>
             )}
             <div className="author-box card">
-              <span className="logo-mark">X</span>
+              <span className="logo-mark logo-mark-img"><img src={LOGO_MARK} alt="" width="44" height="44" /></span>
               <div>
                 <b>{post.author}</b>
-                <p>Written and reviewed by the {post.author.replace(/^XYZ /, '')} at {COMPANY.name} — specialists who build and grow websites, apps and AI products for clients every day. <Link to="/about">About us</Link></p>
+                <p>Written and reviewed by the {post.author.replace(/^Advotis /, '')} at {COMPANY.name} — specialists who build and grow websites, apps and AI products for clients every day. <Link to="/about">About us</Link></p>
               </div>
             </div>
             <div className="share">
@@ -1294,7 +1294,7 @@ export function EbookDetail() {
             <ul className="check-list compact">
               <li><span className="check"><Icon name="check" size={16} /></span>{b.chapters.length} practical chapters</li>
               <li><span className="check"><Icon name="check" size={16} /></span>Frameworks and checklists you can reuse</li>
-              <li><span className="check"><Icon name="check" size={16} /></span>Written by senior XYZ specialists</li>
+              <li><span className="check"><Icon name="check" size={16} /></span>Written by senior Advotis specialists</li>
             </ul>
             <form className="card form" onSubmit={submit}>
               <h3><Icon name="lock" size={18} /> Get instant access</h3>
@@ -1581,7 +1581,6 @@ export function Contact() {
           </form>
           <div className="contact-side">
             <div className="card contact-item"><span className="icon-box sm"><Icon name="mail" size={18} /></span><div><small>Email</small><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></div></div>
-            <div className="card contact-item"><span className="icon-box sm"><Icon name="phone" size={18} /></span><div><small>Phone</small><a href="tel:+10000000000">{COMPANY.phone}</a></div></div>
             {COMPANY.offices.map((o) => (
               <div key={o.city} className="card contact-item"><span className="icon-box sm"><Icon name="pin" size={18} /></span><div><small>{o.city}, {o.country}</small><span>{o.address}</span></div></div>
             ))}

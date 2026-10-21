@@ -1,6 +1,6 @@
-# XYZ Agency — Software Development & Digital Marketing Website
+# Advotis Agency — Software Development & Digital Marketing Website
 
-A multi-page, responsive marketing website for **XYZ Agency**, built with **React 18 + Vite + React Router** in a blue theme with a light/dark mode toggle and scroll animations.
+A multi-page, responsive marketing website for **Advotis Agency**, built with **React 18 + Vite + React Router** in a blue theme with a light/dark mode toggle and scroll animations.
 
 ## Pages
 
