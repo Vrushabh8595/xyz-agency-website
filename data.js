@@ -11,7 +11,7 @@ import pGoogle from './partner-google.png'
 
 export const COMPANY = {
   name: 'Advotis Agency',
-  email: 'hello@xyzagency.com',
+  email: 'contact@advotisagency.com',
   offices: [
     { city: 'New York', country: 'USA', address: '000 Placeholder Ave, New York, NY' },
     { city: 'Dubai', country: 'UAE', address: 'Placeholder Tower, Business Bay' },
