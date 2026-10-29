@@ -168,7 +168,7 @@ export function getSeo(pathname = '/') {
           publisher: { '@id': ORG_ID }, mainEntityOfPage: { '@id': `${abs(path)}#webpage` }, articleSection: p.category,
           keywords: p.keywords.join(', '), wordCount: p.wordCount, inLanguage: 'en', isAccessibleForFree: true,
           citation: p.sources.map(([name, url]) => ({ '@type': 'CreativeWork', name, url })),
-          speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.quick-answer', '.takeaways'] },
+          speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.art-summary', '.takeaways'] },
           about: { '@type': 'Thing', name: p.keywords[0] },
         },
         ...(p.faqs.length ? [faqPage(p.faqs, path)] : []),

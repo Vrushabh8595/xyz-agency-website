@@ -1185,23 +1185,31 @@ export function BlogPost() {
   const toc = post.body.filter(([t]) => t === 'h').map(([, v]) => v)
   return (
     <>
-      <PageHero kicker={post.category} crumbs={[['Blog', '/blog'], [post.title]]} title={post.title}>
-        <p className="meta light-meta">
-          By {post.author} · <time dateTime={post.date}>{post.dateLabel}</time>
-          {post.updated !== post.date && <> · Updated <time dateTime={post.updated}>{post.updated}</time></>} · {post.read}
-        </p>
-      </PageHero>
+      <ReadingProgress />
+      <div className="post-hero">
+        <PageHero kicker={post.category} crumbs={[['Blog', '/blog'], [post.title]]} title={post.title}>
+          <div className="post-meta">
+            <span className="pm-author">
+              <span className="pm-avatar"><img src={LOGO_MARK} alt="" width="28" height="28" /></span>
+              <span>By <b>{post.author}</b></span>
+            </span>
+            <span className="pm-item"><Icon name="clock" size={15} /> <time dateTime={post.date}>{post.dateLabel}</time></span>
+            {post.updated !== post.date && <span className="pm-item">Updated <time dateTime={post.updated}>{post.updated}</time></span>}
+            <span className="pm-item"><Icon name="book" size={15} /> {post.read}</span>
+          </div>
+        </PageHero>
+      </div>
       <section className="section tight-top">
         <div className="container article-wrap">
-          <article className="article">
+          <article className="article post-article">
+            <div className="art-summary">
+              <span className="sum-label"><Icon name="doc" size={16} /> Summary</span>
+              <p>{post.summary}</p>
+            </div>
             <figure className="art-figure">
               <img src={post.image} alt={post.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
             </figure>
             {!content && <p className="empty">Loading article…</p>}
-            <div className="quick-answer">
-              <span className="qa-label"><Icon name="spark" size={16} /> Quick answer</span>
-              <p>{post.summary}</p>
-            </div>
             {content && <div className="takeaways">
               <h2 className="no-top">Key takeaways</h2>
               <ul>{post.takeaways.map((t) => <li key={t}><Icon name="check" size={16} />{t}</li>)}</ul>
@@ -1236,8 +1244,8 @@ export function BlogPost() {
           <aside className="sidebar">
             <nav className="card side-card toc" aria-label="On this page">
               <h3>On this page</h3>
-              {toc.map((h) => <a key={h} href={`#${slugify(h)}`}>{h}</a>)}
-              <a href="#faq">Frequently asked questions</a>
+              {toc.map((h, i) => <a key={h} href={`#${slugify(h)}`}><span className="toc-n">{String(i + 1).padStart(2, '0')}</span>{h}</a>)}
+              {post.faqs.length > 0 && <a href="#faq"><span className="toc-n">{String(toc.length + 1).padStart(2, '0')}</span>Frequently asked questions</a>}
             </nav>
             {service && (
               <div className="card side-card">
@@ -1265,6 +1273,24 @@ export function BlogPost() {
       <CtaBand title={service ? `Need help with ${service.title.split(' &')[0].toLowerCase()}?` : 'Need a hand?'} text="Talk to a senior specialist — we reply within one business day with a clear plan." />
     </>
   )
+}
+
+function ReadingProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const on = () => {
+      const el = document.querySelector('.post-article')
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      const total = r.height - window.innerHeight
+      setPct(Math.min(100, Math.max(0, total > 0 ? (-r.top / total) * 100 : 0)))
+    }
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    window.addEventListener('resize', on)
+    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on) }
+  }, [])
+  return <div className="read-progress" aria-hidden="true"><span style={{ transform: `scaleX(${pct / 100})` }} /></div>
 }
 
 function EbookPromo() {
