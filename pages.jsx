@@ -1178,6 +1178,9 @@ export function BlogPost() {
   if (!meta) return <NotFound />
   const post = { ...meta, ...(content || { body: [], takeaways: [], faqs: [], sources: [] }) }
   const same = POSTS.filter((p) => p.slug !== slug && p.category === post.category)
+  const idx = POSTS.indexOf(meta)
+  const prev = POSTS[idx + 1] /* older */
+  const next = POSTS[idx - 1] /* newer */
   const related = [...same, ...POSTS.filter((p) => p.slug !== slug && !same.includes(p))].slice(0, 3)
   const service = SERVICES.find((s) => s.slug === post.service)
   const book = EBOOKS[POSTS.indexOf(meta) % EBOOKS.length]
@@ -1202,18 +1205,14 @@ export function BlogPost() {
       <section className="section tight-top">
         <div className="container article-wrap">
           <article className="article post-article">
+            <figure className="art-figure">
+              <img src={post.image} alt={post.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
+            </figure>
             <div className="art-summary">
               <span className="sum-label"><Icon name="doc" size={16} /> Summary</span>
               <p>{post.summary}</p>
             </div>
-            <figure className="art-figure">
-              <img src={post.image} alt={post.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
-            </figure>
             {!content && <p className="empty">Loading article…</p>}
-            {content && <div className="takeaways">
-              <h2 className="no-top">Key takeaways</h2>
-              <ul>{post.takeaways.map((t) => <li key={t}><Icon name="check" size={16} />{t}</li>)}</ul>
-            </div>}
             {post.body.map((b, i) => <Block key={i} b={b} />)}
             {post.faqs.length > 0 && <>
               <h2 id="faq">Frequently asked questions</h2>
@@ -1239,6 +1238,28 @@ export function BlogPost() {
               <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${url}`)}`} target="_blank" rel="noopener">WhatsApp</a>
               <a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(url)}`}>Email</a>
             </div>
+            {(prev || next) && (
+              <nav className="post-nav" aria-label="More articles">
+                {prev ? (
+                  <Link to={`/blog/${prev.slug}`} className="pn-card pn-prev" rel="prev">
+                    <span className="pn-thumb"><img src={prev.image} alt="" width="120" height="63" loading="lazy" decoding="async" /></span>
+                    <span className="pn-text">
+                      <span className="pn-label"><Icon name="back" size={15} /> Previous article</span>
+                      <span className="pn-title">{prev.title}</span>
+                    </span>
+                  </Link>
+                ) : <span />}
+                {next ? (
+                  <Link to={`/blog/${next.slug}`} className="pn-card pn-next" rel="next">
+                    <span className="pn-text">
+                      <span className="pn-label">Next article <Icon name="arrow" size={15} /></span>
+                      <span className="pn-title">{next.title}</span>
+                    </span>
+                    <span className="pn-thumb"><img src={next.image} alt="" width="120" height="63" loading="lazy" decoding="async" /></span>
+                  </Link>
+                ) : <span />}
+              </nav>
+            )}
             <Link to="/blog" className="back-link"><Icon name="back" size={18} /> Back to blog</Link>
           </article>
           <aside className="sidebar">
