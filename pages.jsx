@@ -189,7 +189,15 @@ export function Home() {
           <p>Trusted by growing brands worldwide</p>
           <div className="marquee">
             <div className="marquee-track">
-              {[...CLIENTS, ...CLIENTS].map((c, i) => <span key={i}>{c}</span>)}
+              {Array.from({ length: 8 }, () => CLIENTS).flat().map((c, i) => {
+                const dup = i >= CLIENTS.length
+                return (
+                  <a key={i} href={c.url} target="_blank" rel="noopener" className="client-logo" title={`${c.name} — visit website`}
+                    aria-hidden={dup || undefined} tabIndex={dup ? -1 : undefined}>
+                    <img src={c.logo} alt={dup ? '' : `${c.name} logo`} width={Math.round((c.w * 54) / c.h)} height="54" loading="lazy" decoding="async" />
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>

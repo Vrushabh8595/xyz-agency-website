@@ -1405,3 +1405,18 @@ body { overflow-x: clip; }
   .post-nav { grid-template-columns: 1fr; }
   .pn-thumb { width: 80px; }
 }
+
+/* Client logos marquee */
+.marquee { padding: 10px 0 22px; }
+.logos .marquee-track { gap: 24px; align-items: center; animation-duration: 48s; }
+.client-logo { flex-shrink: 0; display: grid; place-items: center; height: 80px; padding: 0 24px; border-radius: 16px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); transition: transform .25s var(--ease), box-shadow .25s, border-color .25s; }
+.client-logo img { display: block; height: 54px; width: auto; filter: grayscale(.15); transition: filter .25s; }
+.client-logo:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 40%, var(--line)); box-shadow: var(--shadow-lg); }
+.client-logo:hover img { filter: none; }
+.client-logo:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+[data-theme="dark"] .client-logo { border-color: transparent; }
+@media (max-width: 760px) {
+  .client-logo { height: 60px; padding: 0 16px; border-radius: 14px; }
+  .client-logo img { height: 36px; }
+  .logos .marquee-track { gap: 16px; }
+}

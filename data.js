@@ -439,7 +439,12 @@ export const STATS = [
   { value: 85, suffix: '+', label: 'Engineers & marketers' },
 ]
 
-export const CLIENTS = ['NORTHWIND', 'Lumina', 'BRIGHTPATH', 'Vertex Labs', 'Orbitly', 'HELIX', 'Cobalt & Co', 'Summit Health']
+export const CLIENTS = [
+  { name: 'Pustakalay', url: 'https://www.pustakalay.store/', logo: '/client-pustakalay.webp', w: 174, h: 160 },
+  { name: 'Raj Rajeshwar Health Care', url: 'https://rajrajeshwar.co.in/', logo: '/client-rajrajeshwar-health-care.webp', w: 570, h: 160 },
+  { name: 'BidAsked', url: 'https://bidasked.com/', logo: '/client-bidasked.webp', w: 387, h: 160 },
+  { name: 'Dressing Room — Costumes on Rent', url: 'https://dressingrdrapery.in/', logo: '/client-dressing-room.webp', w: 294, h: 160 },
+]
 
 export const VALUES = [
   { icon: 'target', title: 'Outcomes over outputs', text: 'We measure success by pipeline and revenue, not by the number of deliverables shipped.' },
