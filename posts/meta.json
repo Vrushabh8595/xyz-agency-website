@@ -4,7 +4,7 @@
   "file": "posts-a",
   "category": "SEO",
   "service": "seo",
-  "title": "Answer Engine Optimization (AEO): How to Get Cited by AI",
+  "title": "AEO Guide: How to Get Your Brand Cited by ChatGPT and Google AI",
   "description": "Answer engine optimization (AEO) explained: how ChatGPT, Google AI Mode and Copilot pick sources, and a 30-day plan to get your pages cited by AI.",
   "excerpt": "How AI answer engines choose sources, and the content, technical and measurement steps that make your pages the ones they cite.",
   "summary": "Answer engine optimization (AEO) is the practice of making your content easy for AI systems like Google AI Mode, ChatGPT search and Microsoft Copilot to find, understand and cite. To get cited, keep pages crawlable and indexed, lead each section with a direct answer, back claims with sources and data, build brand authority off-site, and track citations and AI referrals.",
@@ -21,7 +21,7 @@
    "Google AI Mode optimization"
   ],
   "image": "/blog/answer-engine-optimization-guide.webp",
-  "imageAlt": "Answer Engine Optimization (AEO): How to Get Cited by AI — featured image",
+  "imageAlt": "AEO Guide: How to Get Your Brand Cited by ChatGPT and Google AI — featured image",
   "wordCount": 1537,
   "read": "7 min read"
  },
@@ -30,7 +30,7 @@
   "file": "posts-b",
   "category": "AI",
   "service": "ai-development",
-  "title": "AI Agents for Business: 12 Practical Use Cases",
+  "title": "12 AI Agent Use Cases That Deliver Real Business Value",
   "description": "Explore 12 practical AI agents for business use cases, from support to DevOps, plus how to pick your first agent and set safe autonomy levels. Read the guide.",
   "excerpt": "Twelve proven ways companies use AI agents in 2026, how to choose your first one, and how much autonomy to give it.",
   "summary": "AI agents for business are LLM-powered systems that plan steps, call tools like your CRM or database, and check results to finish multi-step tasks. The most practical 2026 use cases are support resolution, lead research, reporting, invoice processing, coding, incident triage and marketing operations. Start with a high-volume, easy-to-verify task, keep a human approving actions, and expand autonomy only with evidence.",
@@ -47,7 +47,7 @@
    "how to deploy AI agents"
   ],
   "image": "/blog/ai-agents-for-business-use-cases.webp",
-  "imageAlt": "AI Agents for Business: 12 Practical Use Cases — featured image",
+  "imageAlt": "12 AI Agent Use Cases That Deliver Real Business Value — featured image",
   "wordCount": 1529,
   "read": "7 min read"
  },
@@ -56,7 +56,7 @@
   "file": "posts-c",
   "category": "Web Development",
   "service": "web-experience",
-  "title": "Core Web Vitals in 2026: A Practical INP Optimization Guide",
+  "title": "How to Fix INP and Pass Core Web Vitals in 2026",
   "description": "A practical INP optimization guide for 2026: measure Interaction to Next Paint in the field, find slow interactions and apply fixes that pass Core Web Vitals.",
   "excerpt": "How to measure, diagnose and fix Interaction to Next Paint so your site feels instant and passes Core Web Vitals.",
   "summary": "INP optimization means shortening the time between a user's click, tap or key press and the next visual update. Google rates INP of 200 ms or less as good at the 75th percentile of field visits. To improve it, find slow interactions with field data, then cut input delay, break up long event handlers by yielding to the main thread, and reduce rendering work.",
@@ -73,7 +73,7 @@
    "reduce input delay"
   ],
   "image": "/blog/core-web-vitals-inp-guide.webp",
-  "imageAlt": "Core Web Vitals in 2026: A Practical INP Optimization Guide — featured image",
+  "imageAlt": "How to Fix INP and Pass Core Web Vitals in 2026 — featured image",
   "wordCount": 1584,
   "read": "7 min read"
  },
@@ -82,7 +82,7 @@
   "file": "posts-d",
   "category": "Paid Media",
   "service": "paid-media",
-  "title": "Google Ads AI Max and Performance Max: How to Stay in Control",
+  "title": "Google Ads AI Max & Performance Max: How to Keep Control of Spend",
   "description": "Google Ads AI Max and Performance Max in 2026: the brand, URL, text and negative keyword controls that keep automation on target. Get the checklist.",
   "excerpt": "The guardrails, experiments and reports that let you use Google's most automated campaign types without losing control of spend or message.",
   "summary": "To stay in control of Google Ads AI Max and Performance Max, set guardrails before you scale: negative keyword lists, brand inclusions and exclusions, URL exclusions and text guidelines. Feed both campaign types conversion goals that reflect real business value, test AI Max with Google's 50/50 experiment, and review search terms, asset and channel reports every one to two weeks.",
@@ -99,7 +99,7 @@
    "google ads text guidelines"
   ],
   "image": "/blog/google-ads-ai-max-performance-max.webp",
-  "imageAlt": "Google Ads AI Max and Performance Max: How to Stay in Control — featured image",
+  "imageAlt": "Google Ads AI Max & Performance Max: How to Keep Control of Spend — featured image",
   "wordCount": 1707,
   "read": "7 min read"
  },
@@ -108,7 +108,7 @@
   "file": "posts-a",
   "category": "SEO",
   "service": "seo",
-  "title": "GEO vs SEO vs AEO: What's the Difference in 2026?",
+  "title": "GEO vs SEO vs AEO: Key Differences and What to Prioritize",
   "description": "GEO vs SEO vs AEO in 2026: clear definitions, a side-by-side comparison and a practical way to prioritize search, answer and generative engine work.",
   "excerpt": "Clear definitions of SEO, AEO and GEO, how they overlap, and how to split effort between them without wasting budget.",
   "summary": "SEO optimizes pages to rank in search results, AEO optimizes content to be quoted as a direct answer, and GEO (generative engine optimization) optimizes content and brand presence to be cited in AI-generated responses from tools like ChatGPT and Google AI Mode. They share one foundation, so treat AEO and GEO as layers on top of strong SEO, not replacements.",
@@ -125,7 +125,7 @@
    "AI search optimization"
   ],
   "image": "/blog/geo-vs-seo-vs-aeo.webp",
-  "imageAlt": "GEO vs SEO vs AEO: What's the Difference in 2026? — featured image",
+  "imageAlt": "GEO vs SEO vs AEO: Key Differences and What to Prioritize — featured image",
   "wordCount": 1489,
   "read": "6 min read"
  },
@@ -134,7 +134,7 @@
   "file": "posts-legacy",
   "category": "Demand Gen",
   "service": "content-social",
-  "title": "The B2B Demand Generation Playbook for 2027",
+  "title": "B2B Demand Generation in 2027: The Complete Playbook",
   "description": "A B2B demand generation playbook for 2027: define your ICP, build a content engine, capture intent and measure pipeline. Get the full framework inside.",
   "excerpt": "A practical framework for building a B2B pipeline engine that creates demand, captures intent and does not depend on a single channel.",
   "summary": "B2B demand generation creates awareness and preference among buyers before they are ready to talk to sales, while lead generation captures those already in market. A 2027 playbook has five parts: a sharp ideal customer profile, a consistent content engine, high-intent paid capture, fast conversion paths, and measurement tied to qualified pipeline and revenue in the CRM.",
@@ -151,7 +151,7 @@
    "B2B marketing strategy 2027"
   ],
   "image": "/blog/b2b-demand-generation-playbook.webp",
-  "imageAlt": "The B2B Demand Generation Playbook for 2027 — featured image",
+  "imageAlt": "B2B Demand Generation in 2027: The Complete Playbook — featured image",
   "wordCount": 1458,
   "read": "6 min read"
  },
@@ -160,7 +160,7 @@
   "file": "posts-b",
   "category": "AI",
   "service": "ai-development",
-  "title": "Model Context Protocol (MCP) Explained for Business Leaders",
+  "title": "What Is Model Context Protocol (MCP)? A Plain-English Business Guide",
   "description": "Model Context Protocol (MCP) explained in plain English: how it connects AI to your tools, what changed in 2026 and the security risks. Read before you build.",
   "excerpt": "A plain-English guide to MCP: how it works, why it matters for your AI roadmap, what changed in 2026 and how to adopt it safely.",
   "summary": "The Model Context Protocol (MCP) is an open standard that lets AI applications such as ChatGPT, Claude, Gemini, Copilot and VS Code connect to business tools and data through one common interface. A company builds an MCP server once, and any compatible AI app can use it. MCP is now governed by the Linux Foundation's Agentic AI Foundation, and its 2026-07-28 specification made the protocol stateless.",
@@ -177,7 +177,7 @@
    "MCP for business"
   ],
   "image": "/blog/model-context-protocol-mcp-explained.webp",
-  "imageAlt": "Model Context Protocol (MCP) Explained for Business Leaders — featured image",
+  "imageAlt": "What Is Model Context Protocol (MCP)? A Plain-English Business Guide — featured image",
   "wordCount": 1529,
   "read": "7 min read"
  },
@@ -186,7 +186,7 @@
   "file": "posts-c",
   "category": "Web Development",
   "service": "web-development",
-  "title": "Headless CMS vs WordPress in 2026: Which Should You Choose?",
+  "title": "Headless CMS vs WordPress: Which Is Better for Your Website?",
   "description": "Headless CMS vs WordPress in 2026: compare cost, speed, editing, SEO and security, see when hybrid headless WordPress wins, and use our checklist to decide.",
   "excerpt": "A clear-eyed comparison of headless CMS platforms and WordPress in 2026, with a decision checklist for marketing and product teams.",
   "summary": "Choose WordPress when your team needs fast publishing, a huge plugin ecosystem and a lower total cost for a content-led marketing site. Choose a headless CMS when content must feed several channels, such as a web app, mobile app and kiosks, or when developers need full control of the front end. Headless WordPress is a middle path that keeps the familiar editor.",
@@ -203,7 +203,7 @@
    "WordPress vs Contentful"
   ],
   "image": "/blog/headless-cms-vs-wordpress.webp",
-  "imageAlt": "Headless CMS vs WordPress in 2026: Which Should You Choose? — featured image",
+  "imageAlt": "Headless CMS vs WordPress: Which Is Better for Your Website? — featured image",
   "wordCount": 1516,
   "read": "7 min read"
  },
@@ -212,7 +212,7 @@
   "file": "posts-d",
   "category": "Analytics",
   "service": "analytics-cro",
-  "title": "Server-Side Tracking and Consent Mode: Privacy-First Measurement",
+  "title": "Server-Side Tracking & Consent Mode v2: A Practical Setup Guide",
   "description": "Server-side tracking and Consent Mode v2 explained: how to respect user consent, protect conversion data and set up GTM, tag gateway and CAPI. See the plan.",
   "excerpt": "How server-side tagging and Consent Mode v2 work together to keep measurement accurate while honoring every visitor's privacy choices.",
   "summary": "Server-side tracking sends measurement data to a server you control, which then forwards only approved data to analytics and ad platforms. Combined with Consent Mode v2, which tells Google tags what each visitor agreed to, it lets you honor consent centrally, reduce third-party scripts and still give ad platforms reliable conversion signals. It is not a way around consent.",
@@ -229,7 +229,7 @@
    "privacy-first measurement"
   ],
   "image": "/blog/server-side-tracking-consent-mode.webp",
-  "imageAlt": "Server-Side Tracking and Consent Mode: Privacy-First Measurement — featured image",
+  "imageAlt": "Server-Side Tracking & Consent Mode v2: A Practical Setup Guide — featured image",
   "wordCount": 1538,
   "read": "7 min read"
  },
@@ -238,7 +238,7 @@
   "file": "posts-a",
   "category": "SEO",
   "service": "seo",
-  "title": "Google AI Mode and Zero-Click Search: What to Do Now",
+  "title": "Zero-Click Search and Google AI Mode: How to Protect Your Traffic",
   "description": "Google AI Mode and zero-click search are reshaping organic traffic in 2026. See what the data shows and seven practical moves to protect your pipeline.",
   "excerpt": "What AI Mode and rising zero-click searches mean for organic traffic, and seven moves to protect visibility and leads.",
   "summary": "Google AI Mode is a conversational search experience that answers complex questions with an AI-generated response and supporting links. Combined with AI Overviews, it is pushing more searches to end without a click. To respond, make pages citable, target questions AI cannot fully answer, strengthen brand demand, and measure conversions and visibility rather than clicks alone.",
@@ -255,7 +255,7 @@
    "organic traffic decline"
   ],
   "image": "/blog/google-ai-mode-zero-click-search.webp",
-  "imageAlt": "Google AI Mode and Zero-Click Search: What to Do Now — featured image",
+  "imageAlt": "Zero-Click Search and Google AI Mode: How to Protect Your Traffic — featured image",
   "wordCount": 1467,
   "read": "6 min read"
  },
@@ -264,7 +264,7 @@
   "file": "posts-b",
   "category": "AI",
   "service": "ai-development",
-  "title": "RAG vs Fine-Tuning: Which Is Right for Your AI Product?",
+  "title": "RAG vs Fine-Tuning: How to Choose the Right Approach for Your AI Product",
   "description": "RAG vs fine-tuning compared: what each changes, cost, freshness and when to combine them, with a step-by-step decision path. Choose the right approach today.",
   "excerpt": "RAG changes what a model knows; fine-tuning changes how it behaves. Here is how to pick the right one for your AI product.",
   "summary": "RAG (retrieval-augmented generation) retrieves relevant passages from your data and adds them to the prompt, so it is best for facts that change, need citations or need per-user permissions. Fine-tuning trains a model on examples, so it is best for consistent format, tone or narrow classification at scale. Most AI products should start with prompting and RAG, and fine-tune only when evaluations show a behavior gap.",
@@ -281,7 +281,7 @@
    "LLM customization"
   ],
   "image": "/blog/rag-vs-fine-tuning.webp",
-  "imageAlt": "RAG vs Fine-Tuning: Which Is Right for Your AI Product? — featured image",
+  "imageAlt": "RAG vs Fine-Tuning: How to Choose the Right Approach for Your AI Product — featured image",
   "wordCount": 1472,
   "read": "6 min read"
  },
@@ -290,7 +290,7 @@
   "file": "posts-legacy",
   "category": "SEO",
   "service": "seo",
-  "title": "SEO Agency vs In-House Team: How to Decide",
+  "title": "SEO Agency vs In-House Team: Costs, Pros and Cons",
   "description": "SEO agency vs in-house team: compare cost, speed, skills and control, see when a hybrid model wins, and get the questions to ask before you hire anyone.",
   "excerpt": "Cost, speed, expertise and control: a clear comparison to help you choose between an SEO agency, an in-house team or a hybrid.",
   "summary": "Choose an in-house SEO team when organic search is a primary growth channel, you publish at high volume and SEO must be embedded in daily product work. Choose an SEO agency when you need results before you can hire, lack senior SEO leadership or need specialist skills part-time. Many growing companies use a hybrid: an internal owner plus agency specialists.",
@@ -307,7 +307,7 @@
    "how to choose an SEO agency"
   ],
   "image": "/blog/seo-agency-vs-in-house.webp",
-  "imageAlt": "SEO Agency vs In-House Team: How to Decide — featured image",
+  "imageAlt": "SEO Agency vs In-House Team: Costs, Pros and Cons — featured image",
   "wordCount": 1344,
   "read": "6 min read"
  },
@@ -316,7 +316,7 @@
   "file": "posts-c",
   "category": "Mobile Apps",
   "service": "mobile-apps",
-  "title": "Flutter vs React Native in 2026: An Honest Comparison",
+  "title": "Flutter vs React Native in 2026: Which Should You Build With?",
   "description": "Flutter vs React Native in 2026: an honest comparison of performance, architecture, tooling, hiring and long-term risk, with clear advice on which to choose.",
   "excerpt": "Both frameworks matured fast this year. Here is how Flutter and React Native really compare in 2026, and how to pick.",
   "summary": "Flutter and React Native are both production-ready in 2026. Choose Flutter when you want pixel-identical custom UI across platforms and a single toolkit that also targets desktop. Choose React Native when your team already knows React and TypeScript, wants native platform components, or shares code with a web app. Team skills usually matter more than raw performance.",
@@ -333,7 +333,7 @@
    "best framework for mobile app"
   ],
   "image": "/blog/flutter-vs-react-native-2026.webp",
-  "imageAlt": "Flutter vs React Native in 2026: An Honest Comparison — featured image",
+  "imageAlt": "Flutter vs React Native in 2026: Which Should You Build With? — featured image",
   "wordCount": 1525,
   "read": "7 min read"
  },
@@ -342,7 +342,7 @@
   "file": "posts-d",
   "category": "Content",
   "service": "content-social",
-  "title": "Social Search: Why TikTok, Instagram and YouTube Rival Google",
+  "title": "Social Search: How to Get Found on TikTok, Instagram and YouTube",
   "description": "Social search explained: why buyers search TikTok, Instagram and YouTube first, and how to optimize short-form video to get found. Get the playbook.",
   "excerpt": "Why buyers now search inside TikTok, Instagram and YouTube, and how to make short-form video that ranks there and in Google.",
   "summary": "Social search is using TikTok, Instagram and YouTube as search engines to find products, places, tutorials and reviews. It rivals Google for experience-based questions because short videos show real use and real people. To compete, research the words people type in each app, put them in speech, on-screen text and captions, and make one video per question.",
@@ -359,7 +359,7 @@
    "social media search optimization"
   ],
   "image": "/blog/social-search-short-form-video.webp",
-  "imageAlt": "Social Search: Why TikTok, Instagram and YouTube Rival Google — featured image",
+  "imageAlt": "Social Search: How to Get Found on TikTok, Instagram and YouTube — featured image",
   "wordCount": 1472,
   "read": "6 min read"
  },
@@ -368,7 +368,7 @@
   "file": "posts-a",
   "category": "SEO",
   "service": "seo",
-  "title": "Technical SEO for AI Crawlers: llms.txt, Schema and Rendering",
+  "title": "Technical SEO for AI Crawlers: llms.txt, Schema and Rendering Done Right",
   "description": "Technical SEO for AI crawlers: which bots to allow in robots.txt, whether llms.txt and schema help, and why server-rendered HTML matters for AI search.",
   "excerpt": "Robots.txt rules, llms.txt, schema and JavaScript rendering: the technical checklist that decides whether AI engines can read your site.",
   "summary": "Technical SEO for AI crawlers means making sure bots like Googlebot, OAI-SearchBot, Bingbot and PerplexityBot can access, render and understand your pages. Allow the search crawlers you want citations from, decide separately on training bots like GPTBot, serve key content in server HTML, keep schema accurate, and treat llms.txt as optional rather than a ranking requirement.",
@@ -386,7 +386,7 @@
    "JavaScript rendering AI crawlers"
   ],
   "image": "/blog/technical-seo-for-ai-crawlers.webp",
-  "imageAlt": "Technical SEO for AI Crawlers: llms.txt, Schema and Rendering — featured image",
+  "imageAlt": "Technical SEO for AI Crawlers: llms.txt, Schema and Rendering Done Right — featured image",
   "wordCount": 1507,
   "read": "7 min read"
  },
@@ -395,7 +395,7 @@
   "file": "posts-b",
   "category": "Web Development",
   "service": "web-applications",
-  "title": "AI-Assisted Development: Shipping Faster Without Losing Quality",
+  "title": "AI-Assisted Coding: Ship Software Faster Without Sacrificing Quality",
   "description": "AI-assisted development can speed delivery or create rework. See the guardrails, review rules and rollout plan that keep code quality high. Get the playbook.",
   "excerpt": "How engineering teams use AI coding assistants and agents to ship faster while protecting quality, security and stability.",
   "summary": "AI-assisted development uses coding assistants and agents to plan, write, test and review software while engineers direct the work and own the result. Google's 2025 DORA research found AI improves delivery throughput but still hurts stability when fundamentals are weak. Teams ship faster without losing quality by writing specs first, keeping changes small, requiring tests and human review, and scanning every change automatically.",
@@ -412,7 +412,7 @@
    "AI in software development"
   ],
   "image": "/blog/ai-assisted-software-development.webp",
-  "imageAlt": "AI-Assisted Development: Shipping Faster Without Losing Quality — featured image",
+  "imageAlt": "AI-Assisted Coding: Ship Software Faster Without Sacrificing Quality — featured image",
   "wordCount": 1508,
   "read": "7 min read"
  },
@@ -421,7 +421,7 @@
   "file": "posts-c",
   "category": "Mobile Apps",
   "service": "mobile-apps",
-  "title": "How Much Does It Cost to Build an App in 2026?",
+  "title": "App Development Cost in 2026: What You Will Really Pay",
   "description": "How much does it cost to build an app in 2026? Learn what drives app development cost, which store fees apply, and how to scope an MVP that fits your budget.",
   "excerpt": "The real drivers of app development cost in 2026, the fixed fees you cannot avoid, and a simple way to estimate your own budget.",
   "summary": "App development cost in 2026 is driven mainly by scope, the number of platforms, backend complexity, design depth and the team's location and seniority. Estimate it as total hours multiplied by a blended hourly rate, then add third-party services, store fees and ongoing maintenance. A focused MVP built cross-platform is the most reliable way to control the first budget.",
@@ -438,7 +438,7 @@
    "how much does an app cost"
   ],
   "image": "/blog/app-development-cost-2026.webp",
-  "imageAlt": "How Much Does It Cost to Build an App in 2026? — featured image",
+  "imageAlt": "App Development Cost in 2026: What You Will Really Pay — featured image",
   "wordCount": 1519,
   "read": "7 min read"
  },
@@ -447,7 +447,7 @@
   "file": "posts-legacy",
   "category": "Analytics",
   "service": "analytics-cro",
-  "title": "Attribution Your CFO Will Actually Trust",
+  "title": "Marketing Attribution: How to Build a Model Your CFO Will Trust",
   "description": "Marketing attribution your CFO will trust: anchor it in CRM revenue, combine models, add incrementality tests and report trends. See the framework inside.",
   "excerpt": "Why most marketing attribution reports get ignored by finance, and how to build one leadership actually relies on.",
   "summary": "Marketing attribution a CFO will trust starts from closed revenue in the CRM, not ad platform dashboards that double-count conversions. Combine several lenses, such as first touch, data-driven, self-reported attribution, incrementality tests and marketing mix modeling, then act where they agree. Report trends, ranges and decisions rather than false precision, and document the methodology so finance can audit it.",
@@ -465,7 +465,7 @@
    "incrementality testing"
   ],
   "image": "/blog/attribution-your-cfo-will-trust.webp",
-  "imageAlt": "Attribution Your CFO Will Actually Trust — featured image",
+  "imageAlt": "Marketing Attribution: How to Build a Model Your CFO Will Trust — featured image",
   "wordCount": 1259,
   "read": "5 min read"
  },
@@ -474,7 +474,7 @@
   "file": "posts-d",
   "category": "Cloud & DevOps",
   "service": "devops-maintenance",
-  "title": "Website Security Checklist for 2026: 20 Essentials",
+  "title": "Website Security Checklist 2026: 20 Must-Have Protections",
   "description": "A website security checklist for 2026: 20 essentials covering MFA, patching, supply chain, headers, backups and incident response. Use it to audit your site.",
   "excerpt": "Twenty practical controls, grouped by priority, that protect your website, users and data from the attacks most likely to hit you in 2026.",
   "summary": "A 2026 website security checklist should start with phishing-resistant MFA and least-privilege access, then fast patching and supply chain control, since exploited vulnerabilities are now the top breach entry point. Add HTTPS with HSTS, a web application firewall, secure DNS, input validation, a Content Security Policy, payment page script monitoring, centralized logging, tested backups and a written incident plan.",
@@ -491,7 +491,7 @@
    "wordpress security checklist"
   ],
   "image": "/blog/website-security-checklist-2026.webp",
-  "imageAlt": "Website Security Checklist for 2026: 20 Essentials — featured image",
+  "imageAlt": "Website Security Checklist 2026: 20 Must-Have Protections — featured image",
   "wordCount": 1493,
   "read": "6 min read"
  },
@@ -500,7 +500,7 @@
   "file": "posts-a",
   "category": "Web Development",
   "service": "web-applications",
-  "title": "JavaScript SEO: How to Make React Sites Rank (SSR vs SSG)",
+  "title": "JavaScript SEO for React: SSR vs SSG and How to Rank",
   "description": "JavaScript SEO for React: how Google renders JS, when to use SSR, SSG or ISR, and a practical checklist to make React sites rank in search and AI answers.",
   "excerpt": "How Google and AI crawlers handle React, when to choose SSR, SSG or ISR, and the fixes that make JavaScript sites rank.",
   "summary": "JavaScript SEO is the practice of making JavaScript-heavy sites crawlable, renderable and indexable. React sites can rank well, but pure client-side rendering is risky because Google renders in a queue and many AI crawlers do not run JavaScript. Use static generation for stable pages, server-side rendering for dynamic ones, and ship real links, titles and status codes in HTML.",
@@ -517,7 +517,7 @@
    "client-side rendering SEO"
   ],
   "image": "/blog/javascript-seo-react-ssr-ssg.webp",
-  "imageAlt": "JavaScript SEO: How to Make React Sites Rank (SSR vs SSG) — featured image",
+  "imageAlt": "JavaScript SEO for React: SSR vs SSG and How to Rank — featured image",
   "wordCount": 1434,
   "read": "6 min read"
  },
@@ -526,7 +526,7 @@
   "file": "posts-b",
   "category": "AI",
   "service": "ai-automation",
-  "title": "AI Marketing Automation: 10 Workflows That Save Hours",
+  "title": "10 AI Marketing Automation Workflows That Save Hours Every Week",
   "description": "Ten AI marketing automation workflows that save hours, from lead scoring to reporting, with build steps, guardrails and ROI metrics. Start automating smarter.",
   "excerpt": "Ten practical AI workflows for marketing teams, how to build them step by step, and the guardrails that keep them on-brand.",
   "summary": "AI marketing automation adds large language model steps, such as researching, drafting, classifying and summarizing, to triggered marketing workflows. The workflows that save the most hours are lead enrichment, follow-up drafts, content briefs, repurposing, ad copy variants, performance reports, campaign QA, review replies, feedback analysis and churn alerts. Keep humans approving anything public, and fact-check all AI output before it ships.",
@@ -543,7 +543,7 @@
    "AI content automation"
   ],
   "image": "/blog/ai-marketing-automation-workflows.webp",
-  "imageAlt": "AI Marketing Automation: 10 Workflows That Save Hours — featured image",
+  "imageAlt": "10 AI Marketing Automation Workflows That Save Hours Every Week — featured image",
   "wordCount": 1477,
   "read": "6 min read"
  },
@@ -552,7 +552,7 @@
   "file": "posts-c",
   "category": "E-commerce",
   "service": "ecommerce-development",
-  "title": "Agentic Commerce: Preparing Your Store for AI Shopping Agents",
+  "title": "Agentic Commerce: How to Sell to AI Shopping Agents",
   "description": "Agentic commerce explained for 2026: how AI shopping agents find and buy products, what UCP and ACP mean, and the steps to make your store agent-ready now.",
   "excerpt": "AI agents now research and buy products for shoppers. Here is how agentic commerce works and how to get your store ready.",
   "summary": "Agentic commerce is shopping where AI agents discover, compare and sometimes buy products on a shopper's behalf inside tools like ChatGPT, Google AI Mode, Gemini and Microsoft Copilot. To prepare, keep product data complete and accurate in feeds and structured data, allow AI crawlers access, connect to platform channels or protocols like UCP and ACP, and keep checkout, policies and fulfillment agent-friendly.",
@@ -569,7 +569,7 @@
    "agent-ready ecommerce"
   ],
   "image": "/blog/agentic-commerce-ecommerce-ai-shopping.webp",
-  "imageAlt": "Agentic Commerce: Preparing Your Store for AI Shopping Agents — featured image",
+  "imageAlt": "Agentic Commerce: How to Sell to AI Shopping Agents — featured image",
   "wordCount": 1511,
   "read": "7 min read"
  },
@@ -578,7 +578,7 @@
   "file": "posts-legacy",
   "category": "AI",
   "service": "ai-automation",
-  "title": "Where AI Fits in a Modern Marketing Operation",
+  "title": "AI in Marketing Operations: Where It Actually Adds Value",
   "description": "Where AI fits in marketing operations: five tasks it handles well today, two that still need a human in the loop, and a simple governance model. Read more.",
   "excerpt": "Five practical places AI saves marketing teams time today, two places it still needs a human in the loop, and how to govern it.",
   "summary": "AI fits best in marketing operations where work is high-volume, repeatable and quick to review: research summaries, briefs and first drafts, ad copy variations, lead enrichment and routing, and reporting commentary. Humans must still own brand voice, final editorial judgment and anything involving sensitive customer data. Start with one low-risk workflow, add a review step and a short written policy, then scale.",
@@ -595,7 +595,7 @@
    "generative AI marketing governance"
   ],
   "image": "/blog/ai-in-marketing-operations.webp",
-  "imageAlt": "Where AI Fits in a Modern Marketing Operation — featured image",
+  "imageAlt": "AI in Marketing Operations: Where It Actually Adds Value — featured image",
   "wordCount": 1293,
   "read": "6 min read"
  },
@@ -604,7 +604,7 @@
   "file": "posts-d",
   "category": "Cloud & DevOps",
   "service": "cloud-hosting",
-  "title": "Cloud Cost Optimization: A FinOps Playbook for Growing Teams",
+  "title": "Cloud Cost Optimization: A FinOps Guide to Cutting Waste",
   "description": "Cloud cost optimization with FinOps: a practical playbook for growing teams covering tagging, rightsizing, commitments and AI spend. Start cutting waste now.",
   "excerpt": "A practical FinOps playbook for growing teams: get visibility, cut waste, control AI spend and make cost part of everyday engineering decisions.",
   "summary": "Cloud cost optimization means cutting cloud spend without hurting performance or delivery speed. Growing teams do it best with FinOps: tag every resource to an owner, report unit costs, remove idle resources, rightsize, schedule non-production environments, buy commitments only for steady usage, cap AI spend per feature, and hold a monthly cost review with engineering, finance and product.",
@@ -621,7 +621,7 @@
    "rightsizing cloud resources"
   ],
   "image": "/blog/cloud-cost-optimization-finops.webp",
-  "imageAlt": "Cloud Cost Optimization: A FinOps Playbook for Growing Teams — featured image",
+  "imageAlt": "Cloud Cost Optimization: A FinOps Guide to Cutting Waste — featured image",
   "wordCount": 1475,
   "read": "6 min read"
  },
@@ -630,7 +630,7 @@
   "file": "posts-legacy",
   "category": "CRO",
   "service": "web-experience",
-  "title": "The 12-Point Landing Page Conversion Checklist",
+  "title": "Landing Page Conversion Checklist: 12 Fixes That Lift Sign-Ups",
   "description": "A 12-point landing page conversion checklist covering message match, forms, trust, Core Web Vitals and testing. Run it before you buy more traffic.",
   "excerpt": "Twelve checks that consistently lift conversion rates on paid and organic landing pages, from message match to testing.",
   "summary": "A landing page conversion checklist confirms a page turns traffic into leads or sales. The 12 checks: match the ad or query, state the outcome, show the CTA on load, keep one action, cut form fields, build mobile-friendly forms, show proof early, explain next steps, answer objections, pass Core Web Vitals, stay readable and accessible, and track and test.",
@@ -647,7 +647,7 @@
    "high-converting landing page"
   ],
   "image": "/blog/landing-page-conversion-checklist.webp",
-  "imageAlt": "The 12-Point Landing Page Conversion Checklist — featured image",
+  "imageAlt": "Landing Page Conversion Checklist: 12 Fixes That Lift Sign-Ups — featured image",
   "wordCount": 1390,
   "read": "6 min read"
  },
@@ -656,7 +656,7 @@
   "file": "posts-legacy",
   "category": "Paid Media",
   "service": "paid-media",
-  "title": "LinkedIn Ads for B2B: What Works in 2026",
+  "title": "LinkedIn Ads for B2B: Strategies That Work in 2026",
   "description": "LinkedIn Ads for B2B in 2026: targeting structure, Thought Leader and Document Ads, nurture sequences and measurement that keep costs in check. Learn how.",
   "excerpt": "Targeting, creative, nurture and measurement strategies that keep LinkedIn ad costs under control for B2B teams.",
   "summary": "LinkedIn Ads work for B2B when deal values can absorb premium click costs and buyers can be defined by role, seniority or company. In 2026, keep audiences anchored to your ideal customer profile but large enough to learn, rotate Thought Leader Ads, Document Ads and video, nurture before asking for a demo, and measure pipeline through the Insight Tag and Conversions API.",
@@ -674,7 +674,7 @@
    "reduce LinkedIn ad costs"
   ],
   "image": "/blog/linkedin-ads-for-b2b.webp",
-  "imageAlt": "LinkedIn Ads for B2B: What Works in 2026 — featured image",
+  "imageAlt": "LinkedIn Ads for B2B: Strategies That Work in 2026 — featured image",
   "wordCount": 1307,
   "read": "6 min read"
  }
