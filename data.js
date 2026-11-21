@@ -444,6 +444,7 @@ export const CLIENTS = [
   { name: 'Raj Rajeshwar Health Care', url: 'https://rajrajeshwar.co.in/', logo: '/client-rajrajeshwar-health-care.webp', w: 570, h: 160 },
   { name: 'BidAsked', url: 'https://bidasked.com/', logo: '/client-bidasked.webp', w: 387, h: 160 },
   { name: 'Dressing Room — Costumes on Rent', url: 'https://dressingrdrapery.in/', logo: '/client-dressing-room.webp', w: 294, h: 160 },
+  { name: 'CogniSoft LLC', url: 'https://cognisoftllc.com/', logo: '/client-cognisoft.webp', w: 490, h: 160 },
 ]
 
 export const VALUES = [
